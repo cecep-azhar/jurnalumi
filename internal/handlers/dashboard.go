@@ -117,14 +117,17 @@ func WalletPOST(c echo.Context) error {
 	name := c.FormValue("name")
 	walletType := c.FormValue("type")
 	balanceStr := c.FormValue("balance")
+	targetStr := c.FormValue("target_amount") // Added for Phase 5 (Sinking Funds)
 
 	balance, _ := strconv.ParseFloat(balanceStr, 64)
+	targetAmount, _ := strconv.ParseFloat(targetStr, 64)
 
 	wallet := models.Wallet{
-		TenantID: userCtx.TenantID,
-		Name:     name,
-		Type:     walletType,
-		Balance:  balance,
+		TenantID:     userCtx.TenantID,
+		Name:         name,
+		Type:         walletType,
+		Balance:      balance,
+		TargetAmount: targetAmount,
 	}
 
 	db.DB.Create(&wallet)

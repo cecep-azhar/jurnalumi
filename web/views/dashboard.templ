@@ -249,7 +249,7 @@ templ Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet,
 				<div class="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm" @click="addWalletModal = false"></div>
 				<div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 relative z-10" x-transition.scale>
 					<div class="flex justify-between items-center mb-4">
-						<h3 class="text-lg font-bold text-gray-900">Tambah Dompet Baru</h3>
+						<h3 class="text-lg font-bold text-gray-900">Tambah Dompet / Tabungan</h3>
 						<button @click="addWalletModal = false" class="text-gray-400 hover:text-gray-600">✖</button>
 					</div>
 					<form action="/wallets" method="POST" class="space-y-4">
@@ -257,13 +257,19 @@ templ Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet,
 							<label class="block text-sm font-bold text-gray-700 mb-1">Nama Dompet</label>
 							<input type="text" name="name" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-blue-500 outline-none">
 						</div>
-						<div>
-							<label class="block text-sm font-bold text-gray-700 mb-1">Tipe</label>
-							<select name="type" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none" required>
+						<div x-data="{ walletType: 'cash' }">
+							<label class="block text-sm font-bold text-gray-700 mb-1">Tipe Dompet</label>
+							<select name="type" x-model="walletType" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none" required>
 								<option value="cash">Uang Tunai (Cash)</option>
 								<option value="bank">Rekening Bank</option>
 								<option value="ewallet">E-Wallet (Gopay/OVO)</option>
+								<option value="emergency">Dana Darurat (Emergency Fund)</option>
+								<option value="sinking_fund">Tabungan Sinking Fund</option>
 							</select>
+							<div x-show="walletType === 'emergency' || walletType === 'sinking_fund'" class="mt-3 p-3 bg-purple-50 rounded-xl border border-purple-100" x-transition>
+								<label class="block text-xs font-bold text-purple-700 mb-1">Target Nominal (Rp)</label>
+								<input type="number" name="target_amount" placeholder="e.g. 50000000" class="w-full border-2 border-purple-200 rounded-xl px-3 py-1.5 text-sm outline-none focus:border-purple-500">
+							</div>
 						</div>
 						<div>
 							<label class="block text-sm font-bold text-gray-700 mb-1">Saldo Awal (Rp)</label>

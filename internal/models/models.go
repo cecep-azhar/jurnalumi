@@ -42,13 +42,14 @@ type Category struct {
 	BudgetLimit float64   `gorm:"type:numeric(18,2);default:0.00" json:"budget_limit"` // Phase 3: Budget Capping
 }
 
-// Wallet represents Bank, Cash, or E-Wallet accounts
+// Wallet represents Bank, Cash, or E-Wallet accounts (and Sinking Funds)
 type Wallet struct {
 	Base
-	TenantID uuid.UUID `gorm:"type:uuid;not null;index" json:"tenant_id"`
-	Name     string    `gorm:"size:255;not null" json:"name"`
-	Type     string    `gorm:"size:50;not null" json:"type"` 
-	Balance  float64   `gorm:"type:numeric(18,2);default:0.00" json:"balance"`
+	TenantID     uuid.UUID `gorm:"type:uuid;not null;index" json:"tenant_id"`
+	Name         string    `gorm:"size:255;not null" json:"name"`
+	Type         string    `gorm:"size:50;not null" json:"type"` 
+	Balance      float64   `gorm:"type:numeric(18,2);default:0.00" json:"balance"`
+	TargetAmount float64   `gorm:"type:numeric(18,2);default:0.00" json:"target_amount"` // Sinking/Emergency Fund Target
 }
 
 // Transaction represents financial ledger items

@@ -27,7 +27,7 @@
 ## Phase 5: Debt & Protection (W5)
 - [x] CRUD Debts & Receivables.
 - [x] Debt Snowball/Avalanche calculator.
-- [ ] Sinking Funds & Emergency Fund tracker.
+- [x] Sinking Funds & Emergency Fund tracker.
 
 ## Phase 6: PWA & Notifications (W6)
 - [ ] Setup `manifest.json` & `sw.js` (Offline support).
