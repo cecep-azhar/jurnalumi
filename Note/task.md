@@ -1,25 +1,25 @@
 # Task Tracker JurnalUmi
 
 ## Phase 1: Foundation & DB (W1)
-- [ ] Setup boilerplate (Go 1.22, Echo, Templ, Tailwind, Alpine.js, Air).
-- [ ] Setup Docker/Podman `docker-compose.yml` untuk PostgreSQL 16.
-- [ ] Implement DB connection & migration scripts (Schema dari PRD).
+- [x] Setup boilerplate (Go 1.22, Echo, Templ, Tailwind, Alpine.js, Air).
+- [x] Setup Docker/Podman `docker-compose.yml` untuk PostgreSQL 16.
+- [x] Implement DB connection & migration scripts (Schema dari PRD).
 
 ## Phase 2: Auth & Multi-Tenancy (W2)
-- [ ] Auth sistem (Login, Register, JWT/Session).
-- [ ] Middleware Multi-Tenant (Inject `tenant_id` ke context).
-- [ ] Middleware RBAC (Role checking).
-- [ ] CRUD Family Members.
+- [x] Auth sistem (Login, Register, JWT/Session).
+- [x] Middleware Multi-Tenant (Inject `tenant_id` ke context).
+- [x] Middleware RBAC (Role checking).
+- [x] CRUD Family Members.
 
 ## Phase 3: Core Ledger (W3)
-- [ ] CRUD Wallets (Cash, Bank, E-Wallet).
-- [ ] CRUD Categories (Income/Expense hierarchy).
-- [ ] CRUD Transactions (Income, Expense, Transfer).
+- [x] CRUD Wallets (Cash, Bank, E-Wallet).
+- [x] CRUD Categories (Income/Expense hierarchy).
+- [x] CRUD Transactions (Income, Expense, Transfer).
 - [ ] Budget capping check (Alpine.js UI warning).
 
 ## Phase 4: Asset Engine (W4)
-- [ ] CRUD Liquid Assets & Investment.
-- [ ] CRUD Commodity Assets (Gold, Dinar, Perak).
+- [x] CRUD Liquid Assets & Investment.
+- [x] CRUD Commodity Assets (Gold, Dinar, Perak).
 - [ ] API Provider integration (Harga Emas live).
 - [ ] Net Worth Dashboard (Assets - Debts).
 
@@ -34,6 +34,6 @@
 - [ ] Cron/Background worker untuk Debt Reminder & Budget Alert.
 
 ## Phase 7: SaaS & Export (W7-W8)
-- [ ] Billing Module (Mayar.id webhook / Voucher key).
-- [ ] PDF Export engine untuk Monthly Report.
-- [ ] Production Build (Dockerfile, Caddy Reverse Proxy).
+- [x] Billing Module (Mayar.id webhook / Voucher key).
+- [x] PDF Export engine untuk Monthly Report.
+- [x] Production Build (Dockerfile, Caddy Reverse Proxy).
