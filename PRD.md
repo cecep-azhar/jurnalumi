@@ -4,7 +4,7 @@
 - **Dokumen Status:** Approved / Production-Ready Specification
 - **Versi:** 2.0.0 (Enterprise / Multi-Tenant SaaS Standard)
 - **Target OS & Infra:** Linux Fedora (Local Dev Podman Container) & Cloud VPS (Coolify Deployment)
-- **Tech Stack Core:** Go 1.22+ | Echo Framework | Templ (Type-Safe HTML SSR) | PostgreSQL 16 | Tailwind CSS v3/v4 | Air (Live Reload)
+- **Tech Stack Core:** Go 1.22+ | Echo Framework | Templ (Type-Safe HTML SSR) | Alpine.js (Lightweight UI Reactivity) | PostgreSQL 16 | Tailwind CSS v3/v4 | Air (Live Reload)
 
 ---
 
@@ -27,6 +27,7 @@
         │  Go (Echo) SSR Application   │
         │ ┌──────────────────────────┐ │
         │ │  Templ Render Engine     │ │
+        │ │  + Alpine.js Client-Side │ │
         │ └──────────────────────────┘ │
         │ ┌──────────────────────────┐ │
         │ │  Auth & Tenant Middleware│ │
@@ -117,6 +118,12 @@
   - Indikator Status: *Danger (0-3 Bln), Warning (3-6 Bln), Safe (>6 Bln)*.
 - **Sinking Funds (Pos Dana Khusus Masa Depan):**
   - Pos Kurban, Tax Kendaraan, Mudik Lebaran, Biaya Masuk Sekolah, Liburan Keluarga.
+
+### 4.6 Modul Interaktivitas Client-Side (Alpine.js Dynamic UI Engine)
+- **Modal & Slide-Over Drawer:** Form tambah transaksi, pop-up rincian utang, dan dialog edit aset dikontrol secara deklaratif menggunakan `x-data`, `x-show`, dan `x-cloak`.
+- **Dynamic Input Masking & Currency Formatter:** Format otomatis pemisah ribuan Rupiah (e.g. `10.000.000`) saat pengisian nominal via Alpine directives tanpa reload halaman.
+- **Dynamic Field Duplication:** Menambah baris komoditas emas/dinar secara interaktif saat input massal.
+- **Client-Side Filter & Live Search:** Filtering kategori pengeluaran dan pencarian cepat histori transaksi secara instan di browser.
 
 ---
 
