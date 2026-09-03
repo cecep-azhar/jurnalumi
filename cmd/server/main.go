@@ -77,6 +77,9 @@ func main() {
 	e.GET("/family", handlers.FamilyGET, appMiddleware.RequireAuth)
 	e.POST("/family", handlers.FamilyPOST, appMiddleware.RequireAuth)
 
+	// Static files for PWA (Phase 6)
+	e.Static("/static", "web/static")
+
 	// Health Check API
 	e.GET("/health", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, echo.Map{

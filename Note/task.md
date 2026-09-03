@@ -1,10 +1,10 @@
 # Task Tracker JurnalUmi
 
 ## Phase 1: Foundation & DB (W1)
-- [ ] Setup boilerplate (Go 1.22, Echo, Templ, Tailwind, Alpine.js, Air).
-- [ ] Setup Docker/Podman `docker-compose.yml` untuk PostgreSQL 16.
-- [ ] Implement DB connection & migration scripts (Schema dari PRD).
-- [ ] Setup Dark/Light mode toggle (Tailwind `darkMode: 'class'` + Alpine.js + localStorage persist).
+- [x] Setup boilerplate (Go 1.22, Echo, Templ, Tailwind, Alpine.js, Air).
+- [x] Setup Docker/Podman `docker-compose.yml` untuk PostgreSQL 16.
+- [x] Implement DB connection & migration scripts (Schema dari PRD).
+- [x] Setup Dark/Light mode toggle (Tailwind `darkMode: 'class'` + Alpine.js + localStorage persist).
 
 ## Phase 2: Auth & Multi-Tenancy (W2)
 - [x] Auth sistem (Login, Register, JWT/Session).
@@ -30,12 +30,12 @@
 - [x] Sinking Funds & Emergency Fund tracker.
 
 ## Phase 6: PWA & Notifications (W6)
-- [ ] Setup `manifest.json` & `sw.js` (Offline support).
-- [ ] SMTP Client setup.
-- [ ] Cron/Background worker untuk Debt Reminder & Budget Alert.
+- [x] Setup `manifest.json` & `sw.js` (Offline support).
+- [x] SMTP Client setup.
+- [x] Cron/Background worker untuk Debt Reminder & Budget Alert.
 
 ## Phase 7: SaaS & Export (W7-W8)
 - [x] Billing Module (Mayar.id webhook / Voucher key).
 - [x] PDF Export engine untuk Monthly Report.
 - [x] Production Build (Dockerfile, Caddy Reverse Proxy).
-- [ ] Embed YouTube demo video di Landing Page (section demo, responsive iframe 16:9, lazy load).
+- [x] Embed YouTube demo video di Landing Page (section demo, responsive iframe 16:9, lazy load).

@@ -41,7 +41,7 @@ func Layout(title string, tenant models.Tenant, user models.User, content templ.
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" - JurnalUmi</title><script src=\"https://cdn.tailwindcss.com\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js\"></script><style>\n\t\t\t[x-cloak] { display: none !important; }\n\t\t</style></head><body class=\"bg-gray-50 text-gray-900 font-sans antialiased\"><nav class=\"bg-emerald-600 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-40\"><div class=\"font-bold text-xl flex items-center space-x-6\"><a href=\"/dashboard\" class=\"flex items-center hover:text-emerald-200 transition\"><svg class=\"w-6 h-6 mr-2\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z\"></path></svg> JurnalUmi</a><!-- Main Menu --><div class=\"hidden md:flex items-center space-x-4 text-sm font-medium\"><a href=\"/dashboard\" class=\"hover:text-emerald-200 transition\">Dashboard</a> <a href=\"/assets\" class=\"hover:text-emerald-200 transition\">Aset & Emas</a> <a href=\"/debts\" class=\"hover:text-emerald-200 transition\">Utang & Piutang</a> <a href=\"/reports\" class=\"hover:text-emerald-200 transition\">Laporan & Cetak</a> ")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" - JurnalUmi</title><!-- Phase 6: PWA Manifest --><link rel=\"manifest\" href=\"/static/manifest.json\"><meta name=\"theme-color\" content=\"#059669\"><script src=\"https://cdn.tailwindcss.com\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js\"></script><style>\n\t\t\t[x-cloak] { display: none !important; }\n\t\t</style></head><body class=\"bg-gray-50 text-gray-900 font-sans antialiased\"><nav class=\"bg-emerald-600 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-40\"><div class=\"font-bold text-xl flex items-center space-x-6\"><a href=\"/dashboard\" class=\"flex items-center hover:text-emerald-200 transition\"><svg class=\"w-6 h-6 mr-2\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z\"></path></svg> JurnalUmi</a><!-- Main Menu --><div class=\"hidden md:flex items-center space-x-4 text-sm font-medium\"><a href=\"/dashboard\" class=\"hover:text-emerald-200 transition\">Dashboard</a> <a href=\"/assets\" class=\"hover:text-emerald-200 transition\">Aset & Emas</a> <a href=\"/debts\" class=\"hover:text-emerald-200 transition\">Utang & Piutang</a> <a href=\"/reports\" class=\"hover:text-emerald-200 transition\">Laporan & Cetak</a> ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -58,7 +58,7 @@ func Layout(title string, tenant models.Tenant, user models.User, content templ.
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(tenant.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/layout.templ`, Line: 40, Col: 61}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/layout.templ`, Line: 44, Col: 61}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -71,7 +71,7 @@ func Layout(title string, tenant models.Tenant, user models.User, content templ.
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(user.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/layout.templ`, Line: 41, Col: 81}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/layout.templ`, Line: 45, Col: 81}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -84,7 +84,7 @@ func Layout(title string, tenant models.Tenant, user models.User, content templ.
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(user.Role)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/layout.templ`, Line: 41, Col: 96}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/layout.templ`, Line: 45, Col: 96}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -98,7 +98,7 @@ func Layout(title string, tenant models.Tenant, user models.User, content templ.
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</main></body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</main><!-- Service Worker Registration --><script>\n\t\t\tif ('serviceWorker' in navigator) {\n\t\t\t\twindow.addEventListener('load', () => {\n\t\t\t\t\tnavigator.serviceWorker.register('/static/sw.js');\n\t\t\t\t});\n\t\t\t}\n\t\t</script></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

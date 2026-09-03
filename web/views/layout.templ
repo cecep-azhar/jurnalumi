@@ -9,6 +9,10 @@ templ Layout(title string, tenant models.Tenant, user models.User, content templ
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<title>{ title } - JurnalUmi</title>
+		<!-- Phase 6: PWA Manifest -->
+		<link rel="manifest" href="/static/manifest.json" />
+		<meta name="theme-color" content="#059669" />
+		
 		<script src="https://cdn.tailwindcss.com"></script>
 		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
 		<style>
@@ -49,6 +53,14 @@ templ Layout(title string, tenant models.Tenant, user models.User, content templ
 			@content
 		</main>
 
+		<!-- Service Worker Registration -->
+		<script>
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', () => {
+					navigator.serviceWorker.register('/static/sw.js');
+				});
+			}
+		</script>
 	</body>
 	</html>
 }
