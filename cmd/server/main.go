@@ -66,6 +66,11 @@ func main() {
 	e.GET("/assets", handlers.AssetGET, appMiddleware.RequireAuth)
 	e.POST("/assets", handlers.AssetPOST, appMiddleware.RequireAuth)
 
+	// Phase 5: Debt & Protection Routes (Protected)
+	e.GET("/debts", handlers.DebtGET, appMiddleware.RequireAuth)
+	e.POST("/debts", handlers.DebtPOST, appMiddleware.RequireAuth)
+	e.POST("/debts/pay", handlers.DebtPayPOST, appMiddleware.RequireAuth)
+
 	e.GET("/reports", handlers.ReportGET, appMiddleware.RequireAuth)
 	e.GET("/reports/export", handlers.ReportExportCSV, appMiddleware.RequireAuth)
 

@@ -28,6 +28,7 @@ templ Layout(title string, tenant models.Tenant, user models.User, content templ
 				<div class="hidden md:flex items-center space-x-4 text-sm font-medium">
 					<a href="/dashboard" class="hover:text-emerald-200 transition">Dashboard</a>
 					<a href="/assets" class="hover:text-emerald-200 transition">Aset & Emas</a>
+					<a href="/debts" class="hover:text-emerald-200 transition">Utang & Piutang</a>
 					<a href="/reports" class="hover:text-emerald-200 transition">Laporan & Cetak</a>
 					if user.Role == "owner" {
 						<a href="/family" class="hover:text-emerald-200 transition">Manajemen Anggota</a>

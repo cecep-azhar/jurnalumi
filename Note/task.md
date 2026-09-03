@@ -25,8 +25,8 @@
 - [x] Net Worth Dashboard (Assets - Debts).
 
 ## Phase 5: Debt & Protection (W5)
-- [ ] CRUD Debts & Receivables.
-- [ ] Debt Snowball/Avalanche calculator.
+- [x] CRUD Debts & Receivables.
+- [x] Debt Snowball/Avalanche calculator.
 - [ ] Sinking Funds & Emergency Fund tracker.
 
 ## Phase 6: PWA & Notifications (W6)
