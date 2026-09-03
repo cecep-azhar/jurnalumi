@@ -15,11 +15,13 @@ templ Layout(title string, tenant models.Tenant, user models.User, content templ
 		
 		<script src="https://cdn.tailwindcss.com"></script>
 		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+		<!-- SPA mode via HTMX boost -->
+		<script src="https://unpkg.com/htmx.org@1.9.12"></script>
 		<style>
 			[x-cloak] { display: none !important; }
 		</style>
 	</head>
-	<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+	<body class="bg-gray-50 text-gray-900 font-sans antialiased" hx-boost="true">
 		
 		<nav class="bg-emerald-600 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-40">
 			<div class="font-bold text-xl flex items-center space-x-6">
