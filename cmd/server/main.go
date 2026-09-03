@@ -62,6 +62,16 @@ func main() {
 	e.POST("/wallets", handlers.WalletPOST, appMiddleware.RequireAuth)
 	e.POST("/categories", handlers.CategoryPOST, appMiddleware.RequireAuth)
 
+	// Extended Features Routes (Protected)
+	e.GET("/assets", handlers.AssetGET, appMiddleware.RequireAuth)
+	e.POST("/assets", handlers.AssetPOST, appMiddleware.RequireAuth)
+
+	e.GET("/reports", handlers.ReportGET, appMiddleware.RequireAuth)
+	e.GET("/reports/export", handlers.ReportExportCSV, appMiddleware.RequireAuth)
+
+	e.GET("/family", handlers.FamilyGET, appMiddleware.RequireAuth)
+	e.POST("/family", handlers.FamilyPOST, appMiddleware.RequireAuth)
+
 	// Health Check API
 	e.GET("/health", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, echo.Map{
