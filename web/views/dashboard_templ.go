@@ -13,7 +13,12 @@ import (
 	"github.com/cecep-azhar/jurnalumi/internal/models"
 )
 
-func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet) templ.Component {
+// CurrencyFormatter is a helper to format numbers as Rupiah
+func FormatRupiah(amount float64) string {
+	return fmt.Sprintf("Rp %.2f", amount)
+}
+
+func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, categories []models.Category, transactions []models.Transaction, liquidBalance float64, totalIncome float64, totalExpense float64) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -31,27 +36,27 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet) 
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"id\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Dashboard - JurnalUmi</title><script src=\"https://cdn.tailwindcss.com\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js\"></script><style>\n\t\t\t[x-cloak] { display: none !important; }\n\t\t</style></head><body class=\"bg-gray-50 text-gray-900 font-sans antialiased\"><!-- Sidebar / Navbar (Simplified for PRD) --><nav class=\"bg-emerald-600 text-white p-4 shadow-md flex justify-between items-center\"><div class=\"font-bold text-xl\">JurnalUmi</div><div class=\"text-sm\"><span class=\"mr-4\">Keluarga: ")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"id\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Dashboard - JurnalUmi</title><script src=\"https://cdn.tailwindcss.com\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js\"></script><style>\n\t\t\t[x-cloak] { display: none !important; }\n\t\t</style></head><body class=\"bg-gray-50 text-gray-900 font-sans antialiased\"><nav class=\"bg-emerald-600 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-40\"><div class=\"font-bold text-xl flex items-center\"><svg class=\"w-6 h-6 mr-2\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z\"></path></svg> JurnalUmi</div><div class=\"text-sm flex items-center space-x-4\"><span class=\"hidden md:inline\">Keluarga: <b>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(tenant.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 27, Col: 46}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 34, Col: 61}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span> <span class=\"font-semibold bg-emerald-700 px-3 py-1 rounded-full\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</b></span> <span class=\"font-semibold bg-emerald-700 px-3 py-1 rounded-full\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(user.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 28, Col: 81}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 35, Col: 81}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -64,27 +69,66 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet) 
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(user.Role)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 28, Col: 96}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 35, Col: 96}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(")</span></div></nav><main class=\"max-w-7xl mx-auto p-6 space-y-6\" x-data=\"{ addTransactionModal: false }\"><!-- Top Metrics --><div class=\"grid grid-cols-1 md:grid-cols-4 gap-4\"><div class=\"bg-white p-5 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-blue-500\"><p class=\"text-sm text-gray-500 mb-1\">Total Saldo Likuid</p><h3 class=\"text-2xl font-bold\">Rp 4.500.000</h3></div><div class=\"bg-white p-5 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-emerald-500\"><p class=\"text-sm text-gray-500 mb-1\">Pemasukan Bulan Ini</p><h3 class=\"text-2xl font-bold\">Rp 12.000.000</h3></div><div class=\"bg-white p-5 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-red-500\"><p class=\"text-sm text-gray-500 mb-1\">Pengeluaran Bulan Ini</p><h3 class=\"text-2xl font-bold\">Rp 8.200.000</h3><div class=\"mt-2 text-xs font-semibold text-red-600 bg-red-100 inline-block px-2 py-1 rounded\">Over Budget Dapur!</div></div><div class=\"bg-white p-5 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-purple-500 relative\"><p class=\"text-sm text-gray-500 mb-1\">Sisa Utang Aktif</p><h3 class=\"text-2xl font-bold\">Rp 15.000.000</h3><div class=\"absolute top-2 right-2 flex space-x-1\"><span class=\"w-2 h-2 rounded-full bg-red-500 animate-pulse\" title=\"Jatuh Tempo H-3\"></span></div></div></div><div class=\"grid grid-cols-1 lg:grid-cols-3 gap-6\"><!-- Dompet & Aset List --><div class=\"bg-white p-6 rounded-2xl shadow-sm border border-gray-100 col-span-1\"><div class=\"flex justify-between items-center mb-4\"><h3 class=\"font-bold text-lg\">Dompet Keluarga</h3><button class=\"text-emerald-600 text-sm hover:underline\">+ Tambah</button></div><div class=\"space-y-3\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(")</span> <a href=\"/logout\" class=\"text-emerald-200 hover:text-white font-semibold flex items-center\"><svg class=\"w-4 h-4 mr-1\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1\"></path></svg></a></div></nav><main class=\"max-w-7xl mx-auto p-4 md:p-6 space-y-6\" x-data=\"{ addTransactionModal: false, addWalletModal: false, addCategoryModal: false }\"><!-- Top Metrics --><div class=\"grid grid-cols-1 md:grid-cols-4 gap-4\"><div class=\"bg-white p-5 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-blue-500\"><p class=\"text-sm text-gray-500 mb-1\">Total Saldo Likuid</p><h3 class=\"text-2xl font-bold\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var5 string
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(liquidBalance))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 48, Col: 65}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h3></div><div class=\"bg-white p-5 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-emerald-500\"><p class=\"text-sm text-gray-500 mb-1\">Pemasukan Bulan Ini</p><h3 class=\"text-2xl font-bold text-emerald-600\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var6 string
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(totalIncome))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 52, Col: 80}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h3></div><div class=\"bg-white p-5 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-red-500\"><p class=\"text-sm text-gray-500 mb-1\">Pengeluaran Bulan Ini</p><h3 class=\"text-2xl font-bold text-red-600\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var7 string
+		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(totalExpense))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 56, Col: 77}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h3></div><div class=\"bg-white p-5 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-purple-500\"><p class=\"text-sm text-gray-500 mb-1\">Sisa Utang (Coming Soon)</p><h3 class=\"text-2xl font-bold text-gray-400\">Rp 0.00</h3></div></div><div class=\"grid grid-cols-1 lg:grid-cols-3 gap-6\"><!-- Dompet & Kategori Section --><div class=\"space-y-6 col-span-1\"><!-- Dompet List --><div class=\"bg-white p-6 rounded-2xl shadow-sm border border-gray-100\"><div class=\"flex justify-between items-center mb-4 border-b pb-2\"><h3 class=\"font-bold text-lg flex items-center\"><svg class=\"w-5 h-5 mr-2 text-blue-500\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z\"></path></svg> Dompet & Bank</h3><button @click=\"addWalletModal = true\" class=\"text-emerald-600 text-sm hover:underline font-semibold\">+ Tambah</button></div><div class=\"space-y-3\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		for _, w := range wallets {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex justify-between items-center p-3 bg-gray-50 rounded-lg\"><div><p class=\"font-semibold\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex justify-between items-center p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition\"><div><p class=\"font-semibold text-gray-900\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var5 string
-			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(w.Name)
+			var templ_7745c5c3_Var8 string
+			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(w.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 69, Col: 42}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 80, Col: 57}
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -92,25 +136,25 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet) 
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var6 string
-			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(w.Type)
+			var templ_7745c5c3_Var9 string
+			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(w.Type)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 70, Col: 61}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 81, Col: 62}
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p></div><div class=\"font-bold text-gray-700\">Rp ")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var7 string
-			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%.2f", w.Balance))
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p></div><div class=\"font-bold text-gray-800\">")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 72, Col: 80}
+				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+			var templ_7745c5c3_Var10 string
+			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(w.Balance))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 83, Col: 71}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -119,17 +163,271 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet) 
 				return templ_7745c5c3_Err
 			}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!-- Hardcoded Example if empty -->")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
 		if len(wallets) == 0 {
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"text-sm text-gray-500 text-center py-4\">Belum ada dompet terdaftar.</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"mt-8 mb-4 border-t pt-4\"><h3 class=\"font-bold text-lg\">Aset Logam Mulia</h3></div><div class=\"flex justify-between items-center p-3 bg-yellow-50 border border-yellow-200 rounded-lg\"><div><p class=\"font-semibold text-yellow-800\">Emas Antam</p><p class=\"text-xs text-yellow-600\">10 Gram (24K)</p></div><div class=\"text-right\"><div class=\"font-bold text-yellow-900\">Rp 15.000.000</div><div class=\"text-xs text-emerald-600\">Live API 🟢</div></div></div></div><!-- Recent Transactions & Quick Add --><div class=\"bg-white p-6 rounded-2xl shadow-sm border border-gray-100 col-span-1 lg:col-span-2\"><div class=\"flex justify-between items-center mb-6\"><h3 class=\"font-bold text-lg\">Histori Transaksi</h3><button @click=\"addTransactionModal = true\" class=\"bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl font-medium shadow transition\">+ Catat Transaksi</button></div><div class=\"overflow-x-auto\"><table class=\"w-full text-left border-collapse\"><thead><tr class=\"text-gray-400 text-sm border-b\"><th class=\"pb-3 font-medium\">Tanggal</th><th class=\"pb-3 font-medium\">Kategori</th><th class=\"pb-3 font-medium\">Keterangan</th><th class=\"pb-3 font-medium\">Nominal</th></tr></thead> <tbody class=\"text-sm\"><tr class=\"border-b border-gray-50 hover:bg-gray-50 transition\"><td class=\"py-4 text-gray-500\">Hari ini, 08:30</td><td class=\"py-4\"><span class=\"bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-semibold\">Pengeluaran Dapur</span></td><td class=\"py-4 text-gray-700\">Belanja sayur & lauk pasar</td><td class=\"py-4 font-bold text-red-600\">- Rp 150.000</td></tr><tr class=\"border-b border-gray-50 hover:bg-gray-50 transition\"><td class=\"py-4 text-gray-500\">Kemarin, 19:00</td><td class=\"py-4\"><span class=\"bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-semibold\">Gaji Suami</span></td><td class=\"py-4 text-gray-700\">Gaji Bulan September</td><td class=\"py-4 font-bold text-emerald-600\">+ Rp 12.000.000</td></tr><tr class=\"border-b border-gray-50 hover:bg-gray-50 transition\"><td class=\"py-4 text-gray-500\">2 Sep 2026</td><td class=\"py-4\"><span class=\"bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs font-semibold\">Cicilan Utang</span></td><td class=\"py-4 text-gray-700\">Bayar cicilan motor bulan ke-4</td><td class=\"py-4 font-bold text-red-600\">- Rp 850.000</td></tr></tbody></table></div></div></div><!-- Alpine Modal: Tambah Transaksi --><div x-cloak x-show=\"addTransactionModal\" class=\"fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75 backdrop-blur-sm\" x-transition.opacity><div @click.outside=\"addTransactionModal = false\" class=\"bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 relative\" x-transition:enter=\"transition ease-out duration-300 transform\" x-transition:enter-start=\"opacity-0 translate-y-4 scale-95\" x-transition:enter-end=\"opacity-100 translate-y-0 scale-100\"><div class=\"flex justify-between items-center mb-6\"><h3 class=\"text-xl font-bold text-gray-900\">Catat Transaksi Cepat</h3><button @click=\"addTransactionModal = false\" class=\"text-gray-400 hover:text-gray-600\">✖</button></div><form action=\"/transactions\" method=\"POST\" class=\"space-y-4\" x-data=\"{ type: &#39;expense&#39;, amount: &#39;&#39; }\"><!-- Tipe Transaksi (Pemasukan / Pengeluaran) --><div class=\"flex space-x-2 bg-gray-100 p-1 rounded-xl\"><button type=\"button\" @click=\"type = &#39;expense&#39;\" :class=\"type === &#39;expense&#39; ? &#39;bg-white shadow text-red-600 font-bold&#39; : &#39;text-gray-500 hover:text-gray-700&#39;\" class=\"flex-1 py-2 rounded-lg text-sm transition\">Pengeluaran</button> <button type=\"button\" @click=\"type = &#39;income&#39;\" :class=\"type === &#39;income&#39; ? &#39;bg-white shadow text-emerald-600 font-bold&#39; : &#39;text-gray-500 hover:text-gray-700&#39;\" class=\"flex-1 py-2 rounded-lg text-sm transition\">Pemasukan</button></div><input type=\"hidden\" name=\"type\" x-model=\"type\"><!-- Nominal (Rupiah Masking) --><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Nominal (Rp)</label> <input type=\"text\" x-model=\"amount\" placeholder=\"0\" class=\"w-full text-right text-2xl font-bold border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-emerald-500 focus:ring-emerald-500 outline-none transition\" required></div><div class=\"grid grid-cols-2 gap-4\"><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Dompet</label> <select name=\"wallet_id\" class=\"w-full border-2 border-gray-200 rounded-xl px-3 py-2 bg-white\" required><option value=\"\">Pilih Dompet...</option> <option value=\"1\">BCA Suami</option> <option value=\"2\">Uang Tunai Istri</option></select></div><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Kategori</label> <select name=\"category\" class=\"w-full border-2 border-gray-200 rounded-xl px-3 py-2 bg-white\" required><option x-show=\"type === &#39;expense&#39;\" value=\"dapur\">Belanja Dapur</option> <option x-show=\"type === &#39;expense&#39;\" value=\"listrik\">Listrik & Air</option> <option x-show=\"type === &#39;expense&#39;\" value=\"jajan\">Jajan & Hiburan</option> <option x-show=\"type === &#39;income&#39;\" value=\"gaji\">Gaji Utama</option> <option x-show=\"type === &#39;income&#39;\" value=\"bonus\">Bonus / Sampingan</option></select></div></div><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Keterangan Singkat</label> <input type=\"text\" name=\"description\" placeholder=\"Beli apa / dari siapa?\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-emerald-500 outline-none\"></div><button type=\"submit\" class=\"w-full mt-4 flex justify-center items-center bg-gray-900 hover:bg-black text-white font-bold py-3 px-4 rounded-xl transition shadow-lg\">Simpan Transaksi</button></form></div></div></main></body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div><!-- Master Data Kategori --><div class=\"bg-white p-6 rounded-2xl shadow-sm border border-gray-100\"><div class=\"flex justify-between items-center mb-4 border-b pb-2\"><h3 class=\"font-bold text-lg flex items-center\"><svg class=\"w-5 h-5 mr-2 text-purple-500\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M7 7h10M7 12h10m-5 5h5\"></path></svg> Kategori Transaksi</h3><button @click=\"addCategoryModal = true\" class=\"text-emerald-600 text-sm hover:underline font-semibold\">+ Kategori</button></div><div class=\"flex flex-wrap gap-2\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		for _, c := range categories {
+			if c.Type == "expense" {
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span class=\"bg-red-50 text-red-700 border border-red-200 px-3 py-1 rounded-full text-xs font-semibold\">")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				var templ_7745c5c3_Var11 string
+				templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(c.Name)
+				if templ_7745c5c3_Err != nil {
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 104, Col: 121}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span> ")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			} else {
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span class=\"bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-full text-xs font-semibold\">")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				var templ_7745c5c3_Var12 string
+				templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(c.Name)
+				if templ_7745c5c3_Err != nil {
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 106, Col: 133}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span> ")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			}
+		}
+		if len(categories) == 0 {
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"text-sm text-gray-500 text-center py-2\">Belum ada kategori diset.</div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div><!-- Recent Transactions --><div class=\"bg-white p-6 rounded-2xl shadow-sm border border-gray-100 col-span-1 lg:col-span-2\"><div class=\"flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 border-b pb-4 gap-4\"><h3 class=\"font-bold text-lg\">Histori Transaksi Terakhir</h3><button @click=\"addTransactionModal = true\" class=\"bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-md shadow-emerald-200 transition flex items-center w-full sm:w-auto justify-center\"><svg class=\"w-5 h-5 mr-1\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 6v6m0 0v6m0-6h6m-6 0H6\"></path></svg> Catat Transaksi</button></div><div class=\"overflow-x-auto\"><table class=\"w-full text-left border-collapse whitespace-nowrap min-w-full\"><thead><tr class=\"text-gray-400 text-xs uppercase tracking-wider border-b\"><th class=\"pb-3 font-medium\">Tanggal</th><th class=\"pb-3 font-medium\">Kategori</th><th class=\"pb-3 font-medium\">Keterangan</th><th class=\"pb-3 font-medium text-right\">Nominal</th></tr></thead> <tbody class=\"text-sm\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		for _, t := range transactions {
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<tr class=\"border-b border-gray-50 hover:bg-gray-50 transition\"><td class=\"py-4 text-gray-500\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var13 string
+			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(t.TransactionDate.Format("02 Jan 2006, 15:04"))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 139, Col: 89}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</td><td class=\"py-4\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			if t.Type == "expense" {
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span class=\"bg-red-100 text-red-700 px-2.5 py-1 rounded-lg text-xs font-bold uppercase\">")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				var templ_7745c5c3_Var14 string
+				templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(t.CategoryName)
+				if templ_7745c5c3_Err != nil {
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 142, Col: 117}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span>")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			} else {
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span class=\"bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-lg text-xs font-bold uppercase\">")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				var templ_7745c5c3_Var15 string
+				templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(t.CategoryName)
+				if templ_7745c5c3_Err != nil {
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 144, Col: 125}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span>")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</td><td class=\"py-4 text-gray-700 truncate max-w-[200px]\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var16 string
+			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(t.Description)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 147, Col: 79}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</td><td class=\"py-4 font-bold text-right\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			if t.Type == "expense" {
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span class=\"text-red-600\">- ")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				var templ_7745c5c3_Var17 string
+				templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(t.Amount))
+				if templ_7745c5c3_Err != nil {
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 150, Col: 65}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span>")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			} else {
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span class=\"text-emerald-600\">+ ")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				var templ_7745c5c3_Var18 string
+				templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(t.Amount))
+				if templ_7745c5c3_Err != nil {
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 152, Col: 69}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span>")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</td></tr>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		if len(transactions) == 0 {
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<tr><td colspan=\"4\" class=\"py-8 text-center text-gray-400\">Belum ada transaksi bulan ini. Ayo mulai mencatat!</td></tr>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</tbody></table></div></div></div><!-- MODAL: Tambah Transaksi --><div x-cloak x-show=\"addTransactionModal\" class=\"fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0\" x-transition.opacity><div class=\"fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm\" @click=\"addTransactionModal = false\"></div><div class=\"bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 sm:p-8 relative z-10\" x-transition.scale><div class=\"flex justify-between items-center mb-6\"><h3 class=\"text-xl font-bold text-gray-900\">Catat Transaksi Cepat</h3><button @click=\"addTransactionModal = false\" class=\"text-gray-400 hover:text-gray-600 bg-gray-100 p-2 rounded-full\">✖</button></div><form action=\"/transactions\" method=\"POST\" class=\"space-y-5\" x-data=\"{ type: &#39;expense&#39; }\"><div class=\"flex space-x-2 bg-gray-100 p-1.5 rounded-xl\"><button type=\"button\" @click=\"type = &#39;expense&#39;\" :class=\"type === &#39;expense&#39; ? &#39;bg-white shadow text-red-600 font-bold&#39; : &#39;text-gray-500 font-medium&#39;\" class=\"flex-1 py-2 rounded-lg text-sm transition\">Pengeluaran</button> <button type=\"button\" @click=\"type = &#39;income&#39;\" :class=\"type === &#39;income&#39; ? &#39;bg-white shadow text-emerald-600 font-bold&#39; : &#39;text-gray-500 font-medium&#39;\" class=\"flex-1 py-2 rounded-lg text-sm transition\">Pemasukan</button></div><input type=\"hidden\" name=\"type\" x-model=\"type\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Nominal (Rp)</label> <input type=\"number\" name=\"amount\" step=\"0.01\" min=\"1\" placeholder=\"0\" class=\"w-full text-right text-2xl font-bold border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-emerald-500 outline-none transition bg-gray-50\" required></div><div class=\"grid grid-cols-1 sm:grid-cols-2 gap-4\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Dompet</label> <select name=\"wallet_id\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50 outline-none\" required><option value=\"\" disabled selected>Pilih Dompet...</option> ")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		for _, w := range wallets {
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<option value=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var19 string
+			templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(w.ID.String())
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 195, Col: 39}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var20 string
+			templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs(w.Name)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 195, Col: 50}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</option>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</select></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Kategori</label> <select name=\"category\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50 outline-none\" required><option value=\"\" disabled selected>Pilih Kategori...</option> ")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		for _, c := range categories {
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<option x-show=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var21 string
+			templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("type === '%s'", c.Type))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 204, Col: 63}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var21))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" value=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var22 string
+			templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.JoinStringErrs(c.Name)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 204, Col: 80}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var22))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var23 string
+			templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs(c.Name)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 204, Col: 91}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</option>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</select></div></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Keterangan Singkat</label> <input type=\"text\" name=\"description\" placeholder=\"Beli apa / dari siapa?\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50 focus:border-emerald-500 outline-none\" required></div><button type=\"submit\" class=\"w-full mt-4 flex justify-center items-center bg-gray-900 hover:bg-black text-white font-bold py-3.5 px-4 rounded-xl transition shadow-lg text-lg\">Simpan Transaksi</button></form></div></div><!-- MODAL: Tambah Kategori --><div x-cloak x-show=\"addCategoryModal\" class=\"fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0\" x-transition.opacity><div class=\"fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm\" @click=\"addCategoryModal = false\"></div><div class=\"bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 relative z-10\" x-transition.scale><div class=\"flex justify-between items-center mb-4\"><h3 class=\"text-lg font-bold text-gray-900\">Tambah Kategori Baru</h3><button @click=\"addCategoryModal = false\" class=\"text-gray-400 hover:text-gray-600\">✖</button></div><form action=\"/categories\" method=\"POST\" class=\"space-y-4\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Nama Kategori</label> <input type=\"text\" name=\"name\" placeholder=\"e.g. Servis Motor\" required class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-purple-500 outline-none\"></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Tipe Kategori</label> <select name=\"type\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required><option value=\"expense\">Pengeluaran</option> <option value=\"income\">Pemasukan</option></select></div><button type=\"submit\" class=\"w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition\">Simpan Kategori</button></form></div></div><!-- MODAL: Tambah Dompet --><div x-cloak x-show=\"addWalletModal\" class=\"fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0\" x-transition.opacity><div class=\"fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm\" @click=\"addWalletModal = false\"></div><div class=\"bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 relative z-10\" x-transition.scale><div class=\"flex justify-between items-center mb-4\"><h3 class=\"text-lg font-bold text-gray-900\">Tambah Dompet Baru</h3><button @click=\"addWalletModal = false\" class=\"text-gray-400 hover:text-gray-600\">✖</button></div><form action=\"/wallets\" method=\"POST\" class=\"space-y-4\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Nama Dompet</label> <input type=\"text\" name=\"name\" required class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-blue-500 outline-none\"></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Tipe</label> <select name=\"type\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required><option value=\"cash\">Uang Tunai (Cash)</option> <option value=\"bank\">Rekening Bank</option> <option value=\"ewallet\">E-Wallet (Gopay/OVO)</option></select></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Saldo Awal (Rp)</label> <input type=\"number\" name=\"balance\" step=\"0.01\" value=\"0\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-blue-500 outline-none\" required></div><button type=\"submit\" class=\"w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition\">Simpan Dompet</button></form></div></div></main></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -53,6 +53,9 @@ func main() {
 
 	// App Dashboard Route (Protected by Auth Middleware)
 	e.GET("/dashboard", handlers.DashboardHandler, appMiddleware.RequireAuth)
+	e.POST("/transactions", handlers.TransactionPOST, appMiddleware.RequireAuth)
+	e.POST("/wallets", handlers.WalletPOST, appMiddleware.RequireAuth)
+	e.POST("/categories", handlers.CategoryPOST, appMiddleware.RequireAuth)
 
 	// Health Check API
 	e.GET("/health", func(c echo.Context) error {

@@ -5,7 +5,12 @@ import (
 	"github.com/cecep-azhar/jurnalumi/internal/models"
 )
 
-templ Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet) {
+// CurrencyFormatter is a helper to format numbers as Rupiah
+func FormatRupiah(amount float64) string {
+	return fmt.Sprintf("Rp %.2f", amount)
+}
+
+templ Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, categories []models.Category, transactions []models.Transaction, liquidBalance float64, totalIncome float64, totalExpense float64) {
 	<!DOCTYPE html>
 	<html lang="id">
 	<head>
@@ -20,185 +25,255 @@ templ Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet)
 	</head>
 	<body class="bg-gray-50 text-gray-900 font-sans antialiased">
 		
-		<!-- Sidebar / Navbar (Simplified for PRD) -->
-		<nav class="bg-emerald-600 text-white p-4 shadow-md flex justify-between items-center">
-			<div class="font-bold text-xl">JurnalUmi</div>
-			<div class="text-sm">
-				<span class="mr-4">Keluarga: { tenant.Name }</span>
+		<nav class="bg-emerald-600 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-40">
+			<div class="font-bold text-xl flex items-center">
+				<svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+				JurnalUmi
+			</div>
+			<div class="text-sm flex items-center space-x-4">
+				<span class="hidden md:inline">Keluarga: <b>{ tenant.Name }</b></span>
 				<span class="font-semibold bg-emerald-700 px-3 py-1 rounded-full">{ user.Name } ({ user.Role })</span>
+				<a href="/logout" class="text-emerald-200 hover:text-white font-semibold flex items-center">
+					<svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+				</a>
 			</div>
 		</nav>
 
-		<main class="max-w-7xl mx-auto p-6 space-y-6" x-data="{ addTransactionModal: false }">
+		<main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6" x-data="{ addTransactionModal: false, addWalletModal: false, addCategoryModal: false }">
 			
 			<!-- Top Metrics -->
 			<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
 				<div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-blue-500">
 					<p class="text-sm text-gray-500 mb-1">Total Saldo Likuid</p>
-					<h3 class="text-2xl font-bold">Rp 4.500.000</h3>
+					<h3 class="text-2xl font-bold">{ FormatRupiah(liquidBalance) }</h3>
 				</div>
 				<div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-emerald-500">
 					<p class="text-sm text-gray-500 mb-1">Pemasukan Bulan Ini</p>
-					<h3 class="text-2xl font-bold">Rp 12.000.000</h3>
+					<h3 class="text-2xl font-bold text-emerald-600">{ FormatRupiah(totalIncome) }</h3>
 				</div>
 				<div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-red-500">
 					<p class="text-sm text-gray-500 mb-1">Pengeluaran Bulan Ini</p>
-					<h3 class="text-2xl font-bold">Rp 8.200.000</h3>
-					<div class="mt-2 text-xs font-semibold text-red-600 bg-red-100 inline-block px-2 py-1 rounded">Over Budget Dapur!</div>
+					<h3 class="text-2xl font-bold text-red-600">{ FormatRupiah(totalExpense) }</h3>
 				</div>
-				<div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-purple-500 relative">
-					<p class="text-sm text-gray-500 mb-1">Sisa Utang Aktif</p>
-					<h3 class="text-2xl font-bold">Rp 15.000.000</h3>
-					<div class="absolute top-2 right-2 flex space-x-1">
-						<span class="w-2 h-2 rounded-full bg-red-500 animate-pulse" title="Jatuh Tempo H-3"></span>
-					</div>
+				<div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-purple-500">
+					<p class="text-sm text-gray-500 mb-1">Sisa Utang (Coming Soon)</p>
+					<h3 class="text-2xl font-bold text-gray-400">Rp 0.00</h3>
 				</div>
 			</div>
 
 			<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-				<!-- Dompet & Aset List -->
-				<div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 col-span-1">
-					<div class="flex justify-between items-center mb-4">
-						<h3 class="font-bold text-lg">Dompet Keluarga</h3>
-						<button class="text-emerald-600 text-sm hover:underline">+ Tambah</button>
-					</div>
-					<div class="space-y-3">
-						for _, w := range wallets {
-							<div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-								<div>
-									<p class="font-semibold">{ w.Name }</p>
-									<p class="text-xs text-gray-500 capitalize">{ w.Type }</p>
+				<!-- Dompet & Kategori Section -->
+				<div class="space-y-6 col-span-1">
+					<!-- Dompet List -->
+					<div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+						<div class="flex justify-between items-center mb-4 border-b pb-2">
+							<h3 class="font-bold text-lg flex items-center">
+								<svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+								Dompet & Bank
+							</h3>
+							<button @click="addWalletModal = true" class="text-emerald-600 text-sm hover:underline font-semibold">+ Tambah</button>
+						</div>
+						<div class="space-y-3">
+							for _, w := range wallets {
+								<div class="flex justify-between items-center p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
+									<div>
+										<p class="font-semibold text-gray-900">{ w.Name }</p>
+										<p class="text-xs text-gray-500 capitalize">{ w.Type }</p>
+									</div>
+									<div class="font-bold text-gray-800">{ FormatRupiah(w.Balance) }</div>
 								</div>
-								<div class="font-bold text-gray-700">Rp { fmt.Sprintf("%.2f", w.Balance) }</div>
-							</div>
-						}
-						<!-- Hardcoded Example if empty -->
-						if len(wallets) == 0 {
-							<div class="text-sm text-gray-500 text-center py-4">Belum ada dompet terdaftar.</div>
-						}
+							}
+							if len(wallets) == 0 {
+								<div class="text-sm text-gray-500 text-center py-4">Belum ada dompet terdaftar.</div>
+							}
+						</div>
 					</div>
 
-					<div class="mt-8 mb-4 border-t pt-4">
-						<h3 class="font-bold text-lg">Aset Logam Mulia</h3>
-					</div>
-					<div class="flex justify-between items-center p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-						<div>
-							<p class="font-semibold text-yellow-800">Emas Antam</p>
-							<p class="text-xs text-yellow-600">10 Gram (24K)</p>
+					<!-- Master Data Kategori -->
+					<div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+						<div class="flex justify-between items-center mb-4 border-b pb-2">
+							<h3 class="font-bold text-lg flex items-center">
+								<svg class="w-5 h-5 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h10M7 12h10m-5 5h5"></path></svg>
+								Kategori Transaksi
+							</h3>
+							<button @click="addCategoryModal = true" class="text-emerald-600 text-sm hover:underline font-semibold">+ Kategori</button>
 						</div>
-						<div class="text-right">
-							<div class="font-bold text-yellow-900">Rp 15.000.000</div>
-							<div class="text-xs text-emerald-600">Live API 🟢</div>
+						<div class="flex flex-wrap gap-2">
+							for _, c := range categories {
+								if c.Type == "expense" {
+									<span class="bg-red-50 text-red-700 border border-red-200 px-3 py-1 rounded-full text-xs font-semibold">{ c.Name }</span>
+								} else {
+									<span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-full text-xs font-semibold">{ c.Name }</span>
+								}
+							}
+							if len(categories) == 0 {
+								<div class="text-sm text-gray-500 text-center py-2">Belum ada kategori diset.</div>
+							}
 						</div>
 					</div>
 				</div>
 
-				<!-- Recent Transactions & Quick Add -->
+				<!-- Recent Transactions -->
 				<div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 col-span-1 lg:col-span-2">
-					<div class="flex justify-between items-center mb-6">
-						<h3 class="font-bold text-lg">Histori Transaksi</h3>
-						<button @click="addTransactionModal = true" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl font-medium shadow transition">
-							+ Catat Transaksi
+					<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 border-b pb-4 gap-4">
+						<h3 class="font-bold text-lg">Histori Transaksi Terakhir</h3>
+						<button @click="addTransactionModal = true" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-md shadow-emerald-200 transition flex items-center w-full sm:w-auto justify-center">
+							<svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+							Catat Transaksi
 						</button>
 					</div>
 
 					<div class="overflow-x-auto">
-						<table class="w-full text-left border-collapse">
+						<table class="w-full text-left border-collapse whitespace-nowrap min-w-full">
 							<thead>
-								<tr class="text-gray-400 text-sm border-b">
+								<tr class="text-gray-400 text-xs uppercase tracking-wider border-b">
 									<th class="pb-3 font-medium">Tanggal</th>
 									<th class="pb-3 font-medium">Kategori</th>
 									<th class="pb-3 font-medium">Keterangan</th>
-									<th class="pb-3 font-medium">Nominal</th>
+									<th class="pb-3 font-medium text-right">Nominal</th>
 								</tr>
 							</thead>
 							<tbody class="text-sm">
-								<tr class="border-b border-gray-50 hover:bg-gray-50 transition">
-									<td class="py-4 text-gray-500">Hari ini, 08:30</td>
-									<td class="py-4"><span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-semibold">Pengeluaran Dapur</span></td>
-									<td class="py-4 text-gray-700">Belanja sayur & lauk pasar</td>
-									<td class="py-4 font-bold text-red-600">- Rp 150.000</td>
-								</tr>
-								<tr class="border-b border-gray-50 hover:bg-gray-50 transition">
-									<td class="py-4 text-gray-500">Kemarin, 19:00</td>
-									<td class="py-4"><span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-semibold">Gaji Suami</span></td>
-									<td class="py-4 text-gray-700">Gaji Bulan September</td>
-									<td class="py-4 font-bold text-emerald-600">+ Rp 12.000.000</td>
-								</tr>
-								<tr class="border-b border-gray-50 hover:bg-gray-50 transition">
-									<td class="py-4 text-gray-500">2 Sep 2026</td>
-									<td class="py-4"><span class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs font-semibold">Cicilan Utang</span></td>
-									<td class="py-4 text-gray-700">Bayar cicilan motor bulan ke-4</td>
-									<td class="py-4 font-bold text-red-600">- Rp 850.000</td>
-								</tr>
+								for _, t := range transactions {
+									<tr class="border-b border-gray-50 hover:bg-gray-50 transition">
+										<td class="py-4 text-gray-500">{ t.TransactionDate.Format("02 Jan 2006, 15:04") }</td>
+										<td class="py-4">
+											if t.Type == "expense" {
+												<span class="bg-red-100 text-red-700 px-2.5 py-1 rounded-lg text-xs font-bold uppercase">{ t.CategoryName }</span>
+											} else {
+												<span class="bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-lg text-xs font-bold uppercase">{ t.CategoryName }</span>
+											}
+										</td>
+										<td class="py-4 text-gray-700 truncate max-w-[200px]">{ t.Description }</td>
+										<td class="py-4 font-bold text-right">
+											if t.Type == "expense" {
+												<span class="text-red-600">- { FormatRupiah(t.Amount) }</span>
+											} else {
+												<span class="text-emerald-600">+ { FormatRupiah(t.Amount) }</span>
+											}
+										</td>
+									</tr>
+								}
+								if len(transactions) == 0 {
+									<tr>
+										<td colspan="4" class="py-8 text-center text-gray-400">Belum ada transaksi bulan ini. Ayo mulai mencatat!</td>
+									</tr>
+								}
 							</tbody>
 						</table>
 					</div>
 				</div>
 			</div>
 
-			<!-- Alpine Modal: Tambah Transaksi -->
-			<div x-cloak x-show="addTransactionModal" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75 backdrop-blur-sm"
-				 x-transition.opacity>
-				<div @click.outside="addTransactionModal = false" class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 relative"
-					 x-transition:enter="transition ease-out duration-300 transform"
-					 x-transition:enter-start="opacity-0 translate-y-4 scale-95"
-					 x-transition:enter-end="opacity-100 translate-y-0 scale-100">
-					
+			<!-- MODAL: Tambah Transaksi -->
+			<div x-cloak x-show="addTransactionModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0" x-transition.opacity>
+				<div class="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm" @click="addTransactionModal = false"></div>
+				<div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 sm:p-8 relative z-10" x-transition.scale>
 					<div class="flex justify-between items-center mb-6">
 						<h3 class="text-xl font-bold text-gray-900">Catat Transaksi Cepat</h3>
-						<button @click="addTransactionModal = false" class="text-gray-400 hover:text-gray-600">✖</button>
+						<button @click="addTransactionModal = false" class="text-gray-400 hover:text-gray-600 bg-gray-100 p-2 rounded-full">✖</button>
 					</div>
 
-					<form action="/transactions" method="POST" class="space-y-4" x-data="{ type: 'expense', amount: '' }">
-						
-						<!-- Tipe Transaksi (Pemasukan / Pengeluaran) -->
-						<div class="flex space-x-2 bg-gray-100 p-1 rounded-xl">
-							<button type="button" @click="type = 'expense'" :class="type === 'expense' ? 'bg-white shadow text-red-600 font-bold' : 'text-gray-500 hover:text-gray-700'" class="flex-1 py-2 rounded-lg text-sm transition">Pengeluaran</button>
-							<button type="button" @click="type = 'income'" :class="type === 'income' ? 'bg-white shadow text-emerald-600 font-bold' : 'text-gray-500 hover:text-gray-700'" class="flex-1 py-2 rounded-lg text-sm transition">Pemasukan</button>
+					<form action="/transactions" method="POST" class="space-y-5" x-data="{ type: 'expense' }">
+						<div class="flex space-x-2 bg-gray-100 p-1.5 rounded-xl">
+							<button type="button" @click="type = 'expense'" :class="type === 'expense' ? 'bg-white shadow text-red-600 font-bold' : 'text-gray-500 font-medium'" class="flex-1 py-2 rounded-lg text-sm transition">Pengeluaran</button>
+							<button type="button" @click="type = 'income'" :class="type === 'income' ? 'bg-white shadow text-emerald-600 font-bold' : 'text-gray-500 font-medium'" class="flex-1 py-2 rounded-lg text-sm transition">Pemasukan</button>
 						</div>
-
 						<input type="hidden" name="type" x-model="type">
 
-						<!-- Nominal (Rupiah Masking) -->
 						<div>
-							<label class="block text-sm font-medium text-gray-700 mb-1">Nominal (Rp)</label>
-							<input type="text" x-model="amount" placeholder="0" class="w-full text-right text-2xl font-bold border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-emerald-500 focus:ring-emerald-500 outline-none transition" required>
+							<label class="block text-sm font-bold text-gray-700 mb-1">Nominal (Rp)</label>
+							<input type="number" name="amount" step="0.01" min="1" placeholder="0" class="w-full text-right text-2xl font-bold border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-emerald-500 outline-none transition bg-gray-50" required>
 						</div>
 
-						<div class="grid grid-cols-2 gap-4">
+						<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 							<div>
-								<label class="block text-sm font-medium text-gray-700 mb-1">Dompet</label>
-								<select name="wallet_id" class="w-full border-2 border-gray-200 rounded-xl px-3 py-2 bg-white" required>
-									<option value="">Pilih Dompet...</option>
-									<option value="1">BCA Suami</option>
-									<option value="2">Uang Tunai Istri</option>
+								<label class="block text-sm font-bold text-gray-700 mb-1">Dompet</label>
+								<select name="wallet_id" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50 outline-none" required>
+									<option value="" disabled selected>Pilih Dompet...</option>
+									for _, w := range wallets {
+										<option value={ w.ID.String() }>{ w.Name }</option>
+									}
 								</select>
 							</div>
 							<div>
-								<label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
-								<select name="category" class="w-full border-2 border-gray-200 rounded-xl px-3 py-2 bg-white" required>
-									<option x-show="type === 'expense'" value="dapur">Belanja Dapur</option>
-									<option x-show="type === 'expense'" value="listrik">Listrik & Air</option>
-									<option x-show="type === 'expense'" value="jajan">Jajan & Hiburan</option>
-									<option x-show="type === 'income'" value="gaji">Gaji Utama</option>
-									<option x-show="type === 'income'" value="bonus">Bonus / Sampingan</option>
+								<label class="block text-sm font-bold text-gray-700 mb-1">Kategori</label>
+								<select name="category" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50 outline-none" required>
+									<option value="" disabled selected>Pilih Kategori...</option>
+									for _, c := range categories {
+										<option x-show={ fmt.Sprintf("type === '%s'", c.Type) } value={ c.Name }>{ c.Name }</option>
+									}
 								</select>
 							</div>
 						</div>
 
 						<div>
-							<label class="block text-sm font-medium text-gray-700 mb-1">Keterangan Singkat</label>
-							<input type="text" name="description" placeholder="Beli apa / dari siapa?" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-emerald-500 outline-none">
+							<label class="block text-sm font-bold text-gray-700 mb-1">Keterangan Singkat</label>
+							<input type="text" name="description" placeholder="Beli apa / dari siapa?" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50 focus:border-emerald-500 outline-none" required>
 						</div>
 
-						<button type="submit" class="w-full mt-4 flex justify-center items-center bg-gray-900 hover:bg-black text-white font-bold py-3 px-4 rounded-xl transition shadow-lg">
+						<button type="submit" class="w-full mt-4 flex justify-center items-center bg-gray-900 hover:bg-black text-white font-bold py-3.5 px-4 rounded-xl transition shadow-lg text-lg">
 							Simpan Transaksi
 						</button>
 					</form>
 				</div>
 			</div>
-			
+
+			<!-- MODAL: Tambah Kategori -->
+			<div x-cloak x-show="addCategoryModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0" x-transition.opacity>
+				<div class="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm" @click="addCategoryModal = false"></div>
+				<div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 relative z-10" x-transition.scale>
+					<div class="flex justify-between items-center mb-4">
+						<h3 class="text-lg font-bold text-gray-900">Tambah Kategori Baru</h3>
+						<button @click="addCategoryModal = false" class="text-gray-400 hover:text-gray-600">✖</button>
+					</div>
+					<form action="/categories" method="POST" class="space-y-4">
+						<div>
+							<label class="block text-sm font-bold text-gray-700 mb-1">Nama Kategori</label>
+							<input type="text" name="name" placeholder="e.g. Servis Motor" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-purple-500 outline-none">
+						</div>
+						<div>
+							<label class="block text-sm font-bold text-gray-700 mb-1">Tipe Kategori</label>
+							<select name="type" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none" required>
+								<option value="expense">Pengeluaran</option>
+								<option value="income">Pemasukan</option>
+							</select>
+						</div>
+						<button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition">Simpan Kategori</button>
+					</form>
+				</div>
+			</div>
+
+			<!-- MODAL: Tambah Dompet -->
+			<div x-cloak x-show="addWalletModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0" x-transition.opacity>
+				<div class="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm" @click="addWalletModal = false"></div>
+				<div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 relative z-10" x-transition.scale>
+					<div class="flex justify-between items-center mb-4">
+						<h3 class="text-lg font-bold text-gray-900">Tambah Dompet Baru</h3>
+						<button @click="addWalletModal = false" class="text-gray-400 hover:text-gray-600">✖</button>
+					</div>
+					<form action="/wallets" method="POST" class="space-y-4">
+						<div>
+							<label class="block text-sm font-bold text-gray-700 mb-1">Nama Dompet</label>
+							<input type="text" name="name" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-blue-500 outline-none">
+						</div>
+						<div>
+							<label class="block text-sm font-bold text-gray-700 mb-1">Tipe</label>
+							<select name="type" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none" required>
+								<option value="cash">Uang Tunai (Cash)</option>
+								<option value="bank">Rekening Bank</option>
+								<option value="ewallet">E-Wallet (Gopay/OVO)</option>
+							</select>
+						</div>
+						<div>
+							<label class="block text-sm font-bold text-gray-700 mb-1">Saldo Awal (Rp)</label>
+							<input type="number" name="balance" step="0.01" value="0" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-blue-500 outline-none" required>
+						</div>
+						<button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition">Simpan Dompet</button>
+					</form>
+				</div>
+			</div>
+
 		</main>
 	</body>
 	</html>

@@ -101,6 +101,21 @@ func RegisterPOST(c echo.Context) error {
 	}
 	tx.Create(&defaultWallet)
 
+	// Seed Default Categories for Family
+	defaultCategories := []models.Category{
+		{TenantID: tenant.ID, Type: "expense", Name: "Belanja Dapur", Color: "red"},
+		{TenantID: tenant.ID, Type: "expense", Name: "Listrik & Air", Color: "yellow"},
+		{TenantID: tenant.ID, Type: "expense", Name: "Transport & Bensin", Color: "blue"},
+		{TenantID: tenant.ID, Type: "expense", Name: "Jajan & Hiburan", Color: "purple"},
+		{TenantID: tenant.ID, Type: "expense", Name: "Sosial & Zakat", Color: "emerald"},
+		{TenantID: tenant.ID, Type: "income", Name: "Gaji Utama", Color: "emerald"},
+		{TenantID: tenant.ID, Type: "income", Name: "Bonus / THR", Color: "blue"},
+		{TenantID: tenant.ID, Type: "income", Name: "Hasil Sampingan", Color: "purple"},
+	}
+	for _, cat := range defaultCategories {
+		tx.Create(&cat)
+	}
+
 	tx.Commit()
 
 	// Auto-login session after register

@@ -29,6 +29,7 @@ func InitDB(dsn string) {
 	err = DB.AutoMigrate(
 		&models.Tenant{},
 		&models.User{},
+		&models.Category{},
 		&models.Wallet{},
 		&models.CommodityAsset{},
 		&models.Debt{},

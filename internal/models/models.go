@@ -22,14 +22,23 @@ type Tenant struct {
 	Users         []User    `gorm:"foreignKey:TenantID" json:"users,omitempty"`
 }
 
-// User represents family members (Husband, Wife, Child, Auditor)
+// User represents family members
 type User struct {
 	Base
 	TenantID     uuid.UUID `gorm:"type:uuid;not null;index" json:"tenant_id"`
 	Name         string    `gorm:"size:255;not null" json:"name"`
 	Email        string    `gorm:"size:255;uniqueIndex;not null" json:"email"`
 	PasswordHash string    `gorm:"size:255;not null" json:"-"`
-	Role         string    `gorm:"size:50;default:'member'" json:"role"` // owner, spouse, member, auditor
+	Role         string    `gorm:"size:50;default:'member'" json:"role"`
+}
+
+// Category represents Transaction Categories (Master Data)
+type Category struct {
+	Base
+	TenantID uuid.UUID `gorm:"type:uuid;not null;index" json:"tenant_id"`
+	Type     string    `gorm:"size:50;not null" json:"type"` // income, expense
+	Name     string    `gorm:"size:255;not null" json:"name"`
+	Color    string    `gorm:"size:50;default:'gray'" json:"color"`
 }
 
 // Wallet represents Bank, Cash, or E-Wallet accounts
@@ -37,15 +46,29 @@ type Wallet struct {
 	Base
 	TenantID uuid.UUID `gorm:"type:uuid;not null;index" json:"tenant_id"`
 	Name     string    `gorm:"size:255;not null" json:"name"`
-	Type     string    `gorm:"size:50;not null" json:"type"` // cash, bank, ewallet, investment
+	Type     string    `gorm:"size:50;not null" json:"type"` 
 	Balance  float64   `gorm:"type:numeric(18,2);default:0.00" json:"balance"`
+}
+
+// Transaction represents financial ledger items
+type Transaction struct {
+	Base
+	TenantID        uuid.UUID `gorm:"type:uuid;not null;index" json:"tenant_id"`
+	UserID          uuid.UUID `gorm:"type:uuid;not null;index" json:"user_id"`
+	WalletID        uuid.UUID `gorm:"type:uuid;not null;index" json:"wallet_id"`
+	CategoryID      *uuid.UUID `gorm:"type:uuid;index" json:"category_id"` // Link to Category DB
+	Type            string    `gorm:"size:50;not null" json:"type"` 
+	CategoryName    string    `gorm:"size:100;not null" json:"category_name"` // Legacy / Denormalized
+	Amount          float64   `gorm:"type:numeric(18,2);not null" json:"amount"`
+	Description     string    `gorm:"type:text" json:"description"`
+	TransactionDate time.Time `json:"transaction_date"`
 }
 
 // CommodityAsset represents Gold, Dinar, Perak
 type CommodityAsset struct {
 	Base
 	TenantID     uuid.UUID `gorm:"type:uuid;not null;index" json:"tenant_id"`
-	Type         string    `gorm:"size:50;not null" json:"type"` // gold_bar, dinar, dirham, silver
+	Type         string    `gorm:"size:50;not null" json:"type"` 
 	Name         string    `gorm:"size:255;not null" json:"name"`
 	WeightGram   float64   `gorm:"type:numeric(10,4);not null" json:"weight_gram"`
 	Karatage     float64   `gorm:"type:numeric(5,2);default:24.00" json:"karatage"`
@@ -57,34 +80,21 @@ type CommodityAsset struct {
 type Debt struct {
 	Base
 	TenantID        uuid.UUID  `gorm:"type:uuid;not null;index" json:"tenant_id"`
-	Type            string     `gorm:"size:50;not null" json:"type"` // debt (utang), receivable (piutang)
+	Type            string     `gorm:"size:50;not null" json:"type"` 
 	Title           string     `gorm:"size:255;not null" json:"title"`
 	Counterparty    string     `gorm:"size:255;not null" json:"counterparty"`
 	TotalAmount     float64    `gorm:"type:numeric(18,2);not null" json:"total_amount"`
 	RemainingAmount float64    `gorm:"type:numeric(18,2);not null" json:"remaining_amount"`
 	InterestRate    float64    `gorm:"type:numeric(5,2);default:0.00" json:"interest_rate"`
 	DueDate         *time.Time `json:"due_date"`
-	Status          string     `gorm:"size:50;default:'active'" json:"status"` // active, paid, defaulted
-}
-
-// Transaction represents financial ledger items
-type Transaction struct {
-	Base
-	TenantID        uuid.UUID `gorm:"type:uuid;not null;index" json:"tenant_id"`
-	UserID          uuid.UUID `gorm:"type:uuid;not null;index" json:"user_id"`
-	WalletID        uuid.UUID `gorm:"type:uuid;not null;index" json:"wallet_id"`
-	Type            string    `gorm:"size:50;not null" json:"type"` // income, expense, transfer
-	Category        string    `gorm:"size:100;not null" json:"category"`
-	Amount          float64   `gorm:"type:numeric(18,2);not null" json:"amount"`
-	Description     string    `gorm:"type:text" json:"description"`
-	TransactionDate time.Time `json:"transaction_date"`
+	Status          string     `gorm:"size:50;default:'active'" json:"status"` 
 }
 
 // Voucher represents promotional / activation codes
 type Voucher struct {
 	Base
 	Code      string     `gorm:"size:100;uniqueIndex;not null" json:"code"`
-	Duration  int        `gorm:"not null;default:30" json:"duration_days"` // e.g. 30 days
+	Duration  int        `gorm:"not null;default:30" json:"duration_days"` 
 	IsUsed    bool       `gorm:"default:false" json:"is_used"`
 	UsedBy    *uuid.UUID `gorm:"type:uuid" json:"used_by"`
 	UsedAt    *time.Time `json:"used_at"`
