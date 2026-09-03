@@ -190,14 +190,28 @@ sequenceDiagram
 
 ## 7. SAAS SUBSCRIPTION & BILLING ARCHITECTURE
 
-### 7.1 Tiering Plan SaaS
-1. **Free Family Tier (Starter):** Max 1 Account, Max 2 Users, Basic Expense & Income, Manual Gold Price.
-2. **Pro Family Tier (Household Standard):** Multi-User Couple Sync, Auto Gold/Dinar Real-time Price, Unlimited Accounts, Debt Snowball Calculator, Email Reminders.
-3. **Enterprise / Financial Consultant Tier:** Konsultan Keuangan memantau hingga 20 Tenant Keluarga.
+### 7.1 Tiering Plan SaaS & Pricing Model
+1. **Paket Free Always (Selamanya Gratis - Dengan Limit):**
+   - Rp 0 / bulan.
+   - Limit: Max 1 Akun Dompet (Cash/Bank), Max 50 Transaksi/bulan, Max 1 User (Kepala Keluarga).
+   - Akses: Fitur Pemasukan, Pengeluaran, & Ringkasan Sederhana. Tanpa Notifikasi Email & Tanpa Tracker Logam Mulia.
+2. **Paket Premium Household (Akses Penuh Tanpa Batas):**
+   - **Harga:** Rp 39.000 / bulan (atau Rp 390.000 / tahun).
+   - Features: Unlimited Wallets & Transactions, Multi-User Couple Sync (Suami + Istri), Emas/Dinar/Perak Real-time Valuation Engine, Debt Snowball Calculator, Sinking Funds & Emergency Fund Health Score, Email Reminders (SMTP), Backup & PDF Reports Export.
 
-### 7.2 Midtrans / Stripe Integration Flow
-- Langganan bulanan/tahunan via Payment Gateway.
-- Auto-activation & Expiry Management via Webhooks.
+### 7.2 System Pembayaran & Aktivasi (Mayar.id + Voucher Generator Engine)
+- **Opsi 1: Integrasi Mayar.id Payment Gateway:**
+  - Direct Checkout Link via Mayar.id API / Payment Link.
+  - Automasi Webhook Callback: Event `payment.success` otomatis mengubah `tenants.plan` dari `free` menjadi `premium` dan mengaktifkan masa berlaku 30 hari.
+- **Opsi 2: Systems Voucher Code / Activation Key:**
+  - Super Admin dapat generate Unique Voucher Code (misal: `JURNALUMI-39K-XXXXXX`).
+  - Form Redemption Voucher di Dashboard Tenant untuk aktivasi instan tanpa kartu kredit/E-Wallet.
+
+### 7.3 Spesifikasi Landing Page (Conversion-Focused)
+- **Hero Section:** Headline emosional & solutif ("Bebaskan Keluarga dari Stress Keuangan & Utang"). Call-to-Action (CTA): *Coba Gratis Sekarang* / *Langganan Premium Rp 39rb*.
+- **Feature Showcase:** Interactive Preview (Modul Emas/Dinar, Emergency Fund Health Bar, Debt Calculator).
+- **Pricing Matrix:** Komparasi Gratis vs Premium Rp 39rb secara transparan.
+- **Payment Modal:** Pop-up integrasi Mayar.id Checkout & Input Kode Voucher Aktivasi.
 
 ---
 
