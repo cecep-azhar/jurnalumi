@@ -1,90 +1,289 @@
-# Product Requirement Document (PRD)
-## JurnalUmi — Aplikasi Pencatatan & Manajemen Keuangan Rumah Tangga
+# Product Requirement Document (PRD) — Production Ready Specification
+## JurnalUmi — Platform Management Keuangan Rumah Tangga & Multi-Tenant SaaS Keluarga
+
+- **Dokumen Status:** Approved / Production-Ready Specification
+- **Versi:** 2.0.0 (Enterprise / Multi-Tenant SaaS Standard)
+- **Target OS & Infra:** Linux Fedora (Local Dev Podman Container) & Cloud VPS (Coolify Deployment)
+- **Tech Stack Core:** Go 1.22+ | Echo Framework | Templ (Type-Safe HTML SSR) | PostgreSQL 16 | Tailwind CSS v3/v4 | Air (Live Reload)
 
 ---
 
-### 1. RINGKASAN EKSEKUTIF
-**JurnalUmi** adalah aplikasi pencatatan dan pengelolaan keuangan rumah tangga yang dirancang simpel, fungsional, dan fokus pada kejelasan arus kas (cashflow), pertumbuhan aset bersih (net worth), dan pengendalian utang/piutang keluarga. 
-
-Aplikasi ini ditujukan untuk digunakan oleh pasangan/keluarga agar mampu mengontrol kesehatan finansial harian hingga perencanaan masa depan tanpa kerumitan pencatatan akuntansi tradisional.
+## 1. RINGKASAN EKSEKUTIF & VALUE PROPOSITION
+**JurnalUmi** adalah platform SaaS manajemen keuangan rumah tangga yang dirancang untuk memberikan transparansi penuh atas kondisi finansial keluarga. Berbeda dengan aplikasi keuangan generik, JurnalUmi berfokus pada ketahanan finansial riil (*Net Worth & Liquidity Survival*) berbasis budaya dan prinsip keuangan rumah tangga modern serta syariah (pencatatan Emas/Dinar/Perak, zakat/infaq, utang-piutang, serta proteksi dana darurat keluarga).
 
 ---
 
-### 2. TUJUAN PRODUK (PRODUCT GOALS)
-1. **Pencatatan Cepat & Tanpa Beban (Zero Friction):** Memudahkan penginputan transaksi harian dalam kurang dari 5 detik.
-2. **Keterbukaan & Transparansi Finansial:** Visibilitas mutlak atas pemasukan, pengeluaran, utang, dan saldo tabungan riil.
-3. **Peringatan Kesehatan Keuangan (Early Warning System):** Mencegah defisit bulanan dan mendeteksi utang konsumtif yang membahayakan.
-4. **Keamanan Data Keluarga:** Proteksi data sensitif dengan isolasi akun berbasis pasangan/keluarga.
+## 2. SYSTEM ARCHITECTURE & SAAS DESIGN
+
+### 2.1 High-Level Architecture Diagram (Mermaid)
+```
+[ Browser / Mobile PWA (Offline Sync / Cache) ]
+                       │ (HTTP/2 / TLS)
+                       ▼
+             [ Reverse Proxy / Caddy ]
+                       │
+                       ▼
+        ┌──────────────────────────────┐
+        │  Go (Echo) SSR Application   │
+        │ ┌──────────────────────────┐ │
+        │ │  Templ Render Engine     │ │
+        │ └──────────────────────────┘ │
+        │ ┌──────────────────────────┐ │
+        │ │  Auth & Tenant Middleware│ │
+        │ └──────────────────────────┘ │
+        │ ┌──────────────────────────┐ │
+        │ │  Services & Domain Logic │ │
+        │ └──────────────────────────┘ │
+        └──────────────┬───────────────┘
+                       │
+     ┌─────────────────┼─────────────────┐
+     ▼                 ▼                 ▼
+[PostgreSQL 16]   [SMTP / Email]    [Air / Dev Tool]
+(DB Multi-Tenant)  (Transactional)   (Hot Reload)
+```
+
+### 2.2 Multi-Tenancy Architecture (Tenant Isolation)
+- **Model Isolation:** *Discriminator Column Multi-Tenancy* dengan `tenant_id` (Family UUID) pada setiap tabel domain.
+- **Enforcement:** Middleware otomatis menginjeksi `tenant_id` dari Session/JWT Context ke dalam klausa Query (GORM/SQLBuilder Engine).
+- **Tenant Scope:** Setiap Keluarga (Family Account) memiliki ruang isolasi terpisah 100%. Data satu keluarga tidak akan pernah bocor ke keluarga lain.
 
 ---
 
-### 3. FITUR UTAMA & MODUL APLIKASI
+## 3. USER ROLES & HAK AKSES (RBAC)
 
-#### A. Pemasukan (Income Management)
-- **Sumber Pemasukan:**
-  - Pemasukan Utama (Gaji Suami/Istri, Hasil Bisnis).
-  - Pemasukan Sampingan (Project Freelance, Dividen, Hasil Sewa).
-  - Pemasukan Pasif / Non-Rutin (Bonus, THR, Hadiah).
-- **Fitur:** Alokasi otomatis (Skema 50/30/20 atau Custom Budgeting), Rekues penerimaan terjadwal (Tanggal Gaji).
+1. **Super Admin (Platform Owner)**
+   - Mengelola Tenant/Keluarga (SaaS Billing, Activation, Suspension).
+   - Melihat analitik platform global (MRR, Active Tenants, System Metrics).
+   - Pengaturan variabel global (Harga Emas/Dinar/Perak Real-Time via API Provider).
 
-#### B. Pengeluaran (Expense Management)
-- **Kategorisasi Berhierarki (Wajib vs Sukarela):**
-  - **Kebutuhan Rutin (Fixed):** Belanja Dapur, Listrik/Air, Sekolah Anak, Servis Motor, BPJS/Asuransi.
-  - **Keinginan (Variable):** Hiburan, Makan Luar, Jajan, Belanja Hobi.
-  - **Kewajiban Sosial/Agama:** Zakat, Infaq, Sedekah, Uang Orang Tua/Mertua.
-- **Budgeting Limit:** Alokasi batas maksimum per kategori dengan indikator warna (Hijau / Kuning / Merah).
+2. **Family Owner / Kepala Keluarga (Husband/Primary Admin)**
+   - Mengelola Akun Keluarga, menambah/menghapus Anggota Keluarga (Istri/Anak).
+   - Mengatur Alokasi Anggaran Utama (Fixed Expenses, Sinking Funds, Emergency Fund Target).
+   - Full Access: Input, Edit, Delete, Export, dan Pengaturan Utang/Piutang & Aset.
 
-#### C. Utang & Piutang (Debt & Receivable Tracking) — *SANGAT PENTING*
-- **Pencatatan Utang (Debt):**
-  - Utang Bank/Cicilan (KPR, Kredit Motor/Mobil).
-  - Utang Kartu Kredit / Paylater.
-  - Utang Perorangan (Kerabat/Teman).
-  - Fitur: Jadwal jatuh tempo, jumlah sisa pokok, kalkulasi bunga, kalkulator pelunasan (Metode Snowball / Avalanche).
-- **Pencatatan Piutang (Receivable):**
-  - Pinjaman yang diberikan ke orang lain + status penagihan & histori pembayaran.
+3. **Family Co-Owner / Pasangan (Spouse/Wife)**
+   - Full Access input & edit transaksi harian (Pemasukan, Pengeluaran, Pos Belanja Dapur).
+   - Mengelola dompet bersama & laporan belanja harian.
+   - Hak akses setara untuk pencatatan aset bersama.
 
-#### D. Aset & Liabilitas (Net Worth Tracker)
-- **Aset Likuid:** Uang Tunai, Saldo Bank, E-Wallet (Gopay/OVO/ShopeePay).
-- **Aset Investasi & Tabungan:** Emas/Logam Mulia, Reksadana, Saham, Deposito, Dana Darurat.
-- **Aset Fisik:** Kendaraan (Motor/Mobil), Rumah/Tanah, Barang Elektronik Bernilai.
-- **Net Worth Real-Time:** `Total Aset - Total Utang = Kekayaan Bersih Riil`.
+4. **Family Member (Child/Dependents)**
+   - Akses terbatas: Hanya bisa mencatat pengeluaran uang saku pribadi / pos yang ditugaskan.
+   - Tidak bisa melihat detail utang-piutang keluarga atau aset investasi utama.
 
-#### E. Fitur Paling Krusial Rumah Tangga (Essential Core Features)
-1. **Kalkulator & Tracker Dana Darurat (Emergency Fund):**
-   - Menghitung kecukupan dana darurat (idealnya 6-12 bulan pengeluaran rutin).
-   - Menampilkan status keamanan kas jika terjadi PHK / penurunan income mendadak.
-2. **Post-Budget / Sinking Fund (Tabungan Alokasi Khusus):**
-   - Pos dana khusus untuk kebutuhan tahunan (Kurban, Pajak Kendaraan, Mudik Lebaran, Liburan, Renovasi Rumah).
-3. **Multi-User / Akses Bersama Pasangan (Suami-Istri Sync):**
-   - Transaksi yang dicatat Suami atau Istri langsung sinkron real-time dalam satu dompet keluarga.
-
-#### F. Laporan Finansial (Financial Reports)
-- **Laporan Arus Kas (Cash Flow Report):** Pemasukan vs Pengeluaran Bulanan (Surplus/Defisit).
-- **Laporan Kekayaan Bersih (Net Worth Evolution):** Grafik pertumbuhan aset dari bulan ke bulan.
-- **Laporan Breakdown Pengeluaran:** Pie chart persentase konsumsi harian vs investasi.
-- **Ekspor Data:** Export ke PDF & Excel (.xlsx) untuk evaluasi bulanan keluarga.
+5. **Auditor / Financial Planner (Read-Only Viewer)**
+   - Akses Read-Only untuk konsultan keuangan keluarga / penasihat independen.
 
 ---
 
-### 4. ARSITEKTUR TEKNIS & STACK APLIKASI
-- **Backend Framework:** Go 1.22+ (Echo Framework)
-- **Templating / Rendering:** Templ (Type-safe HTML templating for Go) — Pure SSR (Server-Side Rendering)
-- **Database:** PostgreSQL 16+ (Podman Rootless Container)
-- **Styling:** Tailwind CSS v3/v4
-- **Live Reload Dev Tool:** Air (`.air.toml`)
-- **Business Model / Architecture:** SaaS (Multi-Tenant Family Accounts, Role-based Access)
+## 4. DETAILED DOMAIN MODULES & PRODUCTION FEATURES
+
+### 4.1 Modul Pemasukan (Income Management)
+- **Multi-Source Income:** Gaji Rutin, Bonus, Freelance, Hasil Usaha, Bagi Hasil, Dividen, Hasil Sewa.
+- **Recurring Schedule:** Otomatisasi pendaftaran pemasukan rutin bulanan (Auto-Credit Log).
+- **Alokasi Otomatis (Budget Allocation Engine):** Membagi Pemasukan ke Pos:
+  - 50% Kebutuhan Rutin (Needs)
+  - 30% Keinginan / Gaya Hidup (Wants)
+  - 20% Tabungan / Investasi / Proteksi (Savings & Protection)
+
+### 4.2 Modul Pengeluaran (Expense Management)
+- **Hierarki Kategori Multi-Level:** Parent Category -> Sub Category.
+- **Kategori Wajib (Fixed & Mandatory):** Dapur, Listrik, Air, SPP Anak, BPJS/Asuransi, Cicilan Rutin.
+- **Kategori Sosial & Agama:** Zakat Maal, Zakat Fitrah, Infaq/Sedekah, Uang Orang Tua/Mertua.
+- **Kategori Variable & Lifestyle:** Makan Luar, Rekreasi, Belanja Hobi, Langganan Digital.
+- **Real-Time Budget Capping:** Peringatan visual (Warna Hijau <70%, Kuning 70-90%, Merah >90%) jika pengeluaran mendekati limit budget.
+
+### 4.3 Modul Utang & Piutang (Debt & Receivable Engine)
+- **Pencatatan Utang (Liabilities):**
+  - KPR, Kredit Kendaraan, Kartu Kredit, Paylater, Utang Pribadi/Kerabat.
+  - Tracking Parameter: Sisa Pokok, Bunga/Margin (%), Tanggal Jatuh Tempo Bulanan, Tenor Tersisa.
+  - **Kalkulator Strategi Pelunasan Utang:**
+    - *Snowball Method* (Pelunasan dari nominal terkecil).
+    - *Avalanche Method* (Pelunasan dari bunga/margin tertinggi).
+- **Pencatatan Piutang (Receivables):**
+  - Daftar pihak yang meminjam uang keluarga, histori cicilan, & tombol *Send WA/Email Reminder*.
+
+### 4.4 Modul Aset & Komoditas Logam Mulia (Net Worth & Assets)
+- **Aset Likuid:** Kas Tunai, Bank (BCA, Mandiri, BRI, dll), E-Wallet (Gopay, OVO, ShopeePay, DANA).
+- **Aset Logam Mulia (Gold & Precious Metals):**
+  - **Pencatatan Emas Batangan (Gram):** Antam, UBS, Galeri24.
+  - **Pencatatan Dinar & Perak (Dirham):** Jumlah keping, karatase, & bobot gram.
+  - **Auto-Valuation Engine:** Integrasi API harga emas/perak harian untuk mengalkulasi nilai bersih dalam Rupiah secara otomatis.
+- **Aset Investasi & Property:** Reksadana, Saham, Deposito, Surat Berharga Negara (SBN), Kendaraan, Properti/Tanah.
+- **Net Worth Real-Time Dashboard:** `Total Seluruh Aset - Total Utang = Net Worth (Kekayaan Bersih Keluarga)`.
+
+### 4.5 Modul Proteksi & Dana Darurat (Emergency Fund & Sinking Funds)
+- **Emergency Fund Calculator & Health Score:**
+  - Menghitung rasio kecukupan Dana Darurat berdasarkan status keluarga (Single: 6x, Menikah: 9x, Menikah + Anak: 12x pengeluaran bulanan).
+  - Indikator Status: *Danger (0-3 Bln), Warning (3-6 Bln), Safe (>6 Bln)*.
+- **Sinking Funds (Pos Dana Khusus Masa Depan):**
+  - Pos Kurban, Tax Kendaraan, Mudik Lebaran, Biaya Masuk Sekolah, Liburan Keluarga.
 
 ---
 
-### 5. METRIK KEBERHASILAN (KPI)
-- Waktu pencatatan transaksi < 5 detik.
-- Ketepatan prediksi batas budget mingguan (0% overbudget tanpa notifikasi).
-- Penggunaan aktif bersama oleh 2 user (Suami & Istri) dalam satu dompet keluarga.
+## 5. SEQUENCE DIAGRAMS (WORKFLOW UTAMA)
+
+### 5.1 Sequence: Pencatatan Transaksi & Auto-Calculations
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as Husband / Wife
+    participant PWA as PWA App / Client
+    participant App as Go (Echo) Backend
+    participant DB as PostgreSQL 16
+    participant Email as Email Service (SMTP)
+
+    User->>PWA: Input Transaksi Pengeluaran (e.g. Rp 500.000 - Dapur)
+    PWA->>App: POST /api/v1/expenses (JWT + TenantID)
+    App->>App: Validate Input & Tenant Context
+    App->>DB: INSERT INTO expenses & UPDATE wallets (Transaction)
+    DB-->>App: OK Commit
+    App->>DB: SELECT SUM(expenses) vs Budget Limit
+    DB-->>App: Budget Used = 92% (Over Limit Threshold)
+    App-->>PWA: Render Updated UI (Templ Component) with Warning Badge
+    App->>Email: Send Alert Email "Budget Dapur Mendekati Limit!" (Async Background)
+```
+
+### 5.2 Sequence: Pelunasan Utang & Notification Schedule
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Cron as Air / Background Worker
+    participant DB as PostgreSQL 16
+    participant Email as SMTP Email Engine
+    actor User as Husband / Wife
+
+    Cron->>DB: Scan Debts due in <= 3 Days
+    DB-->>Cron: Return Debt List (Tenant, User Email, Amount)
+    loop Every Due Debt
+        Cron->>Email: Dispatch Transactional Email (Debt Due Reminder)
+        Email-->>User: Deliver Email Notification
+    end
+```
 
 ---
 
-### 6. RENCANA PENGEMBANGAN (ROADMAP)
-- **Fase 1:** Core CRUD Transaction (Income, Expense, Wallet, Categories).
-- **Fase 2:** Debt/Receivable Tracker & Net Worth Calculation.
-- **Fase 3:** Emergency Fund Progress & Multi-User Couple Sync.
-- **Fase 4:** Export PDF Report & PWA Mobile App.
+## 6. NOTIFIKASI EMAIL & PWA (OFFLINE & PROGRESSIVE)
+
+### 6.1 System Notifikasi Email (SMTP Transactional Engine)
+- **Providers Supported:** Resend / Mailgun / SMTP Relay / Mailhog (Local Dev).
+- **Trigger Email Automations:**
+  1. **Debt Due Reminder:** H-3 dan H-1 sebelum tanggal jatuh tempo utang/cicilan.
+  2. **Budget Alert:** Email peringatan ketika pos pengeluaran menembus 80% dan 100%.
+  3. **Monthly Financial Summary:** Laporan PDF bulanan otomatis terkirim setiap tanggal 1.
+  4. **Emergency Fund Alert:** Peringatan jika saldo dana darurat terpakai.
+
+### 6.2 PWA & Offline Capabilities (Progressive Web App)
+- **Web App Manifest (`manifest.json`):** App Name, Custom Icons (192x192, 512x512), Theme Colors, Standalone Mode.
+- **Service Worker (`sw.js`):**
+  - **Network-First Strategy:** Untuk data finansial real-time.
+  - **Cache-First Strategy:** Untuk static assets (CSS, JS, Fonts, Icons).
+  - **Offline Form Queueing (IndexedDB):** Mengingat transaksi saat koneksi terputus dan melakukan auto-sync saat internet kembali terhubung.
+
+---
+
+## 7. SAAS SUBSCRIPTION & BILLING ARCHITECTURE
+
+### 7.1 Tiering Plan SaaS
+1. **Free Family Tier (Starter):** Max 1 Account, Max 2 Users, Basic Expense & Income, Manual Gold Price.
+2. **Pro Family Tier (Household Standard):** Multi-User Couple Sync, Auto Gold/Dinar Real-time Price, Unlimited Accounts, Debt Snowball Calculator, Email Reminders.
+3. **Enterprise / Financial Consultant Tier:** Konsultan Keuangan memantau hingga 20 Tenant Keluarga.
+
+### 7.2 Midtrans / Stripe Integration Flow
+- Langganan bulanan/tahunan via Payment Gateway.
+- Auto-activation & Expiry Management via Webhooks.
+
+---
+
+## 8. TIMELINE PENGEMBANGAN & ROADMAP PRODUCTION
+
+| Fase | Milestones & Deliverables | Durasi Est. | Status |
+|---|---|---|---|
+| **Fase 1** | Setup Go (Echo) Boilerplate, Air, Templ, Docker/Podman PostgreSQL, Base DB Schema | Minggu 1 | Ready to Start |
+| **Fase 2** | Auth, Tenant Middleware, RBAC (Owner/Spouse/Member), Account Management | Minggu 2 | Pending |
+| **Fase 3** | Core Ledger: Income, Expense, Category Hierarchy, Wallet Transfer | Minggu 3 | Pending |
+| **Fase 4** | Advanced Asset Engine: Gold/Dinar/Perak Tracker, Net Worth Calculator | Minggu 4 | Pending |
+| **Fase 5** | Debt & Receivable Management, Snowball Calculator, Emergency Fund Engine | Minggu 5 | Pending |
+| **Fase 6** | PWA Service Worker (Offline Support), Email Notif System (SMTP/Resend) | Minggu 6 | Pending |
+| **Fase 7** | SaaS Billing (Midtrans/Stripe), PDF Export Engine, Production Hardening & Deployment | Minggu 7-8 | Pending |
+
+---
+
+## 9. DATABASE SCHEMA DESIGN (POSTGRESQL 16)
+
+```sql
+-- Multi-Tenant Family Accounts
+CREATE TABLE tenants (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(255) NOT NULL,
+    plan VARCHAR(50) DEFAULT 'free',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Users
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id UUID REFERENCES tenants(id) ON DELETE CASCADE,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL DEFAULT 'member', -- owner, spouse, member, auditor
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Wallets & Accounts
+CREATE TABLE wallets (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id UUID REFERENCES tenants(id) ON DELETE CASCADE,
+    name VARCHAR(255) NOT NULL, -- e.g., Cash, Bank BCA, E-Wallet Gopay
+    type VARCHAR(50) NOT NULL, -- cash, bank, ewallet, investment
+    balance NUMERIC(18, 2) DEFAULT 0.00,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Commodity Assets (Emas, Dinar, Perak)
+CREATE TABLE commodity_assets (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id UUID REFERENCES tenants(id) ON DELETE CASCADE,
+    type VARCHAR(50) NOT NULL, -- gold_bar, dinar, dirham, silver
+    name VARCHAR(255) NOT NULL, -- e.g., Antam 10g, Dinar 1/4
+    weight_gram NUMERIC(10, 4) NOT NULL,
+    karatage NUMERIC(5, 2) DEFAULT 24.00,
+    buy_price NUMERIC(18, 2) NOT NULL,
+    current_value NUMERIC(18, 2) DEFAULT 0.00,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Debts & Receivables
+CREATE TABLE debts (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id UUID REFERENCES tenants(id) ON DELETE CASCADE,
+    type VARCHAR(50) NOT NULL, -- debt (utang), receivable (piutang)
+    title VARCHAR(255) NOT NULL,
+    counterparty VARCHAR(255) NOT NULL, -- Nama Pemberi Utang / Peminjam
+    total_amount NUMERIC(18, 2) NOT NULL,
+    remaining_amount NUMERIC(18, 2) NOT NULL,
+    interest_rate NUMERIC(5, 2) DEFAULT 0.00,
+    due_date DATE,
+    status VARCHAR(50) DEFAULT 'active', -- active, paid, defaulted
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Transactions (Income / Expense / Transfer)
+CREATE TABLE transactions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id UUID REFERENCES tenants(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES users(id) ON DELETE SET NULL,
+    wallet_id UUID REFERENCES wallets(id) ON DELETE CASCADE,
+    type VARCHAR(50) NOT NULL, -- income, expense, transfer
+    category VARCHAR(100) NOT NULL,
+    amount NUMERIC(18, 2) NOT NULL,
+    description TEXT,
+    transaction_date TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+```
+
+---
+*Dokumen PRD Production-Ready ini mengunci standar kualitas teknis JurnalUmi untuk dikembangkan menggunakan Go + Echo + Templ + PostgreSQL.*
