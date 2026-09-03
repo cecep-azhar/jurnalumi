@@ -4,6 +4,8 @@ import (
 	"github.com/a-h/templ"
 	"github.com/labstack/echo/v4"
 
+	"github.com/cecep-azhar/jurnalumi/internal/db"
+	"github.com/cecep-azhar/jurnalumi/internal/middleware"
 	"github.com/cecep-azhar/jurnalumi/internal/models"
 	"github.com/cecep-azhar/jurnalumi/web/views"
 )
@@ -16,22 +18,23 @@ func Render(c echo.Context, component templ.Component) error {
 
 // DashboardHandler handles the rendering of the authenticated dashboard
 func DashboardHandler(c echo.Context) error {
-	// Hardcoded dummy data for PRD UI preview
-	tenant := models.Tenant{
-		Name: "Keluarga Prof. Cecep",
-	}
+	// Extract secure User Context from Middleware Session
+	userCtx := c.Get("user_context").(middleware.UserContext)
 
+	// Fetch Real Tenant Data from DB
+	var tenant models.Tenant
+	db.DB.First(&tenant, "id = ?", userCtx.TenantID)
+
+	// User Object for UI
 	user := models.User{
-		Name: "Cecep Azhar",
-		Role: "Owner",
+		Name: userCtx.Name,
+		Role: userCtx.Role,
 	}
 
-	wallets := []models.Wallet{
-		{Name: "BCA Suami", Type: "bank", Balance: 2500000.00},
-		{Name: "Uang Tunai Istri", Type: "cash", Balance: 1500000.00},
-		{Name: "Gopay Belanja", Type: "ewallet", Balance: 500000.00},
-	}
+	// Fetch Wallets belongs to this Tenant ONLY (Multi-Tenancy Isolation)
+	var wallets []models.Wallet
+	db.DB.Where("tenant_id = ?", userCtx.TenantID).Find(&wallets)
 
-	// Render the Templ view
+	// Render the Templ view with Real Data
 	return Render(c, views.Dashboard(tenant, user, wallets))
 }

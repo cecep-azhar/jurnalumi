@@ -10,6 +10,9 @@ import (
 
 	"github.com/cecep-azhar/jurnalumi/internal/db"
 	"github.com/cecep-azhar/jurnalumi/internal/handlers"
+	appMiddleware "github.com/cecep-azhar/jurnalumi/internal/middleware"
+	"github.com/gorilla/sessions"
+	"github.com/labstack/echo-contrib/session"
 )
 
 func main() {
@@ -23,6 +26,10 @@ func main() {
 	db.InitDB(dsn)
 
 	e := echo.New()
+
+	// Setup Sessions (using secure cookie store)
+	store := sessions.NewCookieStore([]byte("jurnalumi-super-secret-key"))
+	e.Use(session.Middleware(store))
 
 	// Global Middlewares
 	e.Use(middleware.Logger())
@@ -42,9 +49,10 @@ func main() {
 	e.POST("/login", handlers.LoginPOST)
 	e.GET("/register", handlers.RegisterGET)
 	e.POST("/register", handlers.RegisterPOST)
+	e.GET("/logout", handlers.LogoutGET)
 
-	// App Dashboard Route (Renders Templ via Handler)
-	e.GET("/dashboard", handlers.DashboardHandler)
+	// App Dashboard Route (Protected by Auth Middleware)
+	e.GET("/dashboard", handlers.DashboardHandler, appMiddleware.RequireAuth)
 
 	// Health Check API
 	e.GET("/health", func(c echo.Context) error {
