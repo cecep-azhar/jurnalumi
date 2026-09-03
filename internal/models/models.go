@@ -35,10 +35,11 @@ type User struct {
 // Category represents Transaction Categories (Master Data)
 type Category struct {
 	Base
-	TenantID uuid.UUID `gorm:"type:uuid;not null;index" json:"tenant_id"`
-	Type     string    `gorm:"size:50;not null" json:"type"` // income, expense
-	Name     string    `gorm:"size:255;not null" json:"name"`
-	Color    string    `gorm:"size:50;default:'gray'" json:"color"`
+	TenantID   uuid.UUID `gorm:"type:uuid;not null;index" json:"tenant_id"`
+	Type       string    `gorm:"size:50;not null" json:"type"` // income, expense
+	Name       string    `gorm:"size:255;not null" json:"name"`
+	Color      string    `gorm:"size:50;default:'gray'" json:"color"`
+	BudgetLimit float64   `gorm:"type:numeric(18,2);default:0.00" json:"budget_limit"` // Phase 3: Budget Capping
 }
 
 // Wallet represents Bank, Cash, or E-Wallet accounts

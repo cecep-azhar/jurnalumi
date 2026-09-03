@@ -210,6 +210,7 @@ sequenceDiagram
 ### 7.3 Spesifikasi Landing Page (Conversion-Focused)
 - **Hero Section:** Headline emosional & solutif ("Bebaskan Keluarga dari Stress Keuangan & Utang"). Call-to-Action (CTA): *Coba Gratis Sekarang* / *Langganan Premium Rp 39rb*.
 - **Feature Showcase:** Interactive Preview (Modul Emas/Dinar, Emergency Fund Health Bar, Debt Calculator).
+- **Demo Video Section:** Embed YouTube iframe (responsive 16:9, `loading="lazy"`) untuk menampilkan video demo aplikasi. URL video dikonfigurasi via environment variable atau hardcode.
 - **Pricing Matrix:** Komparasi Gratis vs Premium Rp 39rb secara transparan.
 - **Payment Modal:** Pop-up integrasi Mayar.id Checkout & Input Kode Voucher Aktivasi.
 

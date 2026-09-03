@@ -9,6 +9,7 @@ import (
 	"github.com/cecep-azhar/jurnalumi/internal/db"
 	"github.com/cecep-azhar/jurnalumi/internal/middleware"
 	"github.com/cecep-azhar/jurnalumi/internal/models"
+	"github.com/cecep-azhar/jurnalumi/internal/services"
 	"github.com/cecep-azhar/jurnalumi/web/views"
 )
 
@@ -27,7 +28,14 @@ func AssetGET(c echo.Context) error {
 	var assets []models.CommodityAsset
 	db.DB.Where("tenant_id = ?", userCtx.TenantID).Find(&assets)
 
-	return Render(c, views.AssetManagement(tenant, user, assets))
+	// Phase 4: API Provider Integration (Live Gold Pricing)
+	var totalAssetValue float64 = 0.0
+	for i, a := range assets {
+		assets[i].CurrentValue = services.CalculateCommodityValue(a.Type, a.WeightGram, a.Karatage)
+		totalAssetValue += assets[i].CurrentValue
+	}
+
+	return Render(c, views.AssetManagement(tenant, user, assets, totalAssetValue))
 }
 
 // AssetPOST handles adding a new gold/dinar asset
@@ -44,8 +52,8 @@ func AssetPOST(c echo.Context) error {
 	karatage, _ := strconv.ParseFloat(karatageStr, 64)
 	buyPrice, _ := strconv.ParseFloat(buyPriceStr, 64)
 
-	// In real world, we fetch current value from API. For now we use buy_price
-	currentValue := buyPrice 
+	// In real world, we fetch current value from API
+	currentValue := services.CalculateCommodityValue(assetType, weight, karatage)
 
 	asset := models.CommodityAsset{
 		TenantID:     userCtx.TenantID,

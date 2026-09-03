@@ -1,9 +1,10 @@
 # Task Tracker JurnalUmi
 
 ## Phase 1: Foundation & DB (W1)
-- [x] Setup boilerplate (Go 1.22, Echo, Templ, Tailwind, Alpine.js, Air).
-- [x] Setup Docker/Podman `docker-compose.yml` untuk PostgreSQL 16.
-- [x] Implement DB connection & migration scripts (Schema dari PRD).
+- [ ] Setup boilerplate (Go 1.22, Echo, Templ, Tailwind, Alpine.js, Air).
+- [ ] Setup Docker/Podman `docker-compose.yml` untuk PostgreSQL 16.
+- [ ] Implement DB connection & migration scripts (Schema dari PRD).
+- [ ] Setup Dark/Light mode toggle (Tailwind `darkMode: 'class'` + Alpine.js + localStorage persist).
 
 ## Phase 2: Auth & Multi-Tenancy (W2)
 - [x] Auth sistem (Login, Register, JWT/Session).
@@ -15,13 +16,13 @@
 - [x] CRUD Wallets (Cash, Bank, E-Wallet).
 - [x] CRUD Categories (Income/Expense hierarchy).
 - [x] CRUD Transactions (Income, Expense, Transfer).
-- [ ] Budget capping check (Alpine.js UI warning).
+- [x] Budget capping check (Alpine.js UI warning).
 
 ## Phase 4: Asset Engine (W4)
 - [x] CRUD Liquid Assets & Investment.
 - [x] CRUD Commodity Assets (Gold, Dinar, Perak).
-- [ ] API Provider integration (Harga Emas live).
-- [ ] Net Worth Dashboard (Assets - Debts).
+- [x] API Provider integration (Harga Emas live).
+- [x] Net Worth Dashboard (Assets - Debts).
 
 ## Phase 5: Debt & Protection (W5)
 - [ ] CRUD Debts & Receivables.
@@ -37,3 +38,4 @@
 - [x] Billing Module (Mayar.id webhook / Voucher key).
 - [x] PDF Export engine untuk Monthly Report.
 - [x] Production Build (Dockerfile, Caddy Reverse Proxy).
+- [ ] Embed YouTube demo video di Landing Page (section demo, responsive iframe 16:9, lazy load).

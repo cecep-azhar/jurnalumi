@@ -138,11 +138,15 @@ func CategoryPOST(c echo.Context) error {
 
 	name := c.FormValue("name")
 	categoryType := c.FormValue("type")
+	budgetLimitStr := c.FormValue("budget_limit")
+
+	budgetLimit, _ := strconv.ParseFloat(budgetLimitStr, 64)
 
 	category := models.Category{
-		TenantID: userCtx.TenantID,
-		Type:     categoryType,
-		Name:     name,
+		TenantID:    userCtx.TenantID,
+		Type:        categoryType,
+		Name:        name,
+		BudgetLimit: budgetLimit,
 	}
 
 	db.DB.Create(&category)

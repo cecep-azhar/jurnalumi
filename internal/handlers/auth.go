@@ -103,14 +103,14 @@ func RegisterPOST(c echo.Context) error {
 
 	// Seed Default Categories for Family
 	defaultCategories := []models.Category{
-		{TenantID: tenant.ID, Type: "expense", Name: "Belanja Dapur", Color: "red"},
-		{TenantID: tenant.ID, Type: "expense", Name: "Listrik & Air", Color: "yellow"},
-		{TenantID: tenant.ID, Type: "expense", Name: "Transport & Bensin", Color: "blue"},
-		{TenantID: tenant.ID, Type: "expense", Name: "Jajan & Hiburan", Color: "purple"},
-		{TenantID: tenant.ID, Type: "expense", Name: "Sosial & Zakat", Color: "emerald"},
-		{TenantID: tenant.ID, Type: "income", Name: "Gaji Utama", Color: "emerald"},
-		{TenantID: tenant.ID, Type: "income", Name: "Bonus / THR", Color: "blue"},
-		{TenantID: tenant.ID, Type: "income", Name: "Hasil Sampingan", Color: "purple"},
+		{TenantID: tenant.ID, Type: "expense", Name: "Belanja Dapur", Color: "red", BudgetLimit: 2000000},
+		{TenantID: tenant.ID, Type: "expense", Name: "Listrik & Air", Color: "yellow", BudgetLimit: 500000},
+		{TenantID: tenant.ID, Type: "expense", Name: "Transport & Bensin", Color: "blue", BudgetLimit: 500000},
+		{TenantID: tenant.ID, Type: "expense", Name: "Jajan & Hiburan", Color: "purple", BudgetLimit: 500000},
+		{TenantID: tenant.ID, Type: "expense", Name: "Sosial & Zakat", Color: "emerald", BudgetLimit: 250000},
+		{TenantID: tenant.ID, Type: "income", Name: "Gaji Utama", Color: "emerald", BudgetLimit: 0},
+		{TenantID: tenant.ID, Type: "income", Name: "Bonus / THR", Color: "blue", BudgetLimit: 0},
+		{TenantID: tenant.ID, Type: "income", Name: "Hasil Sampingan", Color: "purple", BudgetLimit: 0},
 	}
 	for _, cat := range defaultCategories {
 		tx.Create(&cat)

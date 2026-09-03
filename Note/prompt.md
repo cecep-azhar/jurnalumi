@@ -18,8 +18,13 @@ Anda adalah AI Senior Go Developer. Tugas Anda adalah membangun platform SaaS "J
 2. Buat struktur folder standar (`cmd/`, `internal/handlers/`, `internal/models/`, `internal/db/`, `web/views/`).
 3. Selalu perhatikan aturan **Multi-Tenancy**: Semua query SELECT, UPDATE, DELETE ke tabel domain *wajib* menyertakan `WHERE tenant_id = ?`. Ambil `tenant_id` dari JWT/Session context Echo.
 4. UI harus responsif (Tailwind) dan interaktif tanpa heavy SPA (Gunakan htmx/Alpine.js untuk modal, form mask, dynamic select).
-5. Hapus kode mati. Jangan buat abstraksi jika tidak perlu (YAGNI).
-6. Tulis kode -> Simpan file -> Tandai task di `task.md` menjadi `[x]`.
-7. Lanjut ke task berikutnya sampai selesai.
+5. Landing Page wajib punya section **Demo Video** berisi embed YouTube iframe (responsive `aspect-video`, `loading="lazy"`, dark mode compatible).
+6. Implementasi Dark/Light mode:
+   - Tailwind config: `darkMode: 'class'`.
+   - Alpine.js toggle di state global atau localStorage (`prefers-color-scheme` fallback).
+   - Selalu terapkan Tailwind `dark:` prefix (`bg-white dark:bg-gray-900`, dll) di setiap UI Component Templ.
+6. Hapus kode mati. Jangan buat abstraksi jika tidak perlu (YAGNI).
+7. Tulis kode -> Simpan file -> Tandai task di `task.md` menjadi `[x]`.
+8. Lanjut ke task berikutnya sampai selesai.
 
 **Mulai dengan memverifikasi setup Phase 1 dan melengkapinya.**
