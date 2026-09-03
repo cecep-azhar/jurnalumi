@@ -51,6 +51,11 @@ func main() {
 	e.POST("/register", handlers.RegisterPOST)
 	e.GET("/logout", handlers.LogoutGET)
 
+	// Super Admin Control Panel Routes
+	e.GET("/admin/dashboard", handlers.AdminDashboardGET)
+	e.POST("/admin/tenant/upgrade", handlers.AdminUpgradeTenantPOST)
+	e.POST("/admin/vouchers/generate", handlers.AdminGenerateVoucherPOST)
+
 	// App Dashboard Route (Protected by Auth Middleware)
 	e.GET("/dashboard", handlers.DashboardHandler, appMiddleware.RequireAuth)
 	e.POST("/transactions", handlers.TransactionPOST, appMiddleware.RequireAuth)
