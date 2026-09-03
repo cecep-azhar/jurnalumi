@@ -37,6 +37,12 @@ func main() {
 		return c.File("web/views/landing.html")
 	})
 
+	// Auth Routes
+	e.GET("/login", handlers.LoginGET)
+	e.POST("/login", handlers.LoginPOST)
+	e.GET("/register", handlers.RegisterGET)
+	e.POST("/register", handlers.RegisterPOST)
+
 	// App Dashboard Route (Renders Templ via Handler)
 	e.GET("/dashboard", handlers.DashboardHandler)
 
