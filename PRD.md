@@ -67,10 +67,12 @@ Aplikasi ini ditujukan untuk digunakan oleh pasangan/keluarga agar mampu mengont
 ---
 
 ### 4. ARSITEKTUR TEKNIS & STACK APLIKASI
-- **Backend Framework:** Go (Echo + GORM) / Laravel 11 (Filament v3)
-- **Database:** PostgreSQL (Rootless Container Podman)
-- **Frontend / Mobile UI:** HTMX + Tailwind CSS (Responsive PWA / Mobile Web-first)
-- **Security:** CSRF Protection, Password Hashing (Bcrypt/Argon2), Multi-Tenancy Isolation (Family Account ID).
+- **Backend Framework:** Go 1.22+ (Echo Framework)
+- **Templating / Rendering:** Templ (Type-safe HTML templating for Go) — Pure SSR (Server-Side Rendering)
+- **Database:** PostgreSQL 16+ (Podman Rootless Container)
+- **Styling:** Tailwind CSS v3/v4
+- **Live Reload Dev Tool:** Air (`.air.toml`)
+- **Business Model / Architecture:** SaaS (Multi-Tenant Family Accounts, Role-based Access)
 
 ---
 
