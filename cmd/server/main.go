@@ -9,6 +9,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 
 	"github.com/cecep-azhar/jurnalumi/internal/db"
+	"github.com/cecep-azhar/jurnalumi/internal/handlers"
 )
 
 func main() {
@@ -35,6 +36,9 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		return c.File("web/views/landing.html")
 	})
+
+	// App Dashboard Route (Renders Templ via Handler)
+	e.GET("/dashboard", handlers.DashboardHandler)
 
 	// Health Check API
 	e.GET("/health", func(c echo.Context) error {

@@ -1,8 +1,9 @@
 module github.com/cecep-azhar/jurnalumi
 
-go 1.23.0
+go 1.25.0
 
 require (
+	github.com/a-h/templ v0.3.1020
 	github.com/google/uuid v1.6.0
 	github.com/labstack/echo/v4 v4.13.0
 	gorm.io/driver/postgres v1.5.11
@@ -21,10 +22,10 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
-	golang.org/x/crypto v0.22.0 // indirect
-	golang.org/x/net v0.24.0 // indirect
-	golang.org/x/sync v0.1.0 // indirect
-	golang.org/x/sys v0.19.0 // indirect
-	golang.org/x/text v0.14.0 // indirect
+	golang.org/x/crypto v0.48.0 // indirect
+	golang.org/x/net v0.51.0 // indirect
+	golang.org/x/sync v0.19.0 // indirect
+	golang.org/x/sys v0.41.0 // indirect
+	golang.org/x/text v0.34.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 )
