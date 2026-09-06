@@ -18,8 +18,8 @@ import (
 func main() {
 	dsn := os.Getenv("DATABASE_URL")
 	if dsn == "" {
-		// Port 5433 untuk container pg16
-		dsn = "host=127.0.0.1 user=postgres password=[REDACTED] dbname=jurnalumi port=5433 sslmode=disable"
+		// Port 5432 untuk container utama pg5432
+		dsn = "host=127.0.0.1 user=postgres password=postgres dbname=jurnalumi port=5432 sslmode=disable"
 	}
 
 	// Connect Database & Migrate
