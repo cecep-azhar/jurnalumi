@@ -1,38 +1,71 @@
 # Role & Menu Permission JurnalUmi
 
+- **Diperbarui:** 8 September 2026 — diselaraskan dengan `PRD.md` v3.0.0
+- **Status implementasi:** 🔴 **belum ada sama sekali di kode.** Saat ini hanya ada `RequireAuth` (autentikasi), tanpa satu pun pengecekan role. Dokumen ini adalah spesifikasi target middleware `RequireRole()`, bukan deskripsi kondisi sekarang. Lihat `review.md` temuan S4.
+
+## Aturan Penegakan
+
+1. **Role dicek di server pada setiap handler.** Menyembunyikan menu di UI **bukan** kontrol akses.
+2. Kegagalan otorisasi → HTTP 403 (bukan redirect diam-diam).
+3. `superadmin` adalah user tanpa `tenant_id`, dibuat lewat CLI seeder — **tidak pernah** lewat form publik.
+4. `superadmin` **tidak boleh melihat isi transaksi tenant** — hanya metadata & agregat (nama keluarga, plan, jumlah user, tanggal aktif).
+5. Setiap aksi tulis menulis `audit_logs` (siapa, kapan, entitas apa, dari nilai berapa ke berapa).
+
 ## Roles
 
-1.  **Super Admin (Platform Owner)**
-2.  **Family Owner (Kepala Keluarga / Husband / Primary Admin)**
-3.  **Family Co-Owner (Pasangan / Spouse / Wife)**
-4.  **Family Member (Anak / Dependents)**
-5.  **Auditor / Financial Planner (Viewer)**
+| Kode | Sebutan |
+|---|---|
+| `superadmin` | Platform Owner |
+| `owner` | Kepala Keluarga (Family Owner) |
+| `spouse` | Pasangan (Family Co-Owner) |
+| `member` | Anak / Tanggungan |
+| `auditor` | Perencana Keuangan (Read-Only) |
 
-## Menu & Permissions Mapping
+## Matrix Hak Akses
 
-| Menu / Module | Super Admin | Family Owner | Family Co-Owner | Family Member | Auditor |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Platform Analytics & Settings** |
-| SaaS Billing & Tenant Management | V (Full) | X | X | X | X |
-| Global Variables (Gold/API API) | V (Full) | X | X | X | X |
-| **Family Settings** |
-| Manage Family Members | X | V (Full) | X | X | X |
-| Setup Budget (Fixed, Sinking, Emergency) | X | V (Full) | X | X | X |
-| **Daily Ledger (Income & Expense)** |
-| Input/Edit Income | X | V (Full) | V (Full) | X | V (Read) |
-| Input/Edit Expense | X | V (Full) | V (Full) | V (Limited*) | V (Read) |
-| View Shared Wallets | X | V (Full) | V (Full) | X | V (Read) |
-| **Net Worth & Assets** |
-| View Net Worth Dashboard | X | V (Full) | V (Full) | X | V (Read) |
-| Input/Edit Liquid Assets | X | V (Full) | V (Full) | X | V (Read) |
-| Input/Edit Commodity (Gold/Silver) | X | V (Full) | V (Full) | X | V (Read) |
-| Input/Edit Investments/Property | X | V (Full) | V (Full) | X | V (Read) |
-| **Debt & Receivables** |
-| View Debt/Receivables | X | V (Full) | V (Full) | X | V (Read) |
-| Input/Edit Debt/Receivables | X | V (Full) | X** | X | V (Read) |
-| **Protection & Goals** |
-| Emergency Fund Tracker | X | V (Full) | V (Full) | X | V (Read) |
-| Sinking Funds | X | V (Full) | V (Full) | X | V (Read) |
+**Legend:** `F` = full (lihat/tulis/hapus) · `W` = lihat & tulis, tidak boleh hapus · `R` = read-only · `L` = terbatas · `–` = tidak ada akses
 
-*\* Limited: Hanya bisa input/edit expense pada pos yang ditugaskan (uang saku pribadi).*
-*\*\* Berdasarkan PRD, Family Owner memiliki full access utang/piutang. Co-Owner bisa jadi butuh akses, tapi default PRD menyebutkan Owner yang "Pengaturan Utang/Piutang & Aset Utama". Asumsi Co-Owner read-only atau input-only jika tidak dispesifikasikan eksplisit.*
+| Modul / Aksi | superadmin | owner | spouse | member | auditor |
+|---|:---:|:---:|:---:|:---:|:---:|
+| **Platform** |
+| Kelola tenant, billing, suspensi | F | – | – | – | – |
+| Generate voucher | F | – | – | – | – |
+| Variabel global (sumber harga logam mulia) | F | – | – | – | – |
+| Melihat isi transaksi tenant | – | – | – | – | – |
+| **Pengaturan Keluarga** |
+| Kelola anggota keluarga | – | F | – | – | – |
+| Setel budget per periode | – | F | W | – | R |
+| Setel target dana darurat & sinking fund | – | F | W | – | R |
+| Ubah plan / redeem voucher | – | F | – | – | – |
+| Hapus akun keluarga & ekspor data | – | F | – | – | – |
+| **Ledger Harian** |
+| Catat pemasukan | – | F | F | – | R |
+| Catat pengeluaran | – | F | F | L¹ | R |
+| Edit / hapus transaksi | – | F | W² | L¹ | – |
+| Transfer antar dompet | – | F | F | – | R |
+| Kelola dompet | – | F | F | – | R |
+| Kelola kategori | – | F | F | – | R |
+| Import CSV/Excel | – | F | F | – | – |
+| **Aset & Net Worth** |
+| Dashboard net worth | – | F | F | – | R |
+| Aset likuid & investasi | – | F | F | – | R |
+| Logam mulia (emas/dinar/perak) | – | F | F | – | R |
+| **Utang & Piutang** |
+| Lihat utang & piutang | – | F | F | – | R |
+| Catat utang/piutang & pembayaran | – | F | W³ | – | – |
+| Hapus utang/piutang | – | F | – | – | – |
+| Kalkulator Snowball/Avalanche | – | F | F | – | R |
+| **Proteksi & Tujuan** |
+| Dana darurat & health score | – | F | F | – | R |
+| Sinking funds | – | F | F | – | R |
+| **Syariah** |
+| Kalkulator zakat maal | – | F | F | – | R |
+| **Laporan** |
+| Laporan & ekspor CSV/PDF | – | F | F | L¹ | R |
+| Halaman Aktivitas Keluarga (audit log) | – | F | F | – | R |
+
+### Catatan
+1. **`member` (anak):** hanya pada dompet yang ditugaskan kepadanya (`wallets.assigned_user_id`). Hanya bisa mengedit/menghapus transaksi yang ia buat sendiri, dalam 24 jam. Tidak melihat utang, aset, maupun total keuangan keluarga.
+2. **`spouse` edit/hapus transaksi:** boleh mengedit transaksi mana pun; penghapusan permanen hanya oleh `owner`. Semua perubahan tercatat di audit log.
+3. **`spouse` pada utang/piutang:** *revisi dari versi sebelumnya yang menetapkan read-only.* Alasan: dalam praktik rumah tangga, pasangan yang membayar cicilan harus bisa mencatat pembayarannya. Penghapusan tetap eksklusif `owner` sebagai pengaman.
+4. **`auditor`** tidak pernah bisa menulis apa pun, termasuk komentar. Akses diberikan oleh `owner` dan dapat dicabut kapan saja.
