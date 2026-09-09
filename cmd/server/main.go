@@ -28,7 +28,14 @@ func main() {
 	e := echo.New()
 
 	// Setup Sessions (using secure cookie store)
-	store := sessions.NewCookieStore([]byte("jurnalumi-super-secret-key"))
+	secret := os.Getenv("SESSION_SECRET")
+	if secret == "" {
+		if os.Getenv("APP_ENV") == "production" {
+			log.Fatal("SESSION_SECRET is required in production")
+		}
+		secret = "jurnalumi-super-secret-key"
+	}
+	store := sessions.NewCookieStore([]byte(secret))
 	e.Use(session.Middleware(store))
 
 	// Global Middlewares

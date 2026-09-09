@@ -31,7 +31,7 @@
 
 ### Keamanan
 - [ ] 🔴 Proteksi seluruh route `/admin/*`: middleware auth + role `superadmin` (`main.go:57-59` saat ini terbuka publik)
-- [ ] 🔴 Pindahkan `SESSION_SECRET` ke env; refuse start bila kosong saat `APP_ENV=production` (`main.go:32` hardcoded & ter-commit)
+- [x] 🔴 Pindahkan `SESSION_SECRET` ke env; refuse start bila kosong saat `APP_ENV=production` (`main.go:32` hardcoded & ter-commit)
 - [ ] 🔴 Cookie session: `Secure` + `SameSite=Lax` + rotasi session id saat login
 - [ ] 🔴 Middleware `RequireRole(...)` + terapkan matrix `Role_Permission.md` ke semua route (kini role sama sekali tidak dicek)
 - [ ] 🔴 `middleware.CSRF()` global + hidden token di semua form Templ
