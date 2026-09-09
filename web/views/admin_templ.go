@@ -106,25 +106,103 @@ func AdminDashboard(tenants []models.Tenant, totalTenants int, activeVouchers in
 					return templ_7745c5c3_Err
 				}
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</td><td class=\"py-4 text-right\"><form action=\"/admin/tenant/upgrade\" method=\"POST\" class=\"inline\"><input type=\"hidden\" name=\"tenant_id\" value=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</td><td class=\"py-4 text-right\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var6 string
-			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.ResolveAttributeValue(t.ID.String())
+			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/admin.templ`, Line: 86, Col: 71}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/admin.templ`, Line: 85, Col: 84}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var6)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "\"> <button type=\"submit\" class=\"text-xs bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded transition\">Upgrade ke Premium</button></form></td></tr>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "\"><form action=\"/admin/tenant/upgrade\" method=\"POST\" class=\"inline\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var7 string
+			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/admin.templ`, Line: 87, Col: 77}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var7)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "\"> t\t\t\t<input type=\"hidden\" name=\"csrf_token\" value=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var8 string
+			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/admin.templ`, Line: 88, Col: 77}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var8)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "\"> <input type=\"hidden\" name=\"tenant_id\" value=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var9 string
+			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.ResolveAttributeValue(t.ID.String())
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/admin.templ`, Line: 89, Col: 71}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var9)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "\"> <button type=\"submit\" class=\"text-xs bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded transition\">Upgrade ke Premium</button></form></td></tr>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</tbody></table></div></div><!-- Voucher Engine --><div class=\"bg-gray-800 p-6 rounded-2xl border border-gray-700 col-span-1 h-fit\"><div class=\"flex justify-between items-center mb-4 border-b border-gray-700 pb-2\"><h3 class=\"font-bold text-lg text-white\">Voucher Engine</h3></div><p class=\"text-xs text-gray-400 mb-6\">Generate kode aktivasi offline untuk di-redeem pengguna di halaman depan.</p><button @click=\"generateVoucherModal = true\" class=\"w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-xl shadow-lg transition mb-6\">+ Generate Kode Voucher</button><!-- Log Sistem / Harga Emas Global --><div class=\"mt-8 border-t border-gray-700 pt-4\"><h3 class=\"font-bold text-sm text-gray-300 mb-3\">Sistem Global (Harga Emas)</h3><div class=\"bg-gray-900 p-4 rounded-xl border border-gray-700\"><div class=\"flex justify-between mb-2\"><span class=\"text-gray-400 text-xs\">Antam 24K</span> <span class=\"text-yellow-500 text-xs font-bold\">Rp 1.450.000 / gr</span></div><div class=\"flex justify-between\"><span class=\"text-gray-400 text-xs\">Dinar 22K</span> <span class=\"text-yellow-500 text-xs font-bold\">Rp 4.250.000 / dinar</span></div><button class=\"w-full mt-3 text-xs bg-gray-700 hover:bg-gray-600 text-white py-2 rounded transition\">Update Manual via API</button></div></div></div></div><!-- MODAL: Generate Voucher --><div x-cloak x-show=\"generateVoucherModal\" class=\"fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0\" x-transition.opacity><div class=\"fixed inset-0 bg-black bg-opacity-75 backdrop-blur-sm\" @click=\"generateVoucherModal = false\"></div><div class=\"bg-gray-800 rounded-2xl shadow-2xl max-w-sm w-full p-6 relative z-10 border border-gray-700\" x-transition.scale><div class=\"flex justify-between items-center mb-6\"><h3 class=\"text-lg font-bold text-white\">Buat Voucher Premium</h3><button @click=\"generateVoucherModal = false\" class=\"text-gray-500 hover:text-gray-300\">✖</button></div><form action=\"/admin/vouchers/generate\" method=\"POST\" class=\"space-y-4\"><div><label class=\"block text-xs font-bold text-gray-400 mb-1\">Prefix Kode (Opsional)</label> <input type=\"text\" name=\"prefix\" value=\"JURNALUMI-\" class=\"w-full bg-gray-900 border-2 border-gray-700 text-white rounded-xl px-4 py-2 focus:border-purple-500 outline-none uppercase font-mono\"></div><div><label class=\"block text-xs font-bold text-gray-400 mb-1\">Durasi Aktif (Hari)</label> <select name=\"duration\" class=\"w-full bg-gray-900 border-2 border-gray-700 text-white rounded-xl px-4 py-2 outline-none\" required><option value=\"30\">1 Bulan (30 Hari)</option> <option value=\"365\">1 Tahun (365 Hari)</option> <option value=\"9999\">Selamanya (Lifetime)</option></select></div><button type=\"submit\" class=\"w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-xl transition mt-4\">Generate Voucher</button></form></div></div></main></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</tbody></table></div></div><!-- Voucher Engine --><div class=\"bg-gray-800 p-6 rounded-2xl border border-gray-700 col-span-1 h-fit\"><div class=\"flex justify-between items-center mb-4 border-b border-gray-700 pb-2\"><h3 class=\"font-bold text-lg text-white\">Voucher Engine</h3></div><p class=\"text-xs text-gray-400 mb-6\">Generate kode aktivasi offline untuk di-redeem pengguna di halaman depan.</p><button @click=\"generateVoucherModal = true\" class=\"w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-xl shadow-lg transition mb-6\">+ Generate Kode Voucher</button><!-- Log Sistem / Harga Emas Global --><div class=\"mt-8 border-t border-gray-700 pt-4\"><h3 class=\"font-bold text-sm text-gray-300 mb-3\">Sistem Global (Harga Emas)</h3><div class=\"bg-gray-900 p-4 rounded-xl border border-gray-700\"><div class=\"flex justify-between mb-2\"><span class=\"text-gray-400 text-xs\">Antam 24K</span> <span class=\"text-yellow-500 text-xs font-bold\">Rp 1.450.000 / gr</span></div><div class=\"flex justify-between\"><span class=\"text-gray-400 text-xs\">Dinar 22K</span> <span class=\"text-yellow-500 text-xs font-bold\">Rp 4.250.000 / dinar</span></div><button class=\"w-full mt-3 text-xs bg-gray-700 hover:bg-gray-600 text-white py-2 rounded transition\">Update Manual via API</button></div></div></div></div><!-- MODAL: Generate Voucher --><div x-cloak x-show=\"generateVoucherModal\" class=\"fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0\" x-transition.opacity><div class=\"fixed inset-0 bg-black bg-opacity-75 backdrop-blur-sm\" @click=\"generateVoucherModal = false\"></div><div class=\"bg-gray-800 rounded-2xl shadow-2xl max-w-sm w-full p-6 relative z-10 border border-gray-700\" x-transition.scale><div class=\"flex justify-between items-center mb-6\"><h3 class=\"text-lg font-bold text-white\">Buat Voucher Premium</h3><button @click=\"generateVoucherModal = false\" class=\"text-gray-500 hover:text-gray-300\">✖</button></div><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var10 string
+		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/admin.templ`, Line: 137, Col: 78}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var10)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "\"><form action=\"/admin/vouchers/generate\" method=\"POST\" class=\"space-y-4\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var11 string
+		templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/admin.templ`, Line: 139, Col: 77}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var11)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "\"> t\t\t\t<input type=\"hidden\" name=\"csrf_token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var12 string
+		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/admin.templ`, Line: 140, Col: 77}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var12)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "\"><div><label class=\"block text-xs font-bold text-gray-400 mb-1\">Prefix Kode (Opsional)</label> <input type=\"text\" name=\"prefix\" value=\"JURNALUMI-\" class=\"w-full bg-gray-900 border-2 border-gray-700 text-white rounded-xl px-4 py-2 focus:border-purple-500 outline-none uppercase font-mono\"></div><div><label class=\"block text-xs font-bold text-gray-400 mb-1\">Durasi Aktif (Hari)</label> <select name=\"duration\" class=\"w-full bg-gray-900 border-2 border-gray-700 text-white rounded-xl px-4 py-2 outline-none\" required><option value=\"30\">1 Bulan (30 Hari)</option> <option value=\"365\">1 Tahun (365 Hari)</option> <option value=\"9999\">Selamanya (Lifetime)</option></select></div><button type=\"submit\" class=\"w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-xl transition mt-4\">Generate Voucher</button></form></div></div></main></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

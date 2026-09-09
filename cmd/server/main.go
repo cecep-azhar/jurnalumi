@@ -41,11 +41,24 @@ func main() {
 	// Global Middlewares
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-	e.Use(middleware.CORS())
+	e.Use(middleware.SecureWithConfig(middleware.SecureConfig{
+		XSSProtection:         "1; mode=block",
+		ContentTypeNosniff:    "nosniff",
+		XFrameOptions:         "SAMEORIGIN",
+		HSTSMaxAge:            31536000,
+		HSTSExcludeSubdomains: false,
+		ContentSecurityPolicy: "default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; img-src 'self' data: https:; font-src 'self' data:; frame-ancestors 'self';",
+		ReferrerPolicy:        "strict-origin-when-cross-origin",
+	}))
+	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
+		TokenLookup: "form:csrf_token",
+	}))
 
 	// Static Files
 	e.Static("/static", "web/static")
 
+	rateLimiter := middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(5))
+	
 	// Landing Page Route
 	e.GET("/", func(c echo.Context) error {
 		return c.File("web/views/landing.html")
@@ -53,9 +66,9 @@ func main() {
 
 	// Auth Routes
 	e.GET("/login", handlers.LoginGET)
-	e.POST("/login", handlers.LoginPOST)
+	e.POST("/login", handlers.LoginPOST, rateLimiter)
 	e.GET("/register", handlers.RegisterGET)
-	e.POST("/register", handlers.RegisterPOST)
+	e.POST("/register", handlers.RegisterPOST, rateLimiter)
 	e.GET("/logout", handlers.LogoutGET)
 
 	adminGroup := e.Group("/admin")
@@ -69,24 +82,24 @@ func main() {
 
 	// App Dashboard Route (Protected by Auth Middleware)
 	e.GET("/dashboard", handlers.DashboardHandler, appMiddleware.RequireAuth)
-	e.POST("/transactions", handlers.TransactionPOST, appMiddleware.RequireAuth)
-	e.POST("/wallets", handlers.WalletPOST, appMiddleware.RequireAuth)
-	e.POST("/categories", handlers.CategoryPOST, appMiddleware.RequireAuth)
+	e.POST("/transactions", handlers.TransactionPOST, appMiddleware.RequireAuth, appMiddleware.RequireRole("owner", "spouse", "member"))
+	e.POST("/wallets", handlers.WalletPOST, appMiddleware.RequireAuth, appMiddleware.RequireRole("owner", "spouse"))
+	e.POST("/categories", handlers.CategoryPOST, appMiddleware.RequireAuth, appMiddleware.RequireRole("owner", "spouse"))
 
 	// Extended Features Routes (Protected)
 	e.GET("/assets", handlers.AssetGET, appMiddleware.RequireAuth)
-	e.POST("/assets", handlers.AssetPOST, appMiddleware.RequireAuth)
+	e.POST("/assets", handlers.AssetPOST, appMiddleware.RequireAuth, appMiddleware.RequireRole("owner", "spouse"))
 
 	// Phase 5: Debt & Protection Routes (Protected)
 	e.GET("/debts", handlers.DebtGET, appMiddleware.RequireAuth)
-	e.POST("/debts", handlers.DebtPOST, appMiddleware.RequireAuth)
-	e.POST("/debts/pay", handlers.DebtPayPOST, appMiddleware.RequireAuth)
+	e.POST("/debts", handlers.DebtPOST, appMiddleware.RequireAuth, appMiddleware.RequireRole("owner", "spouse"))
+	e.POST("/debts/pay", handlers.DebtPayPOST, appMiddleware.RequireAuth, appMiddleware.RequireRole("owner", "spouse"))
 
 	e.GET("/reports", handlers.ReportGET, appMiddleware.RequireAuth)
-	e.GET("/reports/export", handlers.ReportExportCSV, appMiddleware.RequireAuth)
+	e.GET("/reports/export", handlers.ReportExportCSV, appMiddleware.RequireAuth, appMiddleware.RequireRole("owner", "spouse", "member", "auditor"))
 
 	e.GET("/family", handlers.FamilyGET, appMiddleware.RequireAuth)
-	e.POST("/family", handlers.FamilyPOST, appMiddleware.RequireAuth)
+	e.POST("/family", handlers.FamilyPOST, appMiddleware.RequireAuth, appMiddleware.RequireRole("owner", "spouse"))
 
 	// Static files for PWA (Phase 6)
 	e.Static("/static", "web/static")

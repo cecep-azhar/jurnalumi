@@ -174,7 +174,10 @@ templ Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet,
 						<button @click="addTransactionModal = false" class="text-gray-400 hover:text-gray-600 bg-gray-100 p-2 rounded-full">✖</button>
 					</div>
 
-					<form action="/transactions" method="POST" class="space-y-5" x-data="{ type: 'expense' }">
+					<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+<form action="/transactions" method="POST" class="space-y-5" x-data="{ type: 'expense' }">
+				<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+t			<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
 						<div class="flex space-x-2 bg-gray-100 p-1.5 rounded-xl">
 							<button type="button" @click="type = 'expense'" :class="type === 'expense' ? 'bg-white shadow text-red-600 font-bold' : 'text-gray-500 font-medium'" class="flex-1 py-2 rounded-lg text-sm transition">Pengeluaran</button>
 							<button type="button" @click="type = 'income'" :class="type === 'income' ? 'bg-white shadow text-emerald-600 font-bold' : 'text-gray-500 font-medium'" class="flex-1 py-2 rounded-lg text-sm transition">Pemasukan</button>
@@ -227,7 +230,10 @@ templ Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet,
 						<h3 class="text-lg font-bold text-gray-900">Tambah Kategori Baru</h3>
 						<button @click="addCategoryModal = false" class="text-gray-400 hover:text-gray-600">✖</button>
 					</div>
-					<form action="/categories" method="POST" class="space-y-4">
+					<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+<form action="/categories" method="POST" class="space-y-4">
+				<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+t			<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
 						<div>
 							<label class="block text-sm font-bold text-gray-700 mb-1">Nama Kategori</label>
 							<input type="text" name="name" placeholder="e.g. Servis Motor" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-purple-500 outline-none">
@@ -252,7 +258,10 @@ templ Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet,
 						<h3 class="text-lg font-bold text-gray-900">Tambah Dompet / Tabungan</h3>
 						<button @click="addWalletModal = false" class="text-gray-400 hover:text-gray-600">✖</button>
 					</div>
-					<form action="/wallets" method="POST" class="space-y-4">
+					<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+<form action="/wallets" method="POST" class="space-y-4">
+				<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+t			<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
 						<div>
 							<label class="block text-sm font-bold text-gray-700 mb-1">Nama Dompet</label>
 							<input type="text" name="name" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-blue-500 outline-none">
