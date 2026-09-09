@@ -66,3 +66,8 @@ PR: https://github.com/cecep-azhar/jurnalumi/pull/17
 Status: QA-P0-16 dikerjakan, PR terbuka
 Ringkasan: Menghapus duplikasi deklarasi `e.Static("/static", ...)` di `cmd/server/main.go`. Verifikasi kompilasi dan generation berhasil.
 PR: https://github.com/cecep-azhar/jurnalumi/pull/18
+
+### $(date '+%Y-%m-%d %H:%M WIB') — QA-P0-15
+Status: QA-P0-15 dikerjakan, PR terbuka
+Ringkasan: Membuat `.env.example` dan `README.md` dengan instruksi menjalankan secara lokal. `go build` lulus.
+PR: https://github.com/cecep-azhar/jurnalumi/pull/19
