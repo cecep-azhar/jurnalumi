@@ -44,7 +44,7 @@
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
 | `[x]` | QA-P0-13 | Perbaiki `Dockerfile.dev` → `golang:1.25-alpine` (kini 1.23, mismatch `go.mod` → build gagal) | `Dockerfile.dev:1` | — |
-| `[ ]` | QA-P0-14 | `docker-compose.yml` (Postgres 16 + Mailhog + app) untuk dev lokal | root (baru) | QA-P0-13 |
+| `[~]` PR [#16](https://github.com/cecep-azhar/jurnalumi/pull/16) | QA-P0-14 | `docker-compose.yml` (Postgres 16 + Mailhog + app) untuk dev lokal | root (baru) | QA-P0-13 |
 | `[ ]` | QA-P0-15 | `.env.example` + `README.md` cara menjalankan | root (baru) | QA-P0-02 |
 | `[ ]` | QA-P0-16 | Hapus duplikasi `e.Static("/static", ...)` | `main.go:40` & `main.go:81` | — |
 
@@ -192,3 +192,9 @@ Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/7
 Ringkasan: Rate limiter 5x/detik ditambahkan di endpoint `POST /login` dan `POST /register`.
 Catatan: Plafon belum tercapai (PR masih ≤ 3 yang terbuka, setelah run ini mungkin plafon penuh jadi 4 PR terbuka — cek run berikut).
+
+### $(date '+%Y-%m-%d %H:%M WIB') — QA-P0-14
+Status: PR dibuka, menunggu merge
+PR: https://github.com/cecep-azhar/jurnalumi/pull/16
+Ringkasan: Menambahkan `docker-compose.yml` (PostgreSQL 16 + Mailhog + App). Auto-merge PR #15 dilakukan sebelum ini.
+Catatan: PR #16 terbuka.
