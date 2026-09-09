@@ -45,7 +45,7 @@
 |---|---|---|---|---|
 | `[x]` | QA-P0-13 | Perbaiki `Dockerfile.dev` → `golang:1.25-alpine` (kini 1.23, mismatch `go.mod` → build gagal) | `Dockerfile.dev:1` | — |
 | `[~]` PR [#16](https://github.com/cecep-azhar/jurnalumi/pull/16) | QA-P0-14 | `docker-compose.yml` (Postgres 16 + Mailhog + app) untuk dev lokal | root (baru) | QA-P0-13 |
-| `[ ]` | QA-P0-15 | `.env.example` + `README.md` cara menjalankan | root (baru) | QA-P0-02 |
+| `[~]` PR [#19](https://github.com/cecep-azhar/jurnalumi/pull/19) | QA-P0-15 | `.env.example` + `README.md` cara menjalankan | root (baru) | QA-P0-02 |
 | `[x]` | QA-P0-16 | Hapus duplikasi `e.Static("/static", ...)` | `main.go:40` & `main.go:81` | — |
 
 ---
@@ -198,3 +198,9 @@ Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/16
 Ringkasan: Menambahkan `docker-compose.yml` (PostgreSQL 16 + Mailhog + App). Auto-merge PR #15 dilakukan sebelum ini.
 Catatan: PR #16 terbuka.
+
+### $(date '+%Y-%m-%d %H:%M WIB') — QA-P0-15
+Status: PR dibuka, menunggu merge
+PR: https://github.com/cecep-azhar/jurnalumi/pull/19
+Ringkasan: Membuat `.env.example` dan `README.md` untuk instruksi lokal dev.
+Catatan: PR #18 sudah dimerge otomatis. Task selanjutnya (P0-15) selesai dibuat PR-nya.
