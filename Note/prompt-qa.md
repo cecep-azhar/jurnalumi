@@ -25,3 +25,7 @@ PR: https://github.com/cecep-azhar/jurnalumi/pull/8
 Status: QA-P0-08 dikerjakan, PR terbuka
 Ringkasan: Menambahkan security headers (HSTS, nosniff, Referrer-Policy, CSP).
 PR: https://github.com/cecep-azhar/jurnalumi/pull/9
+### 2026-09-09 14:05 WIB — QA-P0-09
+Status: QA-P0-09 dikerjakan, PR terbuka
+Ringkasan: Menambahkan CLI command di `cmd/seed/main.go` untuk membuat akun superadmin. `go build ./...` lulus.
+PR: https://github.com/cecep-azhar/jurnalumi/pull/10

@@ -31,7 +31,7 @@
 | `[~]` PR [#7](https://github.com/cecep-azhar/jurnalumi/pull/7) | QA-P0-06 🔴 | Rate limit `/login` & `/register` + lockout 5x gagal | `cmd/server/main.go:49-51` | — |
 | `[x]` PR [#8](https://github.com/cecep-azhar/jurnalumi/pull/8) | QA-P0-07 | Hapus `middleware.CORS()` global (tidak perlu, ini SSR bukan API publik) | `cmd/server/main.go:39` | — |
 | `[ ]` | QA-P0-08 | Security header dasar: HSTS, X-Content-Type-Options nosniff, Referrer-Policy, CSP dasar | `cmd/server/main.go` | — |
-| `[ ]` | QA-P0-09 | Seed CLI untuk buat user `superadmin` (bukan lewat form publik) | `cmd/` (command baru, mis. `cmd/seed/`) | QA-P0-04 |
+| `[~]` PR [#10](https://github.com/cecep-azhar/jurnalumi/pull/10) | QA-P0-09 | Seed CLI untuk buat user `superadmin` (bukan lewat form publik) | `cmd/` (command baru, mis. `cmd/seed/`) | QA-P0-04 |
 
 ### Integritas data
 | Status | ID | Task | Lokasi | Depends on |
