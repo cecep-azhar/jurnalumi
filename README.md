@@ -1,43 +1,28 @@
 # JurnalUmi
 
-Aplikasi manajemen keuangan keluarga (SaaS).
+Aplikasi pencatatan keuangan keluarga.
 
-## Persyaratan
+## Requirements
 - Go 1.25+
-- Node.js (untuk Tailwind CSS)
-- Templ CLI
-- Docker & Docker Compose (untuk lokal/dev)
+- Docker & Docker Compose (untuk dev database & mail)
 
-## Menjalankan secara Lokal
+## Local Development
 
-1. **Siapkan konfigurasi:**
+1. Salin `.env.example` ke `.env`
    ```bash
    cp .env.example .env
    ```
-   *Edit isi `.env` bila perlu.*
 
-2. **Jalankan dependensi lokal (PostgreSQL + Mailhog):**
+2. Jalankan database dan layanan pendukung
    ```bash
    docker-compose up -d
    ```
 
-3. **Install toolchain & generate kode (Templ + CSS):**
+3. Generate UI dan jalankan aplikasi
    ```bash
-   npm install
-   go mod download
-   make build-tailwind # jika ada target makefile, atau manual: npx tailwindcss -i ./web/static/css/input.css -o ./web/static/css/style.css
-   templ generate
+   go run github.com/a-h/templ/cmd/templ@latest generate
+   go run ./cmd/server
    ```
 
-4. **Jalankan aplikasi:**
-   ```bash
-   go run cmd/server/main.go
-   ```
-   Aplikasi akan berjalan di `http://localhost:8080`
-
-## Menjalankan via Docker (Penuh)
-Jika Anda menggunakan Dockerfile.dev:
-```bash
-docker build -t jurnalumi-dev -f Dockerfile.dev .
-# (Atur port dan network sesuai kebutuhan)
-```
+Aplikasi akan berjalan di http://localhost:8080
+Mailhog akan berjalan di http://localhost:8025
