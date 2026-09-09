@@ -110,7 +110,9 @@ func FamilyPOST(c echo.Context) error {
 		PasswordHash: string(hashedPassword),
 	}
 
-	db.DB.Create(&member)
+	if err := db.DB.Create(&member).Error; err != nil {
+		return c.String(http.StatusInternalServerError, "Gagal menambahkan anggota keluarga")
+	}
 
 	return c.Redirect(http.StatusFound, "/family")
 }

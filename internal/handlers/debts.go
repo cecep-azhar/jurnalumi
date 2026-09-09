@@ -77,7 +77,9 @@ func DebtPOST(c echo.Context) error {
 		DueDate:         dueDate,
 	}
 
-	db.DB.Create(&debt)
+	if err := db.DB.Create(&debt).Error; err != nil {
+		return c.String(http.StatusInternalServerError, "Gagal menyimpan utang/piutang")
+	}
 
 	return c.Redirect(http.StatusFound, "/debts")
 }
