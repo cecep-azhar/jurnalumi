@@ -27,7 +27,7 @@
 | `[x]` | QA-P0-02 🔴 | `SESSION_SECRET` dari env; refuse start jika kosong saat `APP_ENV=production` | `cmd/server/main.go:32` (hardcoded `jurnalumi-super-secret-key`, ter-commit) | — |
 | `[x]` | QA-P0-03 🔴 | Cookie session: `Secure` + `SameSite=Lax` + rotasi session id saat login | `internal/handlers/auth.go:37-41` | — |
 | `[ ]` | QA-P0-04 🔴 | Middleware `RequireRole(...)` + terapkan matrix `Role_Permission.md` ke semua route | `internal/middleware/auth.go` (baru), semua route di `main.go` | QA-P0-01 |
-| `[ ]` | QA-P0-05 🔴 | `middleware.CSRF()` global + hidden token di semua form Templ | `cmd/server/main.go`, semua file `web/views/*.templ` yang punya `<form>` | — |
+| `[~]` | QA-P0-05 🔴 | `middleware.CSRF()` global + hidden token di semua form Templ | `cmd/server/main.go`, semua file `web/views/*.templ` yang punya `<form>` | — |
 | `[ ]` | QA-P0-06 🔴 | Rate limit `/login` & `/register` + lockout 5x gagal | `cmd/server/main.go:49-51` | — |
 | `[ ]` | QA-P0-07 | Hapus `middleware.CORS()` global (tidak perlu, ini SSR bukan API publik) | `cmd/server/main.go:39` | — |
 | `[ ]` | QA-P0-08 | Security header dasar: HSTS, X-Content-Type-Options nosniff, Referrer-Policy, CSP dasar | `cmd/server/main.go` | — |
@@ -180,3 +180,9 @@ Status: PR dibuka, menunggu merge Prof
 PR: https://github.com/cecep-azhar/jurnalumi/pull/3
 Ringkasan: Cookie diset `Secure: true` saat `APP_ENV=production` dan `SameSite=Lax`. Session ID dirotasi saat login/register dengan reset session sebelum set isi data. Verifikasi: `go build` sukses.
 Catatan: Menambah import `os` untuk cek env var.
+
+### 2026-09-09 10:20 WIB — QA-P0-05
+Status: PR dibuka, menunggu merge
+PR: https://github.com/cecep-azhar/jurnalumi/pull/6
+Ringkasan: Menerapkan middleware CSRF global dan menyisipkan hidden input csrf_token di seluruh form. `go build ./...` lulus.
+Catatan: Menambah dependency go get github.com/labstack/echo/v4/middleware dan update templ.
