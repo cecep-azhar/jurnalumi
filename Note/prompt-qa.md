@@ -49,3 +49,7 @@ Status: QA-P0-12 dikerjakan, PR terbuka
 Ringkasan: Menambahkan validasi input server-side pada AssetPOST, WalletPOST, CategoryPOST, DebtPOST, dan FamilyPOST (nominal > 0, field wajib, enum valid). `go build` sukses.
 PR: https://github.com/cecep-azhar/jurnalumi/pull/14
 
+### $(date '+%Y-%m-%d %H:%M WIB') — QA-P0-13
+Status: QA-P0-13 dikerjakan, PR terbuka
+Ringkasan: Memperbarui versi golang di Dockerfile.dev menjadi 1.25-alpine menyesuaikan dengan go.mod.
+PR: https://github.com/cecep-azhar/jurnalumi/pull/15

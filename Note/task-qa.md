@@ -43,7 +43,7 @@
 ### Infrastruktur dasar
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[ ]` | QA-P0-13 | Perbaiki `Dockerfile.dev` → `golang:1.25-alpine` (kini 1.23, mismatch `go.mod` → build gagal) | `Dockerfile.dev:1` | — |
+| `[x]` | QA-P0-13 | Perbaiki `Dockerfile.dev` → `golang:1.25-alpine` (kini 1.23, mismatch `go.mod` → build gagal) | `Dockerfile.dev:1` | — |
 | `[ ]` | QA-P0-14 | `docker-compose.yml` (Postgres 16 + Mailhog + app) untuk dev lokal | root (baru) | QA-P0-13 |
 | `[ ]` | QA-P0-15 | `.env.example` + `README.md` cara menjalankan | root (baru) | QA-P0-02 |
 | `[ ]` | QA-P0-16 | Hapus duplikasi `e.Static("/static", ...)` | `main.go:40` & `main.go:81` | — |
