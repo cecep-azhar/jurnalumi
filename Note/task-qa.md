@@ -25,7 +25,7 @@
 |---|---|---|---|---|
 | `[~]` PR [#1](https://github.com/cecep-azhar/jurnalumi/pull/1) | QA-P0-01 🔴 | Proteksi seluruh `/admin/*`: middleware auth + role `superadmin` | `cmd/server/main.go:55-57` (saat ini tanpa middleware sama sekali) | — |
 | `[~]` PR [#2](https://github.com/cecep-azhar/jurnalumi/pull/2) | QA-P0-02 🔴 | `SESSION_SECRET` dari env; refuse start jika kosong saat `APP_ENV=production` | `cmd/server/main.go:32` (hardcoded `jurnalumi-super-secret-key`, ter-commit) | — |
-| `[~]` | QA-P0-03 🔴 | Cookie session: `Secure` + `SameSite=Lax` + rotasi session id saat login | `internal/handlers/auth.go:37-41` | — |
+| `[~]` PR [#3](https://github.com/cecep-azhar/jurnalumi/pull/3) | QA-P0-03 🔴 | Cookie session: `Secure` + `SameSite=Lax` + rotasi session id saat login | `internal/handlers/auth.go:37-41` | — |
 | `[ ]` | QA-P0-04 🔴 | Middleware `RequireRole(...)` + terapkan matrix `Role_Permission.md` ke semua route | `internal/middleware/auth.go` (baru), semua route di `main.go` | QA-P0-01 |
 | `[ ]` | QA-P0-05 🔴 | `middleware.CSRF()` global + hidden token di semua form Templ | `cmd/server/main.go`, semua file `web/views/*.templ` yang punya `<form>` | — |
 | `[ ]` | QA-P0-06 🔴 | Rate limit `/login` & `/register` + lockout 5x gagal | `cmd/server/main.go:49-51` | — |
@@ -168,3 +168,9 @@ Status: PR dibuka, menunggu merge Prof
 PR: https://github.com/cecep-azhar/jurnalumi/pull/2
 Ringkasan: SESSION_SECRET dipindah ke env var, `log.Fatal` kalau kosong saat `APP_ENV=production`. Verifikasi: dicoba dengan `APP_ENV=production` tanpa `SESSION_SECRET` set, server refuse start.
 Catatan: dikerjakan di branch `qa/p0-02-session-secret`. **Bug ditemukan setelah run ini**: task-qa.md sempat hilang dari `main` (lihat catatan insiden di atas file), jadi run ini sebenarnya update statusnya nyasar ke `task.md`, bukan ke sini — sudah direkonsiliasi manual oleh Claude 9 Sep 2026 sore.
+
+### 2026-09-09 08:45 WIB — QA-P0-03
+Status: PR dibuka, menunggu merge Prof
+PR: https://github.com/cecep-azhar/jurnalumi/pull/3
+Ringkasan: Cookie diset `Secure: true` saat `APP_ENV=production` dan `SameSite=Lax`. Session ID dirotasi saat login/register dengan reset session sebelum set isi data. Verifikasi: `go build` sukses.
+Catatan: Menambah import `os` untuk cek env var.
