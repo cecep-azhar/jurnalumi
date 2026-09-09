@@ -29,7 +29,7 @@
 | `[~]` PR [#5](https://github.com/cecep-azhar/jurnalumi/pull/5) | QA-P0-04 🔴 | Middleware `RequireRole(...)` + terapkan matrix `Role_Permission.md` ke semua route | `internal/middleware/auth.go` (baru), semua route di `main.go` | QA-P0-01 |
 | `[~]` PR [#6](https://github.com/cecep-azhar/jurnalumi/pull/6) | QA-P0-05 🔴 | `middleware.CSRF()` global + hidden token di semua form Templ | `cmd/server/main.go`, semua file `web/views/*.templ` yang punya `<form>` | — |
 | `[~]` PR [#7](https://github.com/cecep-azhar/jurnalumi/pull/7) | QA-P0-06 🔴 | Rate limit `/login` & `/register` + lockout 5x gagal | `cmd/server/main.go:49-51` | — |
-| `[ ]` | QA-P0-07 | Hapus `middleware.CORS()` global (tidak perlu, ini SSR bukan API publik) | `cmd/server/main.go:39` | — |
+| `[x]` PR [#8](https://github.com/cecep-azhar/jurnalumi/pull/8) | QA-P0-07 | Hapus `middleware.CORS()` global (tidak perlu, ini SSR bukan API publik) | `cmd/server/main.go:39` | — |
 | `[ ]` | QA-P0-08 | Security header dasar: HSTS, X-Content-Type-Options nosniff, Referrer-Policy, CSP dasar | `cmd/server/main.go` | — |
 | `[ ]` | QA-P0-09 | Seed CLI untuk buat user `superadmin` (bukan lewat form publik) | `cmd/` (command baru, mis. `cmd/seed/`) | QA-P0-04 |
 

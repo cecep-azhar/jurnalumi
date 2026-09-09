@@ -16,7 +16,7 @@ STOP total jika:
 - Ditemukan konflik berat di `main` yang mencegah rebase
 Idle: 3 PRs open. Waiting for merge.
 
-### 2026-09-09 13:40 WIB — QA-P0-06 selesai
-Status: QA-P0-06 dikerjakan, PR terbuka
-Ringkasan: Menambahkan Rate Limiter middleware ke route `POST /login` dan `POST /register`.
-PR: https://github.com/cecep-azhar/jurnalumi/pull/7
+### 2026-09-09 13:45 WIB — QA-P0-07 selesai
+Status: QA-P0-07 dikerjakan, PR terbuka
+Ringkasan: Menghapus middleware CORS global karena tidak diperlukan.
+PR: https://github.com/cecep-azhar/jurnalumi/pull/8
