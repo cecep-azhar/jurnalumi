@@ -41,6 +41,15 @@ func main() {
 	// Global Middlewares
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(middleware.SecureWithConfig(middleware.SecureConfig{
+		XSSProtection:         "1; mode=block",
+		ContentTypeNosniff:    "nosniff",
+		XFrameOptions:         "SAMEORIGIN",
+		HSTSMaxAge:            31536000,
+		HSTSExcludeSubdomains: false,
+		ContentSecurityPolicy: "default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; img-src 'self' data: https:; font-src 'self' data:; frame-ancestors 'self';",
+		ReferrerPolicy:        "strict-origin-when-cross-origin",
+	}))
 	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
 		TokenLookup: "form:csrf_token",
 	}))
