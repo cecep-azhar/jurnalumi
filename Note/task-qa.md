@@ -36,7 +36,7 @@
 ### Integritas data
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[ ]` | QA-P0-10 🔴 | Matikan/ganti `DebtPayPOST` yang membagi dua sisa utang → bayar nyata: pilih wallet+nominal → insert transaksi + potong saldo + kurangi sisa, 1 DB transaction | `internal/handlers/debts.go:82-91` (komentar sendiri: "mock implementation") | — |
+| `[~]` PR [#11](https://github.com/cecep-azhar/jurnalumi/pull/11) | QA-P0-10 🔴 | Matikan/ganti `DebtPayPOST` yang membagi dua sisa utang → bayar nyata: pilih wallet+nominal → insert transaksi + potong saldo + kurangi sisa, 1 DB transaction | `internal/handlers/debts.go:82-91` (komentar sendiri: "mock implementation") | — |
 | `[ ]` | QA-P0-11 🔴 | Tangani error `db.Create/Save` di semua handler (kini diabaikan, redirect seolah sukses) | `dashboard.go:132,154`, `features.go:114`, `assets.go:69`, `debts.go:77`, `admin.go:66` | — |
 | `[ ]` | QA-P0-12 | Validasi input server-side (nominal > 0, tanggal wajar, wallet/kategori milik tenant sendiri, enum tipe valid) | semua handler POST | — |
 
