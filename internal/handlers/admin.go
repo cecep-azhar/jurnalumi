@@ -38,7 +38,9 @@ func AdminUpgradeTenantPOST(c echo.Context) error {
 		tenant.Plan = "premium"
 		now := time.Now().AddDate(0, 1, 0)
 		tenant.PlanExpiresAt = &now
-		db.DB.Save(&tenant)
+		if err := db.DB.Save(&tenant).Error; err != nil {
+			return c.String(500, "Gagal mengupdate tenant")
+		}
 	}
 
 	return c.Redirect(http.StatusFound, "/admin/dashboard")
@@ -63,7 +65,9 @@ func AdminGenerateVoucherPOST(c echo.Context) error {
 		IsUsed:   false,
 	}
 
-	db.DB.Create(&voucher)
+	if err := db.DB.Create(&voucher).Error; err != nil {
+		return c.String(500, "Gagal membuat voucher")
+	}
 
 	return c.Redirect(http.StatusFound, "/admin/dashboard")
 }

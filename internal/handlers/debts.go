@@ -73,7 +73,9 @@ func DebtPOST(c echo.Context) error {
 		DueDate:         dueDate,
 	}
 
-	db.DB.Create(&debt)
+	if err := db.DB.Create(&debt).Error; err != nil {
+		return c.String(500, "Gagal menambahkan utang/piutang")
+	}
 
 	return c.Redirect(http.StatusFound, "/debts")
 }
@@ -91,7 +93,9 @@ func DebtPayPOST(c echo.Context) error {
 		if debt.RemainingAmount < 1000 {
 			debt.RemainingAmount = 0
 		}
-		db.DB.Save(&debt)
+		if err := db.DB.Save(&debt).Error; err != nil {
+			return c.String(500, "Gagal mengupdate sisa utang")
+		}
 	}
 
 	return c.Redirect(http.StatusFound, "/debts")

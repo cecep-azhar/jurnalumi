@@ -1,0 +1,108 @@
+--- internal/handlers/debts.go
++++ internal/handlers/debts.go
+@@ -10,6 +10,7 @@
+ 	"github.com/cecep-azhar/jurnalumi/internal/middleware"
+ 	"github.com/cecep-azhar/jurnalumi/internal/models"
+ 	"github.com/cecep-azhar/jurnalumi/web/views"
++	"github.com/google/uuid"
+ 	"github.com/labstack/echo/v4"
+ )
+ 
+@@ -28,6 +29,9 @@
+ 	var debts []models.Debt
+ 	db.DB.Where("tenant_id = ?", userCtx.TenantID).Find(&debts)
+ 
++	var wallets []models.Wallet
++	db.DB.Where("tenant_id = ?", userCtx.TenantID).Find(&wallets)
++
+ 	var totalDebt float64 = 0
+ 	var totalReceivable float64 = 0
+ 
+@@ -39,7 +43,7 @@
+ 		}
+ 	}
+ 
+-	return Render(c, views.DebtManagement(tenant, user, debts, totalDebt, totalReceivable))
++	return Render(c, views.DebtManagement(tenant, user, debts, wallets, totalDebt, totalReceivable))
+ }
+ 
+ // DebtPOST handles adding a new debt or receivable
+@@ -79,16 +83,57 @@
+ 
+ // DebtPayPOST handles partial or full payment of a debt (mock implementation for phase 5)
+ func DebtPayPOST(c echo.Context) error {
+-	// In real implementation, this should insert a Transaction, reduce Wallet balance, and reduce RemainingAmount
+ 	userCtx := c.Get("user_context").(middleware.UserContext)
+ 	debtID := c.FormValue("debt_id")
++	amountStr := c.FormValue("amount")
++	walletID := c.FormValue("wallet_id")
++
++	amount, err := strconv.ParseFloat(amountStr, 64)
++	if err != nil || amount <= 0 {
++		return c.Redirect(http.StatusFound, "/debts")
++	}
++
++	xr := db.DB.Begin()
++	if xr.Error != nil {
++		return c.Redirect(http.StatusFound, "/debts")
++	}
++	defer xr.Rollback()
+ 
+ 	var debt models.Debt
+-	if err := db.DB.Where("tenant_id = ? AND id = ?", userCtx.TenantID, debtID).First(&debt).Error; err == nil {
+-		// Mock payment: half the amount for demo
+-		debt.RemainingAmount = debt.RemainingAmount / 2
+-		if debt.RemainingAmount < 1000 {
+-			debt.RemainingAmount = 0
+-		}
+-		db.DB.Save(&debt)
++	if err := xr.Where("tenant_id = ? AND id = ?", userCtx.TenantID, debtID).First(&debt).Error; err != nil {
++		return c.Redirect(http.StatusFound, "/debts")
++	}
++
++	var wallet models.Wallet
++	if err := xr.Where("tenant_id = ? AND id = ?", userCtx.TenantID, walletID).First(&wallet).Error; err != nil {
++		return c.Redirect(http.StatusFound, "/debts")
++	}
++
++	walletIDParsed, _ := uuid.Parse(walletID)
++
++	trx := models.Transaction{
++		TenantID:        userCtx.TenantID,
++		UserID:          userCtx.UserID,
++		WalletID:        walletIDParsed,
++		Type:            "expense", // Default to expense
++		CategoryName:    "Pelunasan " + debt.Title,
++		Amount:          amount,
++		Description:     "Pembayaran utang/piutang ke " + debt.Counterparty,
++		TransactionDate: time.Now(),
+ 	}
+ 
++	if debt.Type == "receivable" {
++		trx.Type = "income"
++		wallet.Balance += amount
++	} else {
++		wallet.Balance -= amount
++	}
++
++	debt.RemainingAmount -= amount
++	if debt.RemainingAmount < 0 {
++		debt.RemainingAmount = 0
++	}
++	if debt.RemainingAmount == 0 {
++		debt.Status = "paid"
++	}
++
++	if err := xr.Create(&trx).Error; err != nil {
++		return c.Redirect(http.StatusFound, "/debts")
++	}
++	if err := xr.Save(&wallet).Error; err != nil {
++		return c.Redirect(http.StatusFound, "/debts")
++	}
++	if err := xr.Save(&debt).Error; err != nil {
++		return c.Redirect(http.StatusFound, "/debts")
++	}
++
++	xr.Commit()
+ 	return c.Redirect(http.StatusFound, "/debts")
+ }

@@ -65,7 +65,9 @@ func AssetPOST(c echo.Context) error {
 		CurrentValue: currentValue,
 	}
 
-	db.DB.Create(&asset)
+	if err := db.DB.Create(&asset).Error; err != nil {
+		return c.String(500, "Gagal menambahkan aset")
+	}
 
 	return c.Redirect(http.StatusFound, "/assets")
 }
