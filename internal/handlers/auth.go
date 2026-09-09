@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
@@ -33,12 +34,20 @@ func LoginPOST(c echo.Context) error {
 		return c.Redirect(http.StatusFound, "/login?error=invalid_credentials")
 	}
 
-	// Save Session
+	// Session Rotation: destroy old session completely, create new one
 	sess, _ := session.Get("jurnalumi_session", c)
+	sess.Options.MaxAge = -1
+	sess.Save(c.Request(), c.Response())
+
+	sess, _ = session.Get("jurnalumi_session", c)
+	isProd := os.Getenv("APP_ENV") == "production"
+
 	sess.Options = &sessions.Options{
 		Path:     "/",
 		MaxAge:   86400 * 30, // 30 Days
 		HttpOnly: true,
+		Secure:   isProd,
+		SameSite: http.SameSiteLaxMode,
 	}
 	sess.Values["user_id"] = user.ID.String()
 	sess.Values["tenant_id"] = user.TenantID.String()
@@ -117,13 +126,21 @@ func RegisterPOST(c echo.Context) error {
 	}
 
 	tx.Commit()
-
+	
 	// Auto-login session after register
 	sess, _ := session.Get("jurnalumi_session", c)
+	sess.Options.MaxAge = -1
+	sess.Save(c.Request(), c.Response())
+
+	sess, _ = session.Get("jurnalumi_session", c)
+	isProd := os.Getenv("APP_ENV") == "production"
+
 	sess.Options = &sessions.Options{
 		Path:     "/",
 		MaxAge:   86400 * 30,
 		HttpOnly: true,
+		Secure:   isProd,
+		SameSite: http.SameSiteLaxMode,
 	}
 	sess.Values["user_id"] = user.ID.String()
 	sess.Values["tenant_id"] = user.TenantID.String()
