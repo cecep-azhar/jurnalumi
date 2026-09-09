@@ -29,3 +29,8 @@ PR: https://github.com/cecep-azhar/jurnalumi/pull/9
 Status: QA-P0-09 dikerjakan, PR terbuka
 Ringkasan: Menambahkan CLI command di `cmd/seed/main.go` untuk membuat akun superadmin. `go build ./...` lulus.
 PR: https://github.com/cecep-azhar/jurnalumi/pull/10
+
+### $(date '+%Y-%m-%d %H:%M WIB') — QA-P0-10
+Status: QA-P0-10 dikerjakan, PR terbuka
+Ringkasan: Menghapus implementasi mock `DebtPayPOST` dan menggantinya dengan transaksi DB nyata (potong/tambah dompet, update sisa hutang, tambah ke riwayat transaksi). Form modal UI diubah untuk menanyakan dompet sumber/tujuan dan nominal. `go build ./...` lulus.
+PR: https://github.com/cecep-azhar/jurnalumi/pull/11
