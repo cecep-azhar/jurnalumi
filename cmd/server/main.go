@@ -58,10 +58,14 @@ func main() {
 	e.POST("/register", handlers.RegisterPOST)
 	e.GET("/logout", handlers.LogoutGET)
 
+	adminGroup := e.Group("/admin")
+	adminGroup.Use(appMiddleware.RequireAuth)
+	adminGroup.Use(appMiddleware.RequireRole("superadmin"))
+	
 	// Super Admin Control Panel Routes
-	e.GET("/admin/dashboard", handlers.AdminDashboardGET)
-	e.POST("/admin/tenant/upgrade", handlers.AdminUpgradeTenantPOST)
-	e.POST("/admin/vouchers/generate", handlers.AdminGenerateVoucherPOST)
+	adminGroup.GET("/dashboard", handlers.AdminDashboardGET)
+	adminGroup.POST("/tenant/upgrade", handlers.AdminUpgradeTenantPOST)
+	adminGroup.POST("/vouchers/generate", handlers.AdminGenerateVoucherPOST)
 
 	// App Dashboard Route (Protected by Auth Middleware)
 	e.GET("/dashboard", handlers.DashboardHandler, appMiddleware.RequireAuth)

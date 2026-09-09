@@ -51,3 +51,34 @@ func RequireAuth(next echo.HandlerFunc) echo.HandlerFunc {
 		return next(c)
 	}
 }
+
+// RequireRole restricts access to users with specific roles
+func RequireRole(roles ...string) echo.MiddlewareFunc {
+	return func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			userCtxRaw := c.Get("user_context")
+			if userCtxRaw == nil {
+				return c.Redirect(http.StatusFound, "/login")
+			}
+			
+			userCtx, ok := userCtxRaw.(UserContext)
+			if !ok {
+				return c.Redirect(http.StatusFound, "/login")
+			}
+			
+			allowed := false
+			for _, r := range roles {
+				if userCtx.Role == r {
+					allowed = true
+					break
+				}
+			}
+			
+			if !allowed {
+				return c.String(http.StatusForbidden, "Forbidden: insufficient permissions")
+			}
+			
+			return next(c)
+		}
+	}
+}
