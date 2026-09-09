@@ -23,7 +23,7 @@
 ### Keamanan
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[~]` | QA-P0-01 🔴 | Proteksi seluruh `/admin/*`: middleware auth + role `superadmin` | `cmd/server/main.go:55-57` (saat ini tanpa middleware sama sekali) | — |
+| `[~]` PR [#4](https://github.com/cecep-azhar/jurnalumi/pull/4) | QA-P0-01 🔴 | Proteksi seluruh `/admin/*`: middleware auth + role `superadmin` | `cmd/server/main.go:55-57` (saat ini tanpa middleware sama sekali) | — |
 | `[x]` | QA-P0-02 🔴 | `SESSION_SECRET` dari env; refuse start jika kosong saat `APP_ENV=production` | `cmd/server/main.go:32` (hardcoded `jurnalumi-super-secret-key`, ter-commit) | — |
 | `[x]` | QA-P0-03 🔴 | Cookie session: `Secure` + `SameSite=Lax` + rotasi session id saat login | `internal/handlers/auth.go:37-41` | — |
 | `[ ]` | QA-P0-04 🔴 | Middleware `RequireRole(...)` + terapkan matrix `Role_Permission.md` ke semua route | `internal/middleware/auth.go` (baru), semua route di `main.go` | QA-P0-01 |
@@ -162,6 +162,12 @@ Status: ditolak Prof (PR ditutup)
 PR: https://github.com/cecep-azhar/jurnalumi/pull/1
 Ringkasan: Menambahkan auth & role middleware (superadmin) untuk route /admin/*, verifikasi direct hit redirect ke /login.
 Catatan: dikerjakan di branch `qa/p0-01-admin-auth`. PR ditutup tanpa merge. Dikembalikan ke [ ] untuk dikerjakan ulang.
+
+### 2026-09-09 09:50 WIB — QA-P0-01 (Retry)
+Status: PR dibuka, menunggu merge
+PR: https://github.com/cecep-azhar/jurnalumi/pull/4
+Ringkasan: Memisahkan route /admin menjadi group, menerapkan middleware pada group. Verifikasi: curl hit ke endpoint dashboard, tenant/upgrade, dan vouchers/generate return 302 redirect.
+Catatan: Branch sebelumnya di-reset, patch PR ini meng-cover seluruh route /admin.
 
 ### 2026-09-09 08:34 WIB — QA-P0-02
 Status: PR dibuka, menunggu merge Prof
