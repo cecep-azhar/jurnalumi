@@ -69,24 +69,24 @@ func main() {
 
 	// App Dashboard Route (Protected by Auth Middleware)
 	e.GET("/dashboard", handlers.DashboardHandler, appMiddleware.RequireAuth)
-	e.POST("/transactions", handlers.TransactionPOST, appMiddleware.RequireAuth)
-	e.POST("/wallets", handlers.WalletPOST, appMiddleware.RequireAuth)
-	e.POST("/categories", handlers.CategoryPOST, appMiddleware.RequireAuth)
+	e.POST("/transactions", handlers.TransactionPOST, appMiddleware.RequireAuth, appMiddleware.RequireRole("owner", "spouse", "member"))
+	e.POST("/wallets", handlers.WalletPOST, appMiddleware.RequireAuth, appMiddleware.RequireRole("owner", "spouse"))
+	e.POST("/categories", handlers.CategoryPOST, appMiddleware.RequireAuth, appMiddleware.RequireRole("owner", "spouse"))
 
 	// Extended Features Routes (Protected)
 	e.GET("/assets", handlers.AssetGET, appMiddleware.RequireAuth)
-	e.POST("/assets", handlers.AssetPOST, appMiddleware.RequireAuth)
+	e.POST("/assets", handlers.AssetPOST, appMiddleware.RequireAuth, appMiddleware.RequireRole("owner", "spouse"))
 
 	// Phase 5: Debt & Protection Routes (Protected)
 	e.GET("/debts", handlers.DebtGET, appMiddleware.RequireAuth)
-	e.POST("/debts", handlers.DebtPOST, appMiddleware.RequireAuth)
-	e.POST("/debts/pay", handlers.DebtPayPOST, appMiddleware.RequireAuth)
+	e.POST("/debts", handlers.DebtPOST, appMiddleware.RequireAuth, appMiddleware.RequireRole("owner", "spouse"))
+	e.POST("/debts/pay", handlers.DebtPayPOST, appMiddleware.RequireAuth, appMiddleware.RequireRole("owner", "spouse"))
 
 	e.GET("/reports", handlers.ReportGET, appMiddleware.RequireAuth)
-	e.GET("/reports/export", handlers.ReportExportCSV, appMiddleware.RequireAuth)
+	e.GET("/reports/export", handlers.ReportExportCSV, appMiddleware.RequireAuth, appMiddleware.RequireRole("owner", "spouse", "member", "auditor"))
 
 	e.GET("/family", handlers.FamilyGET, appMiddleware.RequireAuth)
-	e.POST("/family", handlers.FamilyPOST, appMiddleware.RequireAuth)
+	e.POST("/family", handlers.FamilyPOST, appMiddleware.RequireAuth, appMiddleware.RequireRole("owner", "spouse"))
 
 	// Static files for PWA (Phase 6)
 	e.Static("/static", "web/static")
