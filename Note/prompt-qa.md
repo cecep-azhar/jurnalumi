@@ -16,7 +16,11 @@ STOP total jika:
 - Ditemukan konflik berat di `main` yang mencegah rebase
 Idle: 3 PRs open. Waiting for merge.
 
-### 2026-09-09 13:45 WIB — QA-P0-07 selesai
+### $(date '+%Y-%m-%d %H:%M WIB') — QA-P0-14
+Status: QA-P0-14 dikerjakan, PR terbuka
+Ringkasan: Menambahkan `docker-compose.yml` untuk lingkungan pengembangan lokal (PostgreSQL 16 + Mailhog + App).
+PR: https://github.com/cecep-azhar/jurnalumi/pull/16
+
 Status: QA-P0-07 dikerjakan, PR terbuka
 Ringkasan: Menghapus middleware CORS global karena tidak diperlukan.
 PR: https://github.com/cecep-azhar/jurnalumi/pull/8
