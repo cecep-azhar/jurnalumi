@@ -28,7 +28,7 @@
 | `[x]` | QA-P0-03 🔴 | Cookie session: `Secure` + `SameSite=Lax` + rotasi session id saat login | `internal/handlers/auth.go:37-41` | — |
 | `[~]` PR [#5](https://github.com/cecep-azhar/jurnalumi/pull/5) | QA-P0-04 🔴 | Middleware `RequireRole(...)` + terapkan matrix `Role_Permission.md` ke semua route | `internal/middleware/auth.go` (baru), semua route di `main.go` | QA-P0-01 |
 | `[~]` PR [#6](https://github.com/cecep-azhar/jurnalumi/pull/6) | QA-P0-05 🔴 | `middleware.CSRF()` global + hidden token di semua form Templ | `cmd/server/main.go`, semua file `web/views/*.templ` yang punya `<form>` | — |
-| `[ ]` | QA-P0-06 🔴 | Rate limit `/login` & `/register` + lockout 5x gagal | `cmd/server/main.go:49-51` | — |
+| `[~]` PR [#7](https://github.com/cecep-azhar/jurnalumi/pull/7) | QA-P0-06 🔴 | Rate limit `/login` & `/register` + lockout 5x gagal | `cmd/server/main.go:49-51` | — |
 | `[ ]` | QA-P0-07 | Hapus `middleware.CORS()` global (tidak perlu, ini SSR bukan API publik) | `cmd/server/main.go:39` | — |
 | `[ ]` | QA-P0-08 | Security header dasar: HSTS, X-Content-Type-Options nosniff, Referrer-Policy, CSP dasar | `cmd/server/main.go` | — |
 | `[ ]` | QA-P0-09 | Seed CLI untuk buat user `superadmin` (bukan lewat form publik) | `cmd/` (command baru, mis. `cmd/seed/`) | QA-P0-04 |
@@ -186,3 +186,9 @@ Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/6
 Ringkasan: Menerapkan middleware CSRF global dan menyisipkan hidden input csrf_token di seluruh form. `go build ./...` lulus.
 Catatan: Menambah dependency go get github.com/labstack/echo/v4/middleware dan update templ.
+
+### 2026-09-09 13:40 WIB — QA-P0-06
+Status: PR dibuka, menunggu merge
+PR: https://github.com/cecep-azhar/jurnalumi/pull/7
+Ringkasan: Rate limiter 5x/detik ditambahkan di endpoint `POST /login` dan `POST /register`.
+Catatan: Plafon belum tercapai (PR masih ≤ 3 yang terbuka, setelah run ini mungkin plafon penuh jadi 4 PR terbuka — cek run berikut).
