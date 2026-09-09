@@ -130,6 +130,10 @@ func WalletPOST(c echo.Context) error {
 		TargetAmount: targetAmount,
 	}
 
+	if name == "" || balance < 0 || targetAmount < 0 {
+		return c.String(http.StatusBadRequest, "Input tidak valid")
+	}
+
 	if err := db.DB.Create(&wallet).Error; err != nil {
 		return c.String(http.StatusInternalServerError, "Gagal menambahkan dompet")
 	}
@@ -152,6 +156,10 @@ func CategoryPOST(c echo.Context) error {
 		Type:        categoryType,
 		Name:        name,
 		BudgetLimit: budgetLimit,
+	}
+
+	if name == "" || budgetLimit < 0 {
+		return c.String(http.StatusBadRequest, "Input tidak valid")
 	}
 
 	if err := db.DB.Create(&category).Error; err != nil {

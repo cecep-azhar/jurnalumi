@@ -65,6 +65,10 @@ func AssetPOST(c echo.Context) error {
 		CurrentValue: currentValue,
 	}
 
+	if name == "" || weight <= 0 || karatage < 0 || buyPrice < 0 || (assetType != "emas" && assetType != "perak" && assetType != "dinar") {
+		return c.String(http.StatusBadRequest, "Input tidak valid")
+	}
+
 	if err := db.DB.Create(&asset).Error; err != nil {
 		return c.String(http.StatusInternalServerError, "Gagal menambahkan aset")
 	}

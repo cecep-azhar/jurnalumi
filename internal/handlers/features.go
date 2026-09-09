@@ -110,6 +110,10 @@ func FamilyPOST(c echo.Context) error {
 		PasswordHash: string(hashedPassword),
 	}
 
+	if name == "" || email == "" || password == "" || (role != "admin" && role != "member") {
+		return c.String(http.StatusBadRequest, "Input tidak valid")
+	}
+
 	if err := db.DB.Create(&member).Error; err != nil {
 		return c.String(http.StatusInternalServerError, "Gagal menambahkan anggota keluarga")
 	}
