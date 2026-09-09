@@ -46,7 +46,10 @@ templ familyContent(members []models.User) {
 					<h3 class="text-lg font-bold text-gray-900">Tambah Anggota Keluarga</h3>
 					<button @click="addMemberModal = false" class="text-gray-400 hover:text-gray-600">✖</button>
 				</div>
-				<form action="/family" method="POST" class="space-y-4">
+				<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+<form action="/family" method="POST" class="space-y-4">
+				<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+t			<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
 					<div>
 						<label class="block text-sm font-bold text-gray-700 mb-1">Nama Anggota</label>
 						<input type="text" name="name" placeholder="e.g. Istri (Siti)" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-emerald-500 outline-none">

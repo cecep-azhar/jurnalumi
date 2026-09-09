@@ -29,7 +29,46 @@ func Login() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"id\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Masuk - JurnalUmi</title><script src=\"https://cdn.tailwindcss.com\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js\"></script></head><body class=\"bg-gray-50 flex items-center justify-center min-h-screen p-4\" x-data=\"{ email: '', password: '' }\"><div class=\"bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-gray-100 space-y-6\"><div class=\"text-center\"><h1 class=\"text-3xl font-extrabold text-emerald-600 mb-2\">JurnalUmi</h1><p class=\"text-gray-500 text-sm\">Masuk ke Akun Keuangan Keluarga Anda</p></div><!-- Quick Demo Login Buttons --><div class=\"bg-emerald-50 p-4 rounded-xl border border-emerald-100 space-y-2\"><p class=\"text-xs font-bold text-emerald-800 uppercase tracking-wider text-center\">⚡ Login Cepat (Demo Mode):</p><div class=\"grid grid-cols-2 gap-2\"><button type=\"button\" @click=\"email = 'cecep@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👨\u200d👩\u200d👦 Suami (Owner)</button> <button type=\"button\" @click=\"email = 'istri@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👩 Istri (Co-Owner)</button> <button type=\"button\" @click=\"email = 'anak@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👦 Anak (Member)</button> <a href=\"/admin/dashboard\" class=\"bg-gray-900 hover:bg-black text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm text-center flex items-center justify-center\">🔑 Super Admin</a></div></div><form x-ref=\"loginForm\" action=\"/login\" method=\"POST\" class=\"space-y-4\"><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Email Keluarga / Suami / Istri</label> <input type=\"email\" name=\"email\" x-model=\"email\" required placeholder=\"nama@keluarga.com\" class=\"w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition\"></div><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Password</label> <input type=\"password\" name=\"password\" x-model=\"password\" required placeholder=\"••••••••\" class=\"w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition\"></div><button type=\"submit\" class=\"w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition text-base\">Masuk Sekarang</button></form><div class=\"text-center text-sm text-gray-500\">Belum punya akun keluarga? <a href=\"/register\" class=\"text-emerald-600 font-bold hover:underline\">Daftar Gratis</a></div></div></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"id\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Masuk - JurnalUmi</title><script src=\"https://cdn.tailwindcss.com\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js\"></script></head><body class=\"bg-gray-50 flex items-center justify-center min-h-screen p-4\" x-data=\"{ email: '', password: '' }\"><div class=\"bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-gray-100 space-y-6\"><div class=\"text-center\"><h1 class=\"text-3xl font-extrabold text-emerald-600 mb-2\">JurnalUmi</h1><p class=\"text-gray-500 text-sm\">Masuk ke Akun Keuangan Keluarga Anda</p></div><!-- Quick Demo Login Buttons --><div class=\"bg-emerald-50 p-4 rounded-xl border border-emerald-100 space-y-2\"><p class=\"text-xs font-bold text-emerald-800 uppercase tracking-wider text-center\">⚡ Login Cepat (Demo Mode):</p><div class=\"grid grid-cols-2 gap-2\"><button type=\"button\" @click=\"email = 'cecep@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👨\u200d👩\u200d👦 Suami (Owner)</button> <button type=\"button\" @click=\"email = 'istri@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👩 Istri (Co-Owner)</button> <button type=\"button\" @click=\"email = 'anak@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👦 Anak (Member)</button> <a href=\"/admin/dashboard\" class=\"bg-gray-900 hover:bg-black text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm text-center flex items-center justify-center\">🔑 Super Admin</a></div></div><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var2 string
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 39, Col: 76}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var2)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\"><form x-ref=\"loginForm\" action=\"/login\" method=\"POST\" class=\"space-y-4\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var3 string
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 41, Col: 77}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var3)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"> t\t\t\t<input type=\"hidden\" name=\"csrf_token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var4 string
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 42, Col: 77}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var4)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\"><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Email Keluarga / Suami / Istri</label> <input type=\"email\" name=\"email\" x-model=\"email\" required placeholder=\"nama@keluarga.com\" class=\"w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition\"></div><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Password</label> <input type=\"password\" name=\"password\" x-model=\"password\" required placeholder=\"••••••••\" class=\"w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition\"></div><button type=\"submit\" class=\"w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition text-base\">Masuk Sekarang</button></form><div class=\"text-center text-sm text-gray-500\">Belum punya akun keluarga? <a href=\"/register\" class=\"text-emerald-600 font-bold hover:underline\">Daftar Gratis</a></div></div></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -53,12 +92,51 @@ func Register() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var2 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var2 == nil {
-			templ_7745c5c3_Var2 = templ.NopComponent
+		templ_7745c5c3_Var5 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var5 == nil {
+			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<!doctype html><html lang=\"id\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Daftar - JurnalUmi</title><script src=\"https://cdn.tailwindcss.com\"></script></head><body class=\"bg-gray-50 flex items-center justify-center min-h-screen p-4\"><div class=\"bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-gray-100\"><div class=\"text-center mb-8\"><h1 class=\"text-3xl font-extrabold text-emerald-600 mb-2\">JurnalUmi</h1><p class=\"text-gray-500 text-sm\">Buat Akun Keluarga Baru (Gratis)</p></div><form action=\"/register\" method=\"POST\" class=\"space-y-4\"><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Nama Keluarga (e.g. Keluarga Azhar)</label> <input type=\"text\" name=\"family_name\" required placeholder=\"Keluarga...\" class=\"w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 outline-none\"></div><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Nama Anda (Kepala Keluarga / Pasangan)</label> <input type=\"text\" name=\"name\" required placeholder=\"Cecep Azhar\" class=\"w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 outline-none\"></div><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Email</label> <input type=\"email\" name=\"email\" required placeholder=\"nama@domain.com\" class=\"w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 outline-none\"></div><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Password</label> <input type=\"password\" name=\"password\" required placeholder=\"••••••••\" class=\"w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 outline-none\"></div><button type=\"submit\" class=\"w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-lg transition mt-2\">Daftar Akun Keluarga</button></form><div class=\"mt-6 text-center text-sm text-gray-500\">Sudah punya akun? <a href=\"/login\" class=\"text-emerald-600 font-bold hover:underline\">Masuk</a></div></div></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<!doctype html><html lang=\"id\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Daftar - JurnalUmi</title><script src=\"https://cdn.tailwindcss.com\"></script></head><body class=\"bg-gray-50 flex items-center justify-center min-h-screen p-4\"><div class=\"bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-gray-100\"><div class=\"text-center mb-8\"><h1 class=\"text-3xl font-extrabold text-emerald-600 mb-2\">JurnalUmi</h1><p class=\"text-gray-500 text-sm\">Buat Akun Keluarga Baru (Gratis)</p></div><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var6 string
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 80, Col: 76}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var6)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\"><form action=\"/register\" method=\"POST\" class=\"space-y-4\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var7 string
+		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 82, Col: 77}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var7)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\"> t\t\t\t<input type=\"hidden\" name=\"csrf_token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var8 string
+		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 83, Col: 77}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var8)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\"><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Nama Keluarga (e.g. Keluarga Azhar)</label> <input type=\"text\" name=\"family_name\" required placeholder=\"Keluarga...\" class=\"w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 outline-none\"></div><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Nama Anda (Kepala Keluarga / Pasangan)</label> <input type=\"text\" name=\"name\" required placeholder=\"Cecep Azhar\" class=\"w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 outline-none\"></div><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Email</label> <input type=\"email\" name=\"email\" required placeholder=\"nama@domain.com\" class=\"w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 outline-none\"></div><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Password</label> <input type=\"password\" name=\"password\" required placeholder=\"••••••••\" class=\"w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 outline-none\"></div><button type=\"submit\" class=\"w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-lg transition mt-2\">Daftar Akun Keluarga</button></form><div class=\"mt-6 text-center text-sm text-gray-500\">Sudah punya akun? <a href=\"/login\" class=\"text-emerald-600 font-bold hover:underline\">Masuk</a></div></div></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
