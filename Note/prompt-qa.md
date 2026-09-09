@@ -34,3 +34,8 @@ PR: https://github.com/cecep-azhar/jurnalumi/pull/10
 Status: QA-P0-10 dikerjakan, PR terbuka
 Ringkasan: Menghapus implementasi mock `DebtPayPOST` dan menggantinya dengan transaksi DB nyata (potong/tambah dompet, update sisa hutang, tambah ke riwayat transaksi). Form modal UI diubah untuk menanyakan dompet sumber/tujuan dan nominal. `go build ./...` lulus.
 PR: https://github.com/cecep-azhar/jurnalumi/pull/11
+
+### $(date '+%Y-%m-%d %H:%M WIB') — QA-P0-11
+Status: QA-P0-11 dikerjakan, PR terbuka
+Ringkasan: Tangani semua operasi `db.Create` dan `db.Save` di handler (assets, dashboard, debts, features, admin) dengan mengecek `Error` dan mengembalikan respon error 500 jika gagal.
+PR: https://github.com/cecep-azhar/jurnalumi/pull/12
