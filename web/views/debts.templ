@@ -76,7 +76,10 @@ templ debtContent(debts []models.Debt, totalDebt float64, totalReceivable float6
 								}
 							</td>
 							<td class="py-4 text-right">
-								<form action="/debts/pay" method="POST" class="inline">
+								<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+<form action="/debts/pay" method="POST" class="inline">
+				<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+t			<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
 									<input type="hidden" name="debt_id" value={ d.ID.String() }/>
 									<button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition">Cicil / Lunas</button>
 								</form>
@@ -100,7 +103,10 @@ templ debtContent(debts []models.Debt, totalDebt float64, totalReceivable float6
 					<h3 class="text-lg font-bold text-gray-900">Catat Utang / Piutang Baru</h3>
 					<button @click="addDebtModal = false" class="text-gray-400 hover:text-gray-600">✖</button>
 				</div>
-				<form action="/debts" method="POST" class="space-y-4">
+				<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+<form action="/debts" method="POST" class="space-y-4">
+				<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+t			<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
 					<div>
 						<label class="block text-sm font-bold text-gray-700 mb-1">Tipe</label>
 						<select name="type" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none" required>

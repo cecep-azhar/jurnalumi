@@ -122,7 +122,46 @@ func familyContent(members []models.User) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</div><!-- MODAL: Tambah Anggota --><div x-cloak x-show=\"addMemberModal\" class=\"fixed inset-0 z-50 flex items-center justify-center p-4\" x-transition.opacity><div class=\"fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm\" @click=\"addMemberModal = false\"></div><div class=\"bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative z-10\" x-transition.scale><div class=\"flex justify-between items-center mb-6\"><h3 class=\"text-lg font-bold text-gray-900\">Tambah Anggota Keluarga</h3><button @click=\"addMemberModal = false\" class=\"text-gray-400 hover:text-gray-600\">✖</button></div><form action=\"/family\" method=\"POST\" class=\"space-y-4\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Nama Anggota</label> <input type=\"text\" name=\"name\" placeholder=\"e.g. Istri (Siti)\" required class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-emerald-500 outline-none\"></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Email</label> <input type=\"email\" name=\"email\" placeholder=\"istri@domain.com\" required class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-emerald-500 outline-none\"></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Role / Pasangan</label> <select name=\"role\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required><option value=\"spouse\">Pasangan (Istri/Suami) — Full Access</option> <option value=\"member\">Anak (Member) — Limited Access</option></select></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Password Akses</label> <input type=\"password\" name=\"password\" required placeholder=\"••••••••\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-emerald-500 outline-none\"></div><button type=\"submit\" class=\"w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition mt-4\">Simpan Anggota</button></form></div></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</div><!-- MODAL: Tambah Anggota --><div x-cloak x-show=\"addMemberModal\" class=\"fixed inset-0 z-50 flex items-center justify-center p-4\" x-transition.opacity><div class=\"fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm\" @click=\"addMemberModal = false\"></div><div class=\"bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative z-10\" x-transition.scale><div class=\"flex justify-between items-center mb-6\"><h3 class=\"text-lg font-bold text-gray-900\">Tambah Anggota Keluarga</h3><button @click=\"addMemberModal = false\" class=\"text-gray-400 hover:text-gray-600\">✖</button></div><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var7 string
+		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/family.templ`, Line: 49, Col: 77}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var7)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\"><form action=\"/family\" method=\"POST\" class=\"space-y-4\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var8 string
+		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/family.templ`, Line: 51, Col: 77}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var8)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\"> t\t\t\t<input type=\"hidden\" name=\"csrf_token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var9 string
+		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/family.templ`, Line: 52, Col: 77}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var9)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Nama Anggota</label> <input type=\"text\" name=\"name\" placeholder=\"e.g. Istri (Siti)\" required class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-emerald-500 outline-none\"></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Email</label> <input type=\"email\" name=\"email\" placeholder=\"istri@domain.com\" required class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-emerald-500 outline-none\"></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Role / Pasangan</label> <select name=\"role\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required><option value=\"spouse\">Pasangan (Istri/Suami) — Full Access</option> <option value=\"member\">Anak (Member) — Limited Access</option></select></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Password Akses</label> <input type=\"password\" name=\"password\" required placeholder=\"••••••••\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-emerald-500 outline-none\"></div><button type=\"submit\" class=\"w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition mt-4\">Simpan Anggota</button></form></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
