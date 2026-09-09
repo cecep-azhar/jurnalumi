@@ -20,3 +20,8 @@ Idle: 3 PRs open. Waiting for merge.
 Status: QA-P0-07 dikerjakan, PR terbuka
 Ringkasan: Menghapus middleware CORS global karena tidak diperlukan.
 PR: https://github.com/cecep-azhar/jurnalumi/pull/8
+
+### 2026-09-09 13:50 WIB — QA-P0-08
+Status: QA-P0-08 dikerjakan, PR terbuka
+Ringkasan: Menambahkan security headers (HSTS, nosniff, Referrer-Policy, CSP).
+PR: https://github.com/cecep-azhar/jurnalumi/pull/9
