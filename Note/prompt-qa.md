@@ -44,3 +44,8 @@ Status: QA-P0-11 selesai, PR terbuka (re-created setelah merge conflict)
 Ringkasan: Tangani semua operasi `db.Create` dan `db.Save` di handler dengan mengecek `Error`.
 PR: https://github.com/cecep-azhar/jurnalumi/pull/13
 
+### $(date '+%Y-%m-%d %H:%M WIB') — QA-P0-12
+Status: QA-P0-12 dikerjakan, PR terbuka
+Ringkasan: Menambahkan validasi input server-side pada AssetPOST, WalletPOST, CategoryPOST, DebtPOST, dan FamilyPOST (nominal > 0, field wajib, enum valid). `go build` sukses.
+PR: https://github.com/cecep-azhar/jurnalumi/pull/14
+
