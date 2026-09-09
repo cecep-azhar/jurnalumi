@@ -130,7 +130,9 @@ func WalletPOST(c echo.Context) error {
 		TargetAmount: targetAmount,
 	}
 
-	db.DB.Create(&wallet)
+	if err := db.DB.Create(&wallet).Error; err != nil {
+		return c.String(http.StatusInternalServerError, "Gagal menambahkan dompet")
+	}
 
 	return c.Redirect(http.StatusFound, "/dashboard")
 }
@@ -152,7 +154,9 @@ func CategoryPOST(c echo.Context) error {
 		BudgetLimit: budgetLimit,
 	}
 
-	db.DB.Create(&category)
+	if err := db.DB.Create(&category).Error; err != nil {
+		return c.String(http.StatusInternalServerError, "Gagal menambahkan kategori")
+	}
 
 	return c.Redirect(http.StatusFound, "/dashboard")
 }
