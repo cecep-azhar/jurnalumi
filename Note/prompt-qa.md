@@ -39,3 +39,8 @@ PR: https://github.com/cecep-azhar/jurnalumi/pull/11
 Status: QA-P0-11 dikerjakan, PR terbuka
 Ringkasan: Tangani semua operasi `db.Create` dan `db.Save` di handler (assets, dashboard, debts, features, admin) dengan mengecek `Error` dan mengembalikan respon error 500 jika gagal.
 PR: https://github.com/cecep-azhar/jurnalumi/pull/12
+### $(date '+%Y-%m-%d %H:%M WIB') — QA-P0-11
+Status: QA-P0-11 selesai, PR terbuka (re-created setelah merge conflict)
+Ringkasan: Tangani semua operasi `db.Create` dan `db.Save` di handler dengan mengecek `Error`.
+PR: https://github.com/cecep-azhar/jurnalumi/pull/13
+
