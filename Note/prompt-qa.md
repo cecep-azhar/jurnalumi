@@ -16,6 +16,7 @@ STOP total jika:
 - Ditemukan konflik berat di `main` yang mencegah rebase
 Idle: 3 PRs open. Waiting for merge.
 
-### 2026-09-09 13:35 WIB — Idle
-Status: idle
-Ringkasan: 3 PR terbuka (PR #4, #5, #6). Menunggu merge dari Prof.
+### 2026-09-09 13:40 WIB — QA-P0-06 selesai
+Status: QA-P0-06 dikerjakan, PR terbuka
+Ringkasan: Menambahkan Rate Limiter middleware ke route `POST /login` dan `POST /register`.
+PR: https://github.com/cecep-azhar/jurnalumi/pull/7
