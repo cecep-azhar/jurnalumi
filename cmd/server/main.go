@@ -49,6 +49,8 @@ func main() {
 	// Static Files
 	e.Static("/static", "web/static")
 
+	rateLimiter := middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(5))
+	
 	// Landing Page Route
 	e.GET("/", func(c echo.Context) error {
 		return c.File("web/views/landing.html")
@@ -56,9 +58,9 @@ func main() {
 
 	// Auth Routes
 	e.GET("/login", handlers.LoginGET)
-	e.POST("/login", handlers.LoginPOST)
+	e.POST("/login", handlers.LoginPOST, rateLimiter)
 	e.GET("/register", handlers.RegisterGET)
-	e.POST("/register", handlers.RegisterPOST)
+	e.POST("/register", handlers.RegisterPOST, rateLimiter)
 	e.GET("/logout", handlers.LogoutGET)
 
 	adminGroup := e.Group("/admin")
