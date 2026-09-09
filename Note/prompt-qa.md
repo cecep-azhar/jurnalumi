@@ -57,3 +57,8 @@ PR: https://github.com/cecep-azhar/jurnalumi/pull/14
 Status: QA-P0-13 dikerjakan, PR terbuka
 Ringkasan: Memperbarui versi golang di Dockerfile.dev menjadi 1.25-alpine menyesuaikan dengan go.mod.
 PR: https://github.com/cecep-azhar/jurnalumi/pull/15
+
+### $(date '+%Y-%m-%d %H:%M WIB') — QA-P0-15
+Status: QA-P0-15 dikerjakan, PR terbuka
+Ringkasan: Membuat `.env.example` dan `README.md` dengan instruksi menjalankan secara lokal. `go build` lulus.
+PR: https://github.com/cecep-azhar/jurnalumi/pull/17
