@@ -77,6 +77,10 @@ func DebtPOST(c echo.Context) error {
 		DueDate:         dueDate,
 	}
 
+	if title == "" || counterparty == "" || totalAmount <= 0 || interestRate < 0 {
+		return c.String(http.StatusBadRequest, "Input tidak valid")
+	}
+
 	if err := db.DB.Create(&debt).Error; err != nil {
 		return c.String(http.StatusInternalServerError, "Gagal menyimpan utang/piutang")
 	}
