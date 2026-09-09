@@ -54,8 +54,7 @@ func main() {
 		TokenLookup: "form:csrf_token",
 	}))
 
-	// Static Files
-	e.Static("/static", "web/static")
+
 
 	rateLimiter := middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(5))
 	
