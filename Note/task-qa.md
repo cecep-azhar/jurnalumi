@@ -71,7 +71,7 @@
 ### B. Ledger inti (kejujuran angka & kebiasaan dasar user)
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[ ]` | QA-P1-07 🔴 | Edit & hapus transaksi (soft delete) — penyebab #1 orang berhenti pakai app keuangan | `internal/handlers/dashboard.go`, route baru | QA-P1-01, QA-P1-05 |
+| `[~]` | QA-P1-07 🔴 | Edit & hapus transaksi (soft delete) — penyebab #1 orang berhenti pakai app keuangan | `internal/handlers/dashboard.go`, route baru | QA-P1-01, QA-P1-05 |
 | `[x]` | QA-P1-08 | `FormatRupiah` format Indonesia (`Rp 500.000`, kini `Rp 500000.00`) | `web/views/dashboard.templ:9-11` | — |
 | `[x]` | QA-P1-09 🔴 | Filter periode di dashboard — label "Bulan Ini" kini menjumlah SELURUH transaksi sepanjang masa (data menyesatkan) | `internal/handlers/dashboard.go:44-51` | — |
 
@@ -257,6 +257,7 @@ Status: selesai & terverifikasi
 PR: https://github.com/cecep-azhar/jurnalumi/pull/28
 Ringkasan: PR di-merge ke main. Task [QA-P1-09] selesai.
 
-### 2026-09-10 11:34 WIB — QA-P1-07
-Status: PR 26 ditutup tanpa merge. Dikembalikan ke [ ].
-PR: https://github.com/cecep-azhar/jurnalumi/pull/26
+### 2026-09-10 11:36 WIB — QA-P1-07
+Status: PR dibuka, menunggu merge
+PR: https://github.com/cecep-azhar/jurnalumi/pull/29
+Ringkasan: Implementasi ulang hapus transaksi (soft delete). Menambahkan TransactionDelete handler, route POST, dan tombol Hapus di dashboard UI. Build dan generate aman.
