@@ -26,7 +26,7 @@ func AssetGET(c echo.Context) error {
 	}
 
 	var assets []models.CommodityAsset
-	db.DB.Where("tenant_id = ?", userCtx.TenantID).Find(&assets)
+	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Find(&assets)
 
 	// Phase 4: API Provider Integration (Live Gold Pricing)
 	var totalAssetValue int64 = 0.0

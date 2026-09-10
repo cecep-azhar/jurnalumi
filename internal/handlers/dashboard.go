@@ -27,13 +27,13 @@ func DashboardHandler(c echo.Context) error {
 	}
 
 	var wallets []models.Wallet
-	db.DB.Where("tenant_id = ?", userCtx.TenantID).Find(&wallets)
+	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Find(&wallets)
 
 	var categories []models.Category
-	db.DB.Where("tenant_id = ?", userCtx.TenantID).Find(&categories)
+	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Find(&categories)
 
 	var transactions []models.Transaction
-	db.DB.Where("tenant_id = ?", userCtx.TenantID).Order("transaction_date desc").Find(&transactions)
+	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Order("transaction_date desc").Find(&transactions)
 
 	// Calculate Metrics
 	var liquidBalance int64 = 0.0
@@ -77,7 +77,7 @@ func TransactionPOST(c echo.Context) error {
 	tx := db.DB.Begin()
 
 	var wallet models.Wallet
-	if err := tx.Where("id = ? AND tenant_id = ?", walletID, userCtx.TenantID).First(&wallet).Error; err != nil {
+	if err := tx.Scopes(db.Scoped(userCtx.TenantID)).Where("id = ?", walletID).First(&wallet).Error; err != nil {
 		tx.Rollback()
 		return c.Redirect(http.StatusFound, "/dashboard?error=unauthorized_wallet")
 	}
