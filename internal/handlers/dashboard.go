@@ -192,6 +192,53 @@ func WalletPOST(c echo.Context) error {
 	return c.Redirect(http.StatusFound, "/dashboard")
 }
 
+// TransactionDelete handles soft-deleting a transaction and reverting the wallet balance
+func TransactionDelete(c echo.Context) error {
+	userCtx := c.Get("user_context").(middleware.UserContext)
+
+	txIDStr := c.Param("id")
+	txID, err := uuid.Parse(txIDStr)
+	if err != nil {
+		return c.Redirect(http.StatusFound, "/dashboard?error=invalid_transaction")
+	}
+
+	tx := db.DB.Begin()
+
+	var transaction models.Transaction
+	if err := tx.Scopes(db.Scoped(userCtx.TenantID)).Where("id = ?", txID).First(&transaction).Error; err != nil {
+		tx.Rollback()
+		return c.Redirect(http.StatusFound, "/dashboard?error=transaction_not_found")
+	}
+
+	var wallet models.Wallet
+	if err := tx.Scopes(db.Scoped(userCtx.TenantID)).Where("id = ?", transaction.WalletID).First(&wallet).Error; err != nil {
+		tx.Rollback()
+		return c.Redirect(http.StatusFound, "/dashboard?error=wallet_not_found")
+	}
+
+	// Revert balance
+	if transaction.Type == "income" {
+		wallet.Balance -= transaction.Amount
+	} else if transaction.Type == "expense" {
+		wallet.Balance += transaction.Amount
+	}
+
+	if err := tx.Save(&wallet).Error; err != nil {
+		tx.Rollback()
+		return c.Redirect(http.StatusFound, "/dashboard?error=failed_revert_balance")
+	}
+
+	// Soft delete
+	if err := tx.Delete(&transaction).Error; err != nil {
+		tx.Rollback()
+		return c.Redirect(http.StatusFound, "/dashboard?error=failed_delete_transaction")
+	}
+
+	tx.Commit()
+
+	return c.Redirect(http.StatusFound, "/dashboard")
+}
+
 // CategoryPOST handles adding a new master category
 func CategoryPOST(c echo.Context) error {
 	userCtx := c.Get("user_context").(middleware.UserContext)
