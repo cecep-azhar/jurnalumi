@@ -81,7 +81,7 @@
 |---|---|---|---|---|
 | `[~]` PR [#30](https://github.com/cecep-azhar/jurnalumi/pull/30) | QA-P1-10 🔴 | Budget per kategori: hitung realisasi vs `BudgetLimit` di server + indikator hijau/kuning/merah (murah — implement) | `web/views/categories*.templ`, handler baru | QA-P1-02, QA-P1-04 |
 | `[~]` | QA-P1-11 🔴 | Net Worth = total aset − total utang, ganti kartu `"Sisa Utang (Coming Soon)"` (murah — implement, data sudah ada) | `web/views/dashboard.templ:64-67` | — |
-| `[ ]` | QA-P1-12 | Kalkulator Snowball & Avalanche beneran menghitung urutan pelunasan (ganti teks statis, murni kalkulasi atas data Debt yang sudah ada — implement) | `web/views/debts.templ:37-39`, service baru | — |
+| `[~]` | QA-P1-12 | Kalkulator Snowball & Avalanche beneran menghitung urutan pelunasan (ganti teks statis, murni kalkulasi atas data Debt yang sudah ada — implement) | `web/views/debts.templ:37-39`, service baru | — |
 | `[ ]` | QA-P1-13 | Sinking Fund / Emergency Fund: versi dasar (target vs setoran terkumpul → progress %). Health score 6x/9x/12x boleh menyusul post-publish | `internal/handlers/*`, model wallet target | QA-P1-01 |
 
 ### D. Aset & harga logam mulia (bug fungsional aktif, bukan cuma fitur kurang)
@@ -408,3 +408,9 @@ Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. 
 Status: skip
 PR: -
 Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
+
+### 2026-09-10 21:18 WIB — QA-P1-12
+Status: PR dibuka, menunggu merge
+PR: https://github.com/cecep-azhar/jurnalumi/pull/32
+Ringkasan: Menambahkan logika snowball terkecil first di DebtGET (hitung dari db). View debts diperbarui agar menggunakan data aslinya.
+Verifikasi: templ generate dan go build lulus.
