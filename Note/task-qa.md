@@ -251,3 +251,4 @@ Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/25
 Ringkasan: Implement test minimal untuk round money int64 dan rbac logic `RequireRole`. RLS logic test di-skip (sulit mock Gorm Scope tenant), diganti verifikasi manual sebelumnya. Fix compile error string fmt `%f` > `%d` pada asset & debts handler imbas pergantian data tipe. `go test` and `go build` pass.
 Catatan: RLS test ditiadakan dan diganti fix UI float templ errors. Test scope sederhana pada model_test dan auth_test.
+### 2026-09-10 09:52 WIB — QA-P1-08\nStatus: PR dibuka, menunggu merge\nPR: https://github.com/cecep-azhar/jurnalumi/pull/27\nRingkasan: Memperbarui fungsi `FormatRupiah` di `dashboard.templ` menggunakan `golang.org/x/text/message` untuk pemisah ribuan ala Indonesia. Verifikasi: templ generate dan go build sukses.\nCatatan: -
