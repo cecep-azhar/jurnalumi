@@ -122,6 +122,47 @@ func TransactionPOST(c echo.Context) error {
 	return c.Redirect(http.StatusFound, "/dashboard")
 }
 
+func TransactionDeletePOST(c echo.Context) error {
+	userCtx := c.Get("user_context").(middleware.UserContext)
+
+	txIDStr := c.FormValue("transaction_id")
+	txID, err := uuid.Parse(txIDStr)
+	if err != nil {
+		return c.Redirect(http.StatusFound, "/dashboard?error=invalid_transaction")
+	}
+
+	tx := db.DB.Begin()
+
+	var transaction models.Transaction
+	if err := tx.Scopes(db.Scoped(userCtx.TenantID)).Where("id = ?", txID).First(&transaction).Error; err != nil {
+		tx.Rollback()
+		return c.Redirect(http.StatusFound, "/dashboard?error=unauthorized_transaction")
+	}
+
+	var wallet models.Wallet
+	if err := tx.Scopes(db.Scoped(userCtx.TenantID)).Where("id = ?", transaction.WalletID).First(&wallet).Error; err != nil {
+		// Proceeding even if wallet not found, though realistically it shouldn't happen
+		// But if it does, we can't revert the balance, just delete the transaction
+	} else {
+		// Revert the balance
+		if transaction.Type == "income" {
+			wallet.Balance -= transaction.Amount
+		} else if transaction.Type == "expense" {
+			wallet.Balance += transaction.Amount
+		}
+		tx.Save(&wallet)
+	}
+
+	if err := tx.Delete(&transaction).Error; err != nil {
+		tx.Rollback()
+		return c.Redirect(http.StatusFound, "/dashboard?error=failed_delete_transaction")
+	}
+
+	tx.Commit()
+
+	return c.Redirect(http.StatusFound, "/dashboard")
+}
+
 // WalletPOST handles adding a new wallet
 func WalletPOST(c echo.Context) error {
 	userCtx := c.Get("user_context").(middleware.UserContext)
