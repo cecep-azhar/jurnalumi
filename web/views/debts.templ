@@ -67,7 +67,7 @@ templ debtContent(debts []models.Debt, wallets []models.Wallet, totalDebt int64,
 							<td class="py-4 font-bold text-gray-900">{ d.Title }</td>
 							<td class="py-4 text-gray-600">{ d.Counterparty }</td>
 							<td class="py-4 font-bold text-gray-800">{ FormatRupiah(d.RemainingAmount) }</td>
-							<td class="py-4 text-gray-500">{ fmt.Sprintf("%.1f%%", d.InterestRate) }</td>
+							<td class="py-4 text-gray-500">{ fmt.Sprintf("%d%%", d.InterestRate) }</td>
 							<td class="py-4 text-gray-500">
 								if d.DueDate != nil {
 									{ d.DueDate.Format("02 Jan 2006") }

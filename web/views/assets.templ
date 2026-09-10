@@ -34,7 +34,7 @@ templ assetContent(assets []models.CommodityAsset, totalAssetValue int64) {
 						{ a.Type }
 					</div>
 					<h4 class="font-bold text-lg text-yellow-900 mb-1">{ a.Name }</h4>
-					<p class="text-sm text-yellow-700 mb-4">{ fmt.Sprintf("%.2f Gram | %.1f Karat", a.WeightGram, a.Karatage) }</p>
+					<p class="text-sm text-yellow-700 mb-4">{ fmt.Sprintf("%d Gram | %d Karat", a.WeightGram, a.Karatage) }</p>
 					
 					<div class="flex justify-between items-end border-t border-yellow-200 pt-3">
 						<div>

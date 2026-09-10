@@ -66,7 +66,7 @@ func ReportExportCSV(c echo.Context) error {
 			t.Type,
 			t.CategoryName,
 			t.Description,
-			fmt.Sprintf("%.2f", t.Amount),
+			fmt.Sprintf("%d", t.Amount),
 		})
 	}
 
