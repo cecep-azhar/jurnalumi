@@ -13,7 +13,7 @@ import (
 	"github.com/cecep-azhar/jurnalumi/internal/models"
 )
 
-func ReportView(tenant models.Tenant, user models.User, transactions []models.Transaction, totalIncome float64, totalExpense float64) templ.Component {
+func ReportView(tenant models.Tenant, user models.User, transactions []models.Transaction, totalIncome int64, totalExpense int64) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -42,7 +42,7 @@ func ReportView(tenant models.Tenant, user models.User, transactions []models.Tr
 	})
 }
 
-func reportContent(transactions []models.Transaction, totalIncome float64, totalExpense float64) templ.Component {
+func reportContent(transactions []models.Transaction, totalIncome int64, totalExpense int64) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {

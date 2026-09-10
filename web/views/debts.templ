@@ -5,11 +5,11 @@ import (
 	"github.com/cecep-azhar/jurnalumi/internal/models"
 )
 
-templ DebtManagement(tenant models.Tenant, user models.User, debts []models.Debt, wallets []models.Wallet, totalDebt float64, totalReceivable float64) {
+templ DebtManagement(tenant models.Tenant, user models.User, debts []models.Debt, wallets []models.Wallet, totalDebt int64, totalReceivable int64) {
 	@Layout("Utang, Piutang & Calculator Snowball", tenant, user, debtContent(debts, wallets, totalDebt, totalReceivable))
 }
 
-templ debtContent(debts []models.Debt, wallets []models.Wallet, totalDebt float64, totalReceivable float64) {
+templ debtContent(debts []models.Debt, wallets []models.Wallet, totalDebt int64, totalReceivable int64) {
 	<div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100" x-data="{ addDebtModal: false, activeTab: 'all' }">
 		<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b pb-4 gap-4">
 			<div>

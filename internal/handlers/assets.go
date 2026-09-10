@@ -29,7 +29,7 @@ func AssetGET(c echo.Context) error {
 	db.DB.Where("tenant_id = ?", userCtx.TenantID).Find(&assets)
 
 	// Phase 4: API Provider Integration (Live Gold Pricing)
-	var totalAssetValue float64 = 0.0
+	var totalAssetValue int64 = 0.0
 	for i, a := range assets {
 		assets[i].CurrentValue = services.CalculateCommodityValue(a.Type, a.WeightGram, a.Karatage)
 		totalAssetValue += assets[i].CurrentValue
@@ -48,9 +48,9 @@ func AssetPOST(c echo.Context) error {
 	karatageStr := c.FormValue("karatage")
 	buyPriceStr := c.FormValue("buy_price")
 
-	weight, _ := strconv.ParseFloat(weightStr, 64)
-	karatage, _ := strconv.ParseFloat(karatageStr, 64)
-	buyPrice, _ := strconv.ParseFloat(buyPriceStr, 64)
+	weight, _ := strconv.ParseInt(weightStr, 10, 64)
+	karatage, _ := strconv.ParseInt(karatageStr, 10, 64)
+	buyPrice, _ := strconv.ParseInt(buyPriceStr, 10, 64)
 
 	// In real world, we fetch current value from API
 	currentValue := services.CalculateCommodityValue(assetType, weight, karatage)

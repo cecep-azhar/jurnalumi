@@ -13,7 +13,7 @@ import (
 	"github.com/cecep-azhar/jurnalumi/internal/models"
 )
 
-func DebtManagement(tenant models.Tenant, user models.User, debts []models.Debt, wallets []models.Wallet, totalDebt float64, totalReceivable float64) templ.Component {
+func DebtManagement(tenant models.Tenant, user models.User, debts []models.Debt, wallets []models.Wallet, totalDebt int64, totalReceivable int64) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -42,7 +42,7 @@ func DebtManagement(tenant models.Tenant, user models.User, debts []models.Debt,
 	})
 }
 
-func debtContent(debts []models.Debt, wallets []models.Wallet, totalDebt float64, totalReceivable float64) templ.Component {
+func debtContent(debts []models.Debt, wallets []models.Wallet, totalDebt int64, totalReceivable int64) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {

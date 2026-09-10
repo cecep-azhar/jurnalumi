@@ -14,11 +14,11 @@ import (
 )
 
 // CurrencyFormatter is a helper to format numbers as Rupiah
-func FormatRupiah(amount float64) string {
+func FormatRupiah(amount int64) string {
 	return fmt.Sprintf("Rp %.2f", amount)
 }
 
-func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, categories []models.Category, transactions []models.Transaction, liquidBalance float64, totalIncome float64, totalExpense float64) templ.Component {
+func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, categories []models.Category, transactions []models.Transaction, liquidBalance int64, totalIncome int64, totalExpense int64) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {

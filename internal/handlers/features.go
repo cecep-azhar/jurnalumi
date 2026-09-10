@@ -30,8 +30,8 @@ func ReportGET(c echo.Context) error {
 	var transactions []models.Transaction
 	db.DB.Where("tenant_id = ?", userCtx.TenantID).Order("transaction_date desc").Find(&transactions)
 
-	var totalIncome float64 = 0.0
-	var totalExpense float64 = 0.0
+	var totalIncome int64 = 0.0
+	var totalExpense int64 = 0.0
 	for _, t := range transactions {
 		if t.Type == "income" {
 			totalIncome += t.Amount
