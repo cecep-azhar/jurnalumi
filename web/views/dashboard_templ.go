@@ -11,11 +11,14 @@ import templruntime "github.com/a-h/templ/runtime"
 import (
 	"fmt"
 	"github.com/cecep-azhar/jurnalumi/internal/models"
+	"golang.org/x/text/language"
+	"golang.org/x/text/message"
 )
 
 // CurrencyFormatter is a helper to format numbers as Rupiah
 func FormatRupiah(amount int64) string {
-	return fmt.Sprintf("Rp %d", amount)
+	p := message.NewPrinter(language.Indonesian)
+	return p.Sprintf("Rp %d", amount)
 }
 
 func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, categories []models.Category, transactions []models.Transaction, liquidBalance int64, totalIncome int64, totalExpense int64) templ.Component {
@@ -46,7 +49,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(tenant.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 34, Col: 61}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 37, Col: 61}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -59,7 +62,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(user.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 35, Col: 81}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 38, Col: 81}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -72,7 +75,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(user.Role)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 35, Col: 96}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 38, Col: 96}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -85,7 +88,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(liquidBalance))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 48, Col: 65}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 51, Col: 65}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -98,7 +101,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(totalIncome))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 52, Col: 80}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 55, Col: 80}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -111,7 +114,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(totalExpense))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 56, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 59, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
@@ -129,7 +132,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(w.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 80, Col: 57}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 83, Col: 57}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
@@ -142,7 +145,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 			var templ_7745c5c3_Var9 string
 			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(w.Type)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 81, Col: 62}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 84, Col: 62}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
@@ -155,7 +158,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 			var templ_7745c5c3_Var10 string
 			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(w.Balance))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 83, Col: 71}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 86, Col: 71}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
@@ -185,7 +188,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 				var templ_7745c5c3_Var11 string
 				templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(c.Name)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 104, Col: 121}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 107, Col: 121}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 				if templ_7745c5c3_Err != nil {
@@ -203,7 +206,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 				var templ_7745c5c3_Var12 string
 				templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(c.Name)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 106, Col: 133}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 109, Col: 133}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 				if templ_7745c5c3_Err != nil {
@@ -233,7 +236,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 			var templ_7745c5c3_Var13 string
 			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(t.TransactionDate.Format("02 Jan 2006, 15:04"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 139, Col: 89}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 142, Col: 89}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 			if templ_7745c5c3_Err != nil {
@@ -251,7 +254,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 				var templ_7745c5c3_Var14 string
 				templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(t.CategoryName)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 142, Col: 117}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 145, Col: 117}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 				if templ_7745c5c3_Err != nil {
@@ -269,7 +272,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 				var templ_7745c5c3_Var15 string
 				templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(t.CategoryName)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 144, Col: 125}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 147, Col: 125}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 				if templ_7745c5c3_Err != nil {
@@ -287,7 +290,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 			var templ_7745c5c3_Var16 string
 			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(t.Description)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 147, Col: 79}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 150, Col: 79}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 			if templ_7745c5c3_Err != nil {
@@ -305,7 +308,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 				var templ_7745c5c3_Var17 string
 				templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(t.Amount))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 150, Col: 65}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 153, Col: 65}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 				if templ_7745c5c3_Err != nil {
@@ -323,7 +326,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 				var templ_7745c5c3_Var18 string
 				templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(t.Amount))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 152, Col: 69}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 155, Col: 69}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
 				if templ_7745c5c3_Err != nil {
@@ -352,7 +355,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 		var templ_7745c5c3_Var19 string
 		templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 177, Col: 78}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 180, Col: 78}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var19)
 		if templ_7745c5c3_Err != nil {
@@ -365,7 +368,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 		var templ_7745c5c3_Var20 string
 		templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 179, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 182, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var20)
 		if templ_7745c5c3_Err != nil {
@@ -378,7 +381,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 		var templ_7745c5c3_Var21 string
 		templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 180, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 183, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var21)
 		if templ_7745c5c3_Err != nil {
@@ -396,7 +399,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 			var templ_7745c5c3_Var22 string
 			templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.ResolveAttributeValue(w.ID.String())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 198, Col: 39}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 201, Col: 39}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var22)
 			if templ_7745c5c3_Err != nil {
@@ -409,7 +412,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 			var templ_7745c5c3_Var23 string
 			templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs(w.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 198, Col: 50}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 201, Col: 50}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
 			if templ_7745c5c3_Err != nil {
@@ -432,7 +435,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 			var templ_7745c5c3_Var24 string
 			templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.ResolveAttributeValue(fmt.Sprintf("type === '%s'", c.Type))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 207, Col: 63}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 210, Col: 63}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var24)
 			if templ_7745c5c3_Err != nil {
@@ -445,7 +448,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 			var templ_7745c5c3_Var25 string
 			templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.ResolveAttributeValue(c.ID.String())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 207, Col: 87}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 210, Col: 87}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var25)
 			if templ_7745c5c3_Err != nil {
@@ -458,7 +461,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 			var templ_7745c5c3_Var26 string
 			templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.JoinStringErrs(c.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 207, Col: 98}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 210, Col: 98}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var26))
 			if templ_7745c5c3_Err != nil {
@@ -476,7 +479,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 		var templ_7745c5c3_Var27 string
 		templ_7745c5c3_Var27, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 233, Col: 78}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 236, Col: 78}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var27)
 		if templ_7745c5c3_Err != nil {
@@ -489,7 +492,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 		var templ_7745c5c3_Var28 string
 		templ_7745c5c3_Var28, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 235, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 238, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var28)
 		if templ_7745c5c3_Err != nil {
@@ -502,7 +505,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 		var templ_7745c5c3_Var29 string
 		templ_7745c5c3_Var29, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 236, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 239, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var29)
 		if templ_7745c5c3_Err != nil {
@@ -515,7 +518,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 		var templ_7745c5c3_Var30 string
 		templ_7745c5c3_Var30, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 261, Col: 78}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 264, Col: 78}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var30)
 		if templ_7745c5c3_Err != nil {
@@ -528,7 +531,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 		var templ_7745c5c3_Var31 string
 		templ_7745c5c3_Var31, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 263, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 266, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var31)
 		if templ_7745c5c3_Err != nil {
@@ -541,7 +544,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 		var templ_7745c5c3_Var32 string
 		templ_7745c5c3_Var32, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 264, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 267, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var32)
 		if templ_7745c5c3_Err != nil {
