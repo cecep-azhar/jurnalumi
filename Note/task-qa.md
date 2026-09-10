@@ -237,3 +237,8 @@ Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/23
 Ringkasan: Membuat struct Budget, PriceSnapshot, Payment di models.go dan mendaftarkannya ke dalam gorm AutoMigrate. go build lulus.
 Catatan: Migrasi ditangani oleh gorm db.AutoMigrate saat startup.
+### $(date '+%Y-%m-%d %H:%M WIB') — QA-P1-05
+Status: PR dibuka, menunggu merge
+PR: https://github.com/cecep-azhar/jurnalumi/pull/24
+Ringkasan: Implementasi opening balance ketika wallet di-create dan cmd script rekonsiliasi saldo harian (CMD terpisah yang bisa dijalankan scheduler cron). Verified build.
+Catatan: Migrasi kategori "Saldo Awal" berjalan on-the-fly ketika wallet pertama dengan balance dibuat.
