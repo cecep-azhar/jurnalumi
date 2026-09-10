@@ -204,3 +204,9 @@ Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/19
 Ringkasan: Membuat `.env.example` dan `README.md` untuk instruksi lokal dev.
 Catatan: PR #18 sudah dimerge otomatis. Task selanjutnya (P0-15) selesai dibuat PR-nya.
+
+### $(date '+%Y-%m-%d %H:%M WIB') — QA-P1-02
+Status: PR dibuka, menunggu merge
+PR: https://github.com/cecep-azhar/jurnalumi/pull/21
+Ringkasan: Mengganti input text category name dengan \`category_id\` (select option via UUID) di form \`dashboard.templ\`. Di handler, mencari kategori dari DB untuk mendapat \`Name\` dan mengaitkan \`category_id\` ke model Transaksi. Kompilasi sukses.
+Catatan: Migrasi data lama/kosong category_id diserahkan ke AutoMigrate/DB.
