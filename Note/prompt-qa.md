@@ -75,3 +75,8 @@ PR: https://github.com/cecep-azhar/jurnalumi/pull/19
 Status: QA-P1-01 dikerjakan, PR terbuka
 Ringkasan: Mengubah tipe data nominal/keuangan dari `float64` menjadi `int64` di model, handler, template, dan service. Mengganti parser `strconv.ParseFloat` menjadi `strconv.ParseInt`. `go build` sukses.
 PR: https://github.com/cecep-azhar/jurnalumi/pull/20
+
+### $(date '+%Y-%m-%d %H:%M WIB') — QA-P1-03
+Status: QA-P1-03 dikerjakan, PR terbuka
+Ringkasan: Aktifkan PostgreSQL Row-Level Security, tambahkan helper `Scoped(tenantID)` dan ganti `db.DB.Where("tenant_id = ?")` dengan `db.DB.Scopes(db.Scoped(...))` di semua handler. Kompilasi sukses.
+PR: https://github.com/cecep-azhar/jurnalumi/pull/22
