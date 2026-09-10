@@ -71,9 +71,9 @@
 ### B. Ledger inti (kejujuran angka & kebiasaan dasar user)
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[~]` | QA-P1-07 🔴 | Edit & hapus transaksi (soft delete) — penyebab #1 orang berhenti pakai app keuangan | `internal/handlers/dashboard.go`, route baru | QA-P1-01, QA-P1-05 |
+| `[ ]` | QA-P1-07 🔴 | Edit & hapus transaksi (soft delete) — penyebab #1 orang berhenti pakai app keuangan | `internal/handlers/dashboard.go`, route baru | QA-P1-01, QA-P1-05 |
 | `[x]` | QA-P1-08 | `FormatRupiah` format Indonesia (`Rp 500.000`, kini `Rp 500000.00`) | `web/views/dashboard.templ:9-11` | — |
-| `[~]` | QA-P1-09 🔴 | Filter periode di dashboard — label "Bulan Ini" kini menjumlah SELURUH transaksi sepanjang masa (data menyesatkan) | `internal/handlers/dashboard.go:44-51` | — |
+| `[x]` | QA-P1-09 🔴 | Filter periode di dashboard — label "Bulan Ini" kini menjumlah SELURUH transaksi sepanjang masa (data menyesatkan) | `internal/handlers/dashboard.go:44-51` | — |
 
 ### C. Fitur yang selama ini cuma teks statis di HTML (janji jual yang belum ditepati)
 > Aturan per item: implementasi beneran ATAU non-aktifkan tombolnya + label jelas "segera hadir" (pilih salah satu, jangan biarkan terlihat berfungsi padahal tidak — Aturan Keras #8 di `prompt-qa.md`). Prioritas: implement kalau murah (< 1 hari kerja), disable+label kalau besar.
@@ -252,8 +252,11 @@ PR: https://github.com/cecep-azhar/jurnalumi/pull/25
 Ringkasan: Implement test minimal untuk round money int64 dan rbac logic `RequireRole`. RLS logic test di-skip (sulit mock Gorm Scope tenant), diganti verifikasi manual sebelumnya. Fix compile error string fmt `%f` > `%d` pada asset & debts handler imbas pergantian data tipe. `go test` and `go build` pass.
 Catatan: RLS test ditiadakan dan diganti fix UI float templ errors. Test scope sederhana pada model_test dan auth_test.
 ### 2026-09-10 09:52 WIB — QA-P1-08\nStatus: PR dibuka, menunggu merge\nPR: https://github.com/cecep-azhar/jurnalumi/pull/27\nRingkasan: Memperbarui fungsi `FormatRupiah` di `dashboard.templ` menggunakan `golang.org/x/text/message` untuk pemisah ribuan ala Indonesia. Verifikasi: templ generate dan go build sukses.\nCatatan: -
-### $(date '+%Y-%m-%d %H:%M WIB') — QA-P1-09
-Status: PR dibuka, menunggu merge
+### 2026-09-10 11:34 WIB — QA-P1-09
+Status: selesai & terverifikasi
 PR: https://github.com/cecep-azhar/jurnalumi/pull/28
-Ringkasan: Memperbaiki filter periode transaksi di dashboard. Sebelumnya `totalIncome` dan `totalExpense` dihitung dari seluruh transaksi, sekarang difilter berdasarkan `TransactionDate` hanya untuk bulan berjalan (awal s/d akhir bulan). `go build` pass.
-Catatan: -
+Ringkasan: PR di-merge ke main. Task [QA-P1-09] selesai.
+
+### 2026-09-10 11:34 WIB — QA-P1-07
+Status: PR 26 ditutup tanpa merge. Dikembalikan ke [ ].
+PR: https://github.com/cecep-azhar/jurnalumi/pull/26
