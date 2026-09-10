@@ -101,3 +101,32 @@ type Voucher struct {
 	UsedBy    *uuid.UUID `gorm:"type:uuid" json:"used_by"`
 	UsedAt    *time.Time `json:"used_at"`
 }
+
+// Budget represents monthly budget per category
+type Budget struct {
+	Base
+	TenantID   uuid.UUID `gorm:"type:uuid;not null;index" json:"tenant_id"`
+	CategoryID uuid.UUID `gorm:"type:uuid;not null;index" json:"category_id"`
+	Period     string    `gorm:"size:7;not null" json:"period"` // format: YYYY-MM
+	Amount     int64     `gorm:"type:bigint;not null" json:"amount"`
+}
+
+// PriceSnapshot represents historical price data
+type PriceSnapshot struct {
+	Base
+	CommodityType string    `gorm:"size:50;not null;index" json:"commodity_type"`
+	PricePerGram  int64     `gorm:"type:bigint;not null" json:"price_per_gram"`
+	Source        string    `gorm:"size:100;not null" json:"source"`
+	SnapshotDate  time.Time `gorm:"index" json:"snapshot_date"`
+}
+
+// Payment represents subscription payments
+type Payment struct {
+	Base
+	TenantID      uuid.UUID  `gorm:"type:uuid;not null;index" json:"tenant_id"`
+	ExternalID    string     `gorm:"size:100;uniqueIndex;not null" json:"external_id"`
+	Amount        int64      `gorm:"type:bigint;not null" json:"amount"`
+	Status        string     `gorm:"size:50;not null" json:"status"`
+	PaymentMethod string     `gorm:"size:50" json:"payment_method"`
+	PaidAt        *time.Time `json:"paid_at"`
+}
