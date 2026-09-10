@@ -28,7 +28,7 @@ func ReportGET(c echo.Context) error {
 	}
 
 	var transactions []models.Transaction
-	db.DB.Where("tenant_id = ?", userCtx.TenantID).Order("transaction_date desc").Find(&transactions)
+	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Order("transaction_date desc").Find(&transactions)
 
 	var totalIncome int64 = 0.0
 	var totalExpense int64 = 0.0
@@ -48,7 +48,7 @@ func ReportExportCSV(c echo.Context) error {
 	userCtx := c.Get("user_context").(middleware.UserContext)
 
 	var transactions []models.Transaction
-	db.DB.Where("tenant_id = ?", userCtx.TenantID).Order("transaction_date desc").Find(&transactions)
+	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Order("transaction_date desc").Find(&transactions)
 
 	c.Response().Header().Set(echo.HeaderContentType, "text/csv")
 	c.Response().Header().Set(echo.HeaderContentDisposition, fmt.Sprintf("attachment; filename=Laporan_Keuangan_JurnalUmi_%s.csv", time.Now().Format("2006-01-02")))
@@ -86,7 +86,7 @@ func FamilyGET(c echo.Context) error {
 	}
 
 	var members []models.User
-	db.DB.Where("tenant_id = ?", userCtx.TenantID).Find(&members)
+	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Find(&members)
 
 	return Render(c, views.FamilyManagement(tenant, user, members))
 }

@@ -25,10 +25,10 @@ func DebtGET(c echo.Context) error {
 
 	// Fetch Debts & Receivables
 	var debts []models.Debt
-	db.DB.Where("tenant_id = ?", userCtx.TenantID).Find(&debts)
+	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Find(&debts)
 
 	var wallets []models.Wallet
-	db.DB.Where("tenant_id = ?", userCtx.TenantID).Find(&wallets)
+	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Find(&wallets)
 
 	var totalDebt int64 = 0
 	var totalReceivable int64 = 0
@@ -107,12 +107,12 @@ func DebtPayPOST(c echo.Context) error {
 	defer xr.Rollback()
 
 	var debt models.Debt
-	if err := xr.Where("tenant_id = ? AND id = ?", userCtx.TenantID, debtID).First(&debt).Error; err != nil {
+	if err := xr.Scopes(db.Scoped(userCtx.TenantID)).Where("id = ?", debtID).First(&debt).Error; err != nil {
 		return c.Redirect(http.StatusFound, "/debts")
 	}
 
 	var wallet models.Wallet
-	if err := xr.Where("tenant_id = ? AND id = ?", userCtx.TenantID, walletID).First(&wallet).Error; err != nil {
+	if err := xr.Scopes(db.Scoped(userCtx.TenantID)).Where("id = ?", walletID).First(&wallet).Error; err != nil {
 		return c.Redirect(http.StatusFound, "/debts")
 	}
 

@@ -41,5 +41,15 @@ func InitDB(dsn string) {
 		log.Fatalf("Failed to migrate database: %v", err)
 	}
 	
+	// Enable RLS on tables with tenant_id
+	tables := []string{
+		"users", "categories", "wallets", "commodity_assets", "debts", "transactions",
+	}
+	for _, table := range tables {
+		if err := EnableRLS(DB, table); err != nil {
+			log.Printf("Failed to enable RLS on %s: %v", table, err)
+		}
+	}
+	
 	log.Println("Database migrated successfully.")
 }
