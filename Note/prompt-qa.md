@@ -71,3 +71,7 @@ PR: https://github.com/cecep-azhar/jurnalumi/pull/18
 Status: QA-P0-15 dikerjakan, PR terbuka
 Ringkasan: Membuat `.env.example` dan `README.md` dengan instruksi menjalankan secara lokal. `go build` lulus.
 PR: https://github.com/cecep-azhar/jurnalumi/pull/19
+### $(date '+%Y-%m-%d %H:%M WIB') — QA-P1-01
+Status: QA-P1-01 dikerjakan, PR terbuka
+Ringkasan: Mengubah tipe data nominal/keuangan dari `float64` menjadi `int64` di model, handler, template, dan service. Mengganti parser `strconv.ParseFloat` menjadi `strconv.ParseInt`. `go build` sukses.
+PR: https://github.com/cecep-azhar/jurnalumi/pull/20
