@@ -197,13 +197,13 @@ PR: https://github.com/cecep-azhar/jurnalumi/pull/7
 Ringkasan: Rate limiter 5x/detik ditambahkan di endpoint `POST /login` dan `POST /register`.
 Catatan: Plafon belum tercapai (PR masih ≤ 3 yang terbuka, setelah run ini mungkin plafon penuh jadi 4 PR terbuka — cek run berikut).
 
-### $(date '+%Y-%m-%d %H:%M WIB') — QA-P0-14
+### 2026-09-10 11:06 WIB — QA-P0-14
 Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/16
 Ringkasan: Menambahkan `docker-compose.yml` (PostgreSQL 16 + Mailhog + App). Auto-merge PR #15 dilakukan sebelum ini.
 Catatan: PR #16 terbuka.
 
-### $(date '+%Y-%m-%d %H:%M WIB') — QA-P0-15
+### 2026-09-10 11:06 WIB — QA-P0-15
 Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/19
 Ringkasan: Membuat `.env.example` dan `README.md` untuk instruksi lokal dev.
@@ -221,7 +221,7 @@ PR: https://github.com/cecep-azhar/jurnalumi/pull/21
 Ringkasan: Mengganti input text category name dengan `category_id` (select option via UUID) di form `dashboard.templ`. Handler mencari kategori dari DB untuk mendapat `Name` dan mengaitkan `category_id` ke model Transaksi. Kompilasi sukses.
 Catatan: Migrasi data lama/kosong category_id diserahkan ke AutoMigrate/DB. Entri ini direkonstruksi oleh Claude (lihat catatan insiden #2).
 
-### $(date '+%Y-%m-%d %H:%M WIB') — QA-P1-07
+### 2026-09-10 11:06 WIB — QA-P1-07
 Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/26
 Ringkasan: Menambahkan fitur hapus transaksi dengan endpoint POST /transactions/delete. Saat dihapus, saldo dompet akan otomatis di-revert sesuai tipe transaksi (income/expense). Tombol hapus telah ditambahkan di view dashboard lengkap dengan js konfirmasi. Verifikasi: templ generate dan go build lulus.
@@ -231,22 +231,22 @@ PR: https://github.com/cecep-azhar/jurnalumi/pull/22
 Ringkasan: Aktifkan PostgreSQL Row-Level Security, tambahkan helper `Scoped(tenantID)` dan ganti `db.DB.Where("tenant_id = ?")` dengan `db.DB.Scopes(db.Scoped(...))` di semua handler. Kompilasi sukses.
 Catatan: Entri ini direkonstruksi oleh Claude (lihat catatan insiden #2). Prof sebaiknya review PR ini dengan teliti — RLS salah pasang bisa bikin data tenant lain kebaca atau sebaliknya tenant sendiri terkunci.
 
-### $(date '+%Y-%m-%d %H:%M WIB') — QA-P1-02
+### 2026-09-10 11:06 WIB — QA-P1-02
 Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/21
 Ringkasan: Mengganti input text category name dengan \`category_id\` (select option via UUID) di form \`dashboard.templ\`. Di handler, mencari kategori dari DB untuk mendapat \`Name\` dan mengaitkan \`category_id\` ke model Transaksi. Kompilasi sukses.
 Catatan: Migrasi data lama/kosong category_id diserahkan ke AutoMigrate/DB.
-### $(date '+%Y-%m-%d %H:%M WIB') — QA-P1-04
+### 2026-09-10 11:06 WIB — QA-P1-04
 Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/23
 Ringkasan: Membuat struct Budget, PriceSnapshot, Payment di models.go dan mendaftarkannya ke dalam gorm AutoMigrate. go build lulus.
 Catatan: Migrasi ditangani oleh gorm db.AutoMigrate saat startup.
-### $(date '+%Y-%m-%d %H:%M WIB') — QA-P1-05
+### 2026-09-10 11:06 WIB — QA-P1-05
 Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/24
 Ringkasan: Implementasi opening balance ketika wallet di-create dan cmd script rekonsiliasi saldo harian (CMD terpisah yang bisa dijalankan scheduler cron). Verified build.
 Catatan: Migrasi kategori "Saldo Awal" berjalan on-the-fly ketika wallet pertama dengan balance dibuat.
-### $(date '+%Y-%m-%d %H:%M WIB') — QA-P1-06
+### 2026-09-10 11:06 WIB — QA-P1-06
 Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/25
 Ringkasan: Implement test minimal untuk round money int64 dan rbac logic `RequireRole`. RLS logic test di-skip (sulit mock Gorm Scope tenant), diganti verifikasi manual sebelumnya. Fix compile error string fmt `%f` > `%d` pada asset & debts handler imbas pergantian data tipe. `go test` and `go build` pass.
@@ -267,3 +267,9 @@ Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/30
 Ringkasan: Menambahkan BudgetLimit input ke form Kategori. Server hitung realisasi budget dan presentase berdasarkan transaksi bulan berjalan (hanya untuk tipe expense yang punya budget). UI menampilkan text warna warni & bar sesuai limit (Hijau <80%, Kuning 80-99%, Merah >100%).
 Catatan: Verifikasi manual: templ generate, go build, check form / view dashboard.
+
+### 2026-09-10 11:06 WIB — QA-P1-11
+Status: PR dibuka, menunggu merge
+PR: https://github.com/cecep-azhar/jurnalumi/pull/31
+Ringkasan: Mengganti kartu placeholder "Sisa Utang" dengan "Kekayaan Bersih" (total aset likuid + aset emas/perak - sisa hutang aktif). Verifikasi: templ generate dan go build sukses.
+Catatan: -
