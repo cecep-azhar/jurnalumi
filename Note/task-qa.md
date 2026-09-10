@@ -62,9 +62,9 @@
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
 | `[x]` PR [#20](https://github.com/cecep-azhar/jurnalumi/pull/20) | QA-P1-01 🔴 | Konversi seluruh nominal uang ke `int64` rupiah penuh (hapus `float64`) | `internal/models/models.go`, semua handler pemroses uang | — |
-| `[~]` PR [#21](https://github.com/cecep-azhar/jurnalumi/pull/21) | QA-P1-02 | Isi & pakai `category_id` di transaksi (kini cuma `category_name` string → laporan per kategori mustahil) | `internal/handlers/dashboard.go:87-96`, `models.go` | QA-P1-01 |
-| `[~]` PR [#22](https://github.com/cecep-azhar/jurnalumi/pull/22) | QA-P1-03 🔴 | Aktifkan PostgreSQL Row-Level Security + `SET LOCAL app.tenant_id` per request + helper `Scoped(c)` (lihat S9 di `review.md`) | `internal/db/`, semua handler (ganti `db.DB` langsung) | QA-P0-04 |
-| `[~]` PR [#23](https://github.com/cecep-azhar/jurnalumi/pull/23) | QA-P1-04 | Tabel baru: `budgets(tenant,category,period)`, `price_snapshots`, `payments` (recurring_rules & audit_logs DITUNDA, lihat non-kritis) | `internal/models/models.go`, migration | QA-P1-01, QA-P1-02 |
+| `[x]` PR [#21](https://github.com/cecep-azhar/jurnalumi/pull/21) | QA-P1-02 | Isi & pakai `category_id` di transaksi (kini cuma `category_name` string → laporan per kategori mustahil) | `internal/handlers/dashboard.go:87-96`, `models.go` | QA-P1-01 |
+| `[x]` PR [#22](https://github.com/cecep-azhar/jurnalumi/pull/22) | QA-P1-03 🔴 | Aktifkan PostgreSQL Row-Level Security + `SET LOCAL app.tenant_id` per request + helper `Scoped(c)` (lihat S9 di `review.md`) | `internal/db/`, semua handler (ganti `db.DB` langsung) | QA-P0-04 |
+| `[x]` PR [#23](https://github.com/cecep-azhar/jurnalumi/pull/23) | QA-P1-04 | Tabel baru: `budgets(tenant,category,period)`, `price_snapshots`, `payments` (recurring_rules & audit_logs DITUNDA, lihat non-kritis) | `internal/models/models.go`, migration | QA-P1-01, QA-P1-02 |
 | `[ ]` | QA-P1-05 | Transaksi `opening_balance` saat wallet dibuat + job rekonsiliasi saldo harian (deteksi saldo vs histori divergen) | `internal/handlers/dashboard.go:116-134` | QA-P1-01 |
 | `[ ]` | QA-P1-06 🔴 | Test minimal: perhitungan uang (rounding, konversi), isolasi tenant (RLS bocor?), RBAC (role rendah tidak bisa akses route tinggi) | `internal/**/*_test.go` (baru) | QA-P1-03, QA-P0-04 |
 
