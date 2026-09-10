@@ -146,9 +146,42 @@ func WalletPOST(c echo.Context) error {
 		return c.String(http.StatusBadRequest, "Input tidak valid")
 	}
 
-	if err := db.DB.Create(&wallet).Error; err != nil {
-		return c.String(http.StatusInternalServerError, "Gagal menambahkan dompet")
+	tx := db.DB.Begin()
+
+	if err := tx.Create(&wallet).Error; err != nil {
+		tx.Rollback()
+		return c.Redirect(http.StatusFound, "/dashboard?error=failed_create_wallet")
 	}
+
+	if balance > 0 {
+		var initialCat models.Category
+		if err := tx.Where("tenant_id = ? AND name = ?", userCtx.TenantID, "Saldo Awal").First(&initialCat).Error; err != nil {
+			initialCat = models.Category{
+				TenantID: userCtx.TenantID,
+				Name:     "Saldo Awal",
+				Type:     "income",
+			}
+			tx.Create(&initialCat)
+		}
+
+		transaction := models.Transaction{
+			TenantID:        userCtx.TenantID,
+			UserID:          userCtx.UserID,
+			WalletID:        wallet.ID,
+			Type:            "income",
+			CategoryID:      &initialCat.ID,
+			CategoryName:    initialCat.Name,
+			Amount:          balance,
+			Description:     "Saldo Awal Dompet",
+			TransactionDate: time.Now(),
+		}
+		if err := tx.Create(&transaction).Error; err != nil {
+			tx.Rollback()
+			return c.Redirect(http.StatusFound, "/dashboard?error=failed_create_wallet_tx")
+		}
+	}
+
+	tx.Commit()
 
 	return c.Redirect(http.StatusFound, "/dashboard")
 }
