@@ -5,7 +5,11 @@
 - **Yang TIDAK masuk sini:** P1 non-kritis & seluruh P2 (referensi di bagian paling bawah). `task.md` tetap sumber kebenaran untuk backlog lengkap; file ini adalah **subset gate "boleh publish"**, lebih sempit & lebih dieksekusi cron.
 - **Prosedur kerja Hermes lengkap ada di `prompt-qa.md`** — file ini hanya data (checklist + log), bukan instruksi.
 
-> ⚠️ **Catatan insiden (9 Sep 2026, sore):** versi pertama file ini tidak pernah di-commit ke `main` (cuma untracked file). Saat Hermes bikin branch `qa/p0-01-admin-auth` lalu `git add -A`, file ini ikut ter-commit DI DALAM branch itu — dan hilang dari `main` begitu Hermes pindah branch ke task berikutnya. Akibatnya task kedua (SESSION_SECRET) tidak menemukan file ini dan fallback nulis status ke `task.md` saja. **Fix:** file ini sekarang di-commit langsung ke `main` (lihat instruksi commit di akhir respons), dan `prompt-qa.md` diperbarui — Note/task-qa.md & Note/task.md tidak boleh lagi ikut ter-commit di dalam branch `qa/*`, update status selalu lewat commit terpisah langsung di `main`.
+> ⚠️ **Catatan insiden (9 Sep 2026, sore):** versi pertama file ini tidak pernah di-commit ke `main` (cuma untracked file). Saat Hermes bikin branch `qa/p0-01-admin-auth` lalu `git add -A`, file ini ikut ter-commit DI DALAM branch itu — dan hilang dari `main` begitu Hermes pindah branch ke task berikutnya. Akibatnya task kedua (SESSION_SECRET) tidak menemukan file ini dan fallback nulis status ke `task.md` saja. **Fix:** file ini sekarang di-commit langsung ke `main`, dan `prompt-qa.md` diperbarui — Note/task-qa.md & Note/task.md tidak boleh lagi ikut ter-commit di dalam branch `qa/*`, update status selalu lewat commit terpisah langsung di `main`.
+
+> ⚠️ **Catatan insiden #2 (10 Sep 2026 siang):** koreksi status yang Claude buat sempat ke-reset dari working tree sebelum ter-commit (kemungkinan `git reset` oleh Hermes di awal salah satu run, di direktori kerja yang sama), lalu Hermes lanjut kerja di atas tabel yang masih basi. Terpisah dari itu — **`prompt-qa.md` (prosedur kerja Hermes) ketimpa jadi versi ringkas 17 baris**, kehilangan seluruh Aturan Keras, langkah reconcile PR lama, dan daftar larangan. Sudah dipulihkan + ditambah aturan baru: **Hermes dilarang menulis ulang isi `prompt-qa.md` sama sekali** — file itu sekarang read-only bagi Hermes, semua log HANYA masuk ke `Log Eksekusi` di file ini.
+>
+> **Status ringkas (direkonsiliasi 10 Sep 2026 siang, versi ke-2):** P0 **16/16 merged**, `go build ./...` lulus di `main`. P1-KRITIS: QA-P1-01 (int64) **merged** (PR [#20](https://github.com/cecep-azhar/jurnalumi/pull/20)); QA-P1-02 (category_id, PR [#21](https://github.com/cecep-azhar/jurnalumi/pull/21)) & QA-P1-03 (RLS, PR [#22](https://github.com/cecep-azhar/jurnalumi/pull/22)) **PR terbuka, belum di-merge**. Sisa 28 item P1-kritis belum disentuh. **Belum siap publish.**
 
 ## Legend
 `[ ]` belum · `[~]` sedang dikerjakan **atau PR sudah dibuka tapi belum di-merge Prof** · `[x]` selesai — kode **sudah merged ke `main`** (bukan cuma PR terbuka) · `[!]` blocked, butuh keputusan Prof (lihat catatan di item) · 🔴 = kalau di-skip: risiko keamanan/uang/hukum, bukan sekadar kurang fitur.
@@ -26,9 +30,9 @@
 | `[x]` PR [#4](https://github.com/cecep-azhar/jurnalumi/pull/4) | QA-P0-01 🔴 | Proteksi seluruh `/admin/*`: middleware auth + role `superadmin` | `cmd/server/main.go:55-57` (saat ini tanpa middleware sama sekali) | — |
 | `[x]` | QA-P0-02 🔴 | `SESSION_SECRET` dari env; refuse start jika kosong saat `APP_ENV=production` | `cmd/server/main.go:32` (hardcoded `jurnalumi-super-secret-key`, ter-commit) | — |
 | `[x]` | QA-P0-03 🔴 | Cookie session: `Secure` + `SameSite=Lax` + rotasi session id saat login | `internal/handlers/auth.go:37-41` | — |
-| `[~]` PR [#5](https://github.com/cecep-azhar/jurnalumi/pull/5) | QA-P0-04 🔴 | Middleware `RequireRole(...)` + terapkan matrix `Role_Permission.md` ke semua route | `internal/middleware/auth.go` (baru), semua route di `main.go` | QA-P0-01 |
-| `[~]` PR [#6](https://github.com/cecep-azhar/jurnalumi/pull/6) | QA-P0-05 🔴 | `middleware.CSRF()` global + hidden token di semua form Templ | `cmd/server/main.go`, semua file `web/views/*.templ` yang punya `<form>` | — |
-| `[~]` PR [#7](https://github.com/cecep-azhar/jurnalumi/pull/7) | QA-P0-06 🔴 | Rate limit `/login` & `/register` + lockout 5x gagal | `cmd/server/main.go:49-51` | — |
+| `[x]` PR [#5](https://github.com/cecep-azhar/jurnalumi/pull/5) | QA-P0-04 🔴 | Middleware `RequireRole(...)` + terapkan matrix `Role_Permission.md` ke semua route | `internal/middleware/auth.go` (baru), semua route di `main.go` | QA-P0-01 |
+| `[x]` PR [#6](https://github.com/cecep-azhar/jurnalumi/pull/6) | QA-P0-05 🔴 | `middleware.CSRF()` global + hidden token di semua form Templ | `cmd/server/main.go`, semua file `web/views/*.templ` yang punya `<form>` | — |
+| `[x]` PR [#7](https://github.com/cecep-azhar/jurnalumi/pull/7) | QA-P0-06 🔴 | Rate limit `/login` & `/register` + lockout 5x gagal | `cmd/server/main.go:49-51` | — |
 | `[x]` PR [#8](https://github.com/cecep-azhar/jurnalumi/pull/8) | QA-P0-07 | Hapus `middleware.CORS()` global (tidak perlu, ini SSR bukan API publik) | `cmd/server/main.go:39` | — |
 | `[x]` PR [#9](https://github.com/cecep-azhar/jurnalumi/pull/9) | QA-P0-08 | Security header dasar: HSTS, X-Content-Type-Options nosniff, Referrer-Policy, CSP dasar | `cmd/server/main.go` | — |
 | `[x]` PR [#10](https://github.com/cecep-azhar/jurnalumi/pull/10) | QA-P0-09 | Seed CLI untuk buat user `superadmin` (bukan lewat form publik) | `cmd/` (command baru, mis. `cmd/seed/`) | QA-P0-04 |
@@ -36,15 +40,15 @@
 ### Integritas data
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[~]` PR [#11](https://github.com/cecep-azhar/jurnalumi/pull/11) | QA-P0-10 🔴 | Matikan/ganti `DebtPayPOST` yang membagi dua sisa utang → bayar nyata: pilih wallet+nominal → insert transaksi + potong saldo + kurangi sisa, 1 DB transaction | `internal/handlers/debts.go:82-91` (komentar sendiri: "mock implementation") | — |
+| `[x]` PR [#11](https://github.com/cecep-azhar/jurnalumi/pull/11) | QA-P0-10 🔴 | Matikan/ganti `DebtPayPOST` yang membagi dua sisa utang → bayar nyata: pilih wallet+nominal → insert transaksi + potong saldo + kurangi sisa, 1 DB transaction | `internal/handlers/debts.go:82-91` (komentar sendiri: "mock implementation") | — |
 | `[x]` PR [#13](https://github.com/cecep-azhar/jurnalumi/pull/13) | QA-P0-11 🔴 | Tangani error `db.Create/Save` di semua handler (kini diabaikan, redirect seolah sukses) | `dashboard.go:132,154`, `features.go:114`, `assets.go:69`, `debts.go:77`, `admin.go:66` | — |
-| `[~]` PR [#14](https://github.com/cecep-azhar/jurnalumi/pull/14) | QA-P0-12 | Validasi input server-side (nominal > 0, tanggal wajar, wallet/kategori milik tenant sendiri, enum tipe valid) | semua handler POST | — |
+| `[x]` PR [#14](https://github.com/cecep-azhar/jurnalumi/pull/14) | QA-P0-12 | Validasi input server-side (nominal > 0, tanggal wajar, wallet/kategori milik tenant sendiri, enum tipe valid) | semua handler POST | — |
 
 ### Infrastruktur dasar
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
 | `[x]` | QA-P0-13 | Perbaiki `Dockerfile.dev` → `golang:1.25-alpine` (kini 1.23, mismatch `go.mod` → build gagal) | `Dockerfile.dev:1` | — |
-| `[~]` PR [#16](https://github.com/cecep-azhar/jurnalumi/pull/16) | QA-P0-14 | `docker-compose.yml` (Postgres 16 + Mailhog + app) untuk dev lokal | root (baru) | QA-P0-13 |
+| `[x]` PR [#16](https://github.com/cecep-azhar/jurnalumi/pull/16) | QA-P0-14 | `docker-compose.yml` (Postgres 16 + Mailhog + app) untuk dev lokal | root (baru) | QA-P0-13 |
 | `[x]` PR [#19](https://github.com/cecep-azhar/jurnalumi/pull/19) | QA-P0-15 | `.env.example` + `README.md` cara menjalankan | root (baru) | QA-P0-02 |
 | `[x]` | QA-P0-16 | Hapus duplikasi `e.Static("/static", ...)` | `main.go:40` & `main.go:81` | — |
 
@@ -57,8 +61,8 @@
 ### A. Fondasi data (kerjakan duluan — banyak item lain menumpang di sini)
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[~]` PR [#20](https://github.com/cecep-azhar/jurnalumi/pull/20) | QA-P1-01 🔴 | Konversi seluruh nominal uang ke `int64` rupiah penuh (hapus `float64`) | `internal/models/models.go`, semua handler pemroses uang | — |
-| `[ ]` | QA-P1-02 | Isi & pakai `category_id` di transaksi (kini cuma `category_name` string → laporan per kategori mustahil) | `internal/handlers/dashboard.go:87-96`, `models.go` | QA-P1-01 |
+| `[x]` PR [#20](https://github.com/cecep-azhar/jurnalumi/pull/20) | QA-P1-01 🔴 | Konversi seluruh nominal uang ke `int64` rupiah penuh (hapus `float64`) | `internal/models/models.go`, semua handler pemroses uang | — |
+| `[~]` PR [#21](https://github.com/cecep-azhar/jurnalumi/pull/21) | QA-P1-02 | Isi & pakai `category_id` di transaksi (kini cuma `category_name` string → laporan per kategori mustahil) | `internal/handlers/dashboard.go:87-96`, `models.go` | QA-P1-01 |
 | `[~]` PR [#22](https://github.com/cecep-azhar/jurnalumi/pull/22) | QA-P1-03 🔴 | Aktifkan PostgreSQL Row-Level Security + `SET LOCAL app.tenant_id` per request + helper `Scoped(c)` (lihat S9 di `review.md`) | `internal/db/`, semua handler (ganti `db.DB` langsung) | QA-P0-04 |
 | `[ ]` | QA-P1-04 | Tabel baru: `budgets(tenant,category,period)`, `price_snapshots`, `payments` (recurring_rules & audit_logs DITUNDA, lihat non-kritis) | `internal/models/models.go`, migration | QA-P1-01, QA-P1-02 |
 | `[ ]` | QA-P1-05 | Transaksi `opening_balance` saat wallet dibuat + job rekonsiliasi saldo harian (deteksi saldo vs histori divergen) | `internal/handlers/dashboard.go:116-134` | QA-P1-01 |
@@ -204,6 +208,24 @@ Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/19
 Ringkasan: Membuat `.env.example` dan `README.md` untuk instruksi lokal dev.
 Catatan: PR #18 sudah dimerge otomatis. Task selanjutnya (P0-15) selesai dibuat PR-nya.
+
+### 2026-09-10 01:00 WIB — QA-P1-01
+Status: merged
+PR: https://github.com/cecep-azhar/jurnalumi/pull/20
+Ringkasan: Mengubah tipe data nominal/keuangan dari `float64` menjadi `int64` di model, handler, template, dan service. Mengganti parser `strconv.ParseFloat` menjadi `strconv.ParseInt`. `go build` sukses.
+Catatan: entri ini direkonstruksi oleh Claude — aslinya sempat tertulis di `prompt-qa.md` (bug, sudah diperbaiki, lihat catatan insiden #2 di atas file).
+
+### 2026-09-10 01:02 WIB — QA-P1-02
+Status: PR dibuka, menunggu merge
+PR: https://github.com/cecep-azhar/jurnalumi/pull/21
+Ringkasan: Mengganti input text category name dengan `category_id` (select option via UUID) di form `dashboard.templ`. Handler mencari kategori dari DB untuk mendapat `Name` dan mengaitkan `category_id` ke model Transaksi. Kompilasi sukses.
+Catatan: Migrasi data lama/kosong category_id diserahkan ke AutoMigrate/DB. Entri ini direkonstruksi oleh Claude (lihat catatan insiden #2).
+
+### 2026-09-10 01:22 WIB — QA-P1-03
+Status: PR dibuka, menunggu merge
+PR: https://github.com/cecep-azhar/jurnalumi/pull/22
+Ringkasan: Aktifkan PostgreSQL Row-Level Security, tambahkan helper `Scoped(tenantID)` dan ganti `db.DB.Where("tenant_id = ?")` dengan `db.DB.Scopes(db.Scoped(...))` di semua handler. Kompilasi sukses.
+Catatan: Entri ini direkonstruksi oleh Claude (lihat catatan insiden #2). Prof sebaiknya review PR ini dengan teliti — RLS salah pasang bisa bikin data tenant lain kebaca atau sebaliknya tenant sendiri terkunci.
 
 ### $(date '+%Y-%m-%d %H:%M WIB') — QA-P1-02
 Status: PR dibuka, menunggu merge
