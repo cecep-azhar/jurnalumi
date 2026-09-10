@@ -79,11 +79,21 @@ templ Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet,
 						<div class="space-y-3">
 							for _, w := range wallets {
 								<div class="flex justify-between items-center p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
-									<div>
-										<p class="font-semibold text-gray-900">{ w.Name }</p>
-										<p class="text-xs text-gray-500 capitalize">{ w.Type }</p>
+									<div class="w-full">
+										<div class="flex justify-between items-center mb-1">
+											<div>
+												<p class="font-semibold text-gray-900">{ w.Name }</p>
+												<p class="text-xs text-gray-500 capitalize">{ w.Type }</p>
+											</div>
+											<div class="font-bold text-gray-800">{ FormatRupiah(w.Balance) }</div>
+										</div>
+										if w.TargetAmount > 0 {
+											<div class="w-full bg-gray-200 rounded-full h-1.5 mt-2">
+												<div class="bg-purple-500 h-1.5 rounded-full" style={ fmt.Sprintf("width: %d%%", (w.Balance * 100) / w.TargetAmount) }></div>
+											</div>
+											<div class="text-[10px] text-gray-500 text-right mt-1">Target: { FormatRupiah(w.TargetAmount) } ({ fmt.Sprintf("%d%%", (w.Balance * 100) / w.TargetAmount) })</div>
+										}
 									</div>
-									<div class="font-bold text-gray-800">{ FormatRupiah(w.Balance) }</div>
 								</div>
 							}
 							if len(wallets) == 0 {
