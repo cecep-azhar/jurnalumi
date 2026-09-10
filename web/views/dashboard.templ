@@ -201,10 +201,10 @@ t			<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } 
 							</div>
 							<div>
 								<label class="block text-sm font-bold text-gray-700 mb-1">Kategori</label>
-								<select name="category" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50 outline-none" required>
+								<select name="category_id" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50 outline-none" required>
 									<option value="" disabled selected>Pilih Kategori...</option>
 									for _, c := range categories {
-										<option x-show={ fmt.Sprintf("type === '%s'", c.Type) } value={ c.Name }>{ c.Name }</option>
+										<option x-show={ fmt.Sprintf("type === '%s'", c.Type) } value={ c.ID.String() }>{ c.Name }</option>
 									}
 								</select>
 							</div>

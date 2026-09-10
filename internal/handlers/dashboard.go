@@ -61,7 +61,7 @@ func TransactionPOST(c echo.Context) error {
 	transType := c.FormValue("type")
 	amountStr := c.FormValue("amount")
 	walletIDStr := c.FormValue("wallet_id")
-	category := c.FormValue("category")
+	categoryID := c.FormValue("category_id")
 	description := c.FormValue("description")
 
 	amount, err := strconv.ParseInt(amountStr, 10, 64)
@@ -74,6 +74,11 @@ func TransactionPOST(c echo.Context) error {
 		return c.Redirect(http.StatusFound, "/dashboard?error=invalid_wallet")
 	}
 
+	catID, err := uuid.Parse(categoryID)
+	if err != nil {
+		return c.Redirect(http.StatusFound, "/dashboard?error=invalid_category")
+	}
+
 	tx := db.DB.Begin()
 
 	var wallet models.Wallet
@@ -82,12 +87,19 @@ func TransactionPOST(c echo.Context) error {
 		return c.Redirect(http.StatusFound, "/dashboard?error=unauthorized_wallet")
 	}
 
+	var category models.Category
+	if err := tx.Where("id = ? AND tenant_id = ?", catID, userCtx.TenantID).First(&category).Error; err != nil {
+		tx.Rollback()
+		return c.Redirect(http.StatusFound, "/dashboard?error=unauthorized_category")
+	}
+
 	transaction := models.Transaction{
 		TenantID:        userCtx.TenantID,
 		UserID:          userCtx.UserID,
 		WalletID:        walletID,
 		Type:            transType,
-		CategoryName:    category,
+		CategoryID:      &catID,
+		CategoryName:    category.Name,
 		Amount:          amount,
 		Description:     description,
 		TransactionDate: time.Now(),
