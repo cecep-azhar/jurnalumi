@@ -130,3 +130,11 @@ type Payment struct {
 	PaymentMethod string     `gorm:"size:50" json:"payment_method"`
 	PaidAt        *time.Time `json:"paid_at"`
 }
+
+// CategoryWithBudget extends Category with realized budget info for UI
+type CategoryWithBudget struct {
+	Category
+	RealizedAmount int64
+	BudgetAmount   int64
+	Percentage     int
+}

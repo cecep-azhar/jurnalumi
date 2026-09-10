@@ -29,8 +29,8 @@ func DashboardHandler(c echo.Context) error {
 	var wallets []models.Wallet
 	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Find(&wallets)
 
-	var categories []models.Category
-	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Find(&categories)
+	var categoriesDB []models.Category
+	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Find(&categoriesDB)
 
 	now := time.Now()
 	firstOfMonth := time.Date(now.Year(), now.Month(), 1, 0, 0, 0, 0, now.Location())
@@ -38,6 +38,34 @@ func DashboardHandler(c echo.Context) error {
 
 	var transactions []models.Transaction
 	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Order("transaction_date desc").Find(&transactions)
+
+	// Calculate Realized Budgets
+	var categories []models.CategoryWithBudget
+	for _, c := range categoriesDB {
+		cb := models.CategoryWithBudget{
+			Category:       c,
+			RealizedAmount: 0,
+			BudgetAmount:   c.BudgetLimit,
+			Percentage:     0,
+		}
+		
+		if cb.Type == "expense" {
+			// Calculate realized amount from transactions in current month
+			for _, t := range transactions {
+				if t.CategoryID != nil && *t.CategoryID == c.ID && 
+				   t.TransactionDate.After(firstOfMonth.Add(-1*time.Second)) && 
+				   t.TransactionDate.Before(lastOfMonth.Add(1*time.Second)) {
+					cb.RealizedAmount += t.Amount
+				}
+			}
+			
+			if cb.BudgetAmount > 0 {
+				cb.Percentage = int(float64(cb.RealizedAmount) / float64(cb.BudgetAmount) * 100)
+			}
+		}
+		
+		categories = append(categories, cb)
+	}
 
 	// Calculate Metrics
 	var liquidBalance int64 = 0
