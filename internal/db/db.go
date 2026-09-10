@@ -35,6 +35,9 @@ func InitDB(dsn string) {
 		&models.Debt{},
 		&models.Transaction{},
 		&models.Voucher{},
+		&models.Budget{},
+		&models.PriceSnapshot{},
+		&models.Payment{},
 	)
 	
 	if err != nil {
