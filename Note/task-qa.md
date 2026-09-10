@@ -221,7 +221,11 @@ PR: https://github.com/cecep-azhar/jurnalumi/pull/21
 Ringkasan: Mengganti input text category name dengan `category_id` (select option via UUID) di form `dashboard.templ`. Handler mencari kategori dari DB untuk mendapat `Name` dan mengaitkan `category_id` ke model Transaksi. Kompilasi sukses.
 Catatan: Migrasi data lama/kosong category_id diserahkan ke AutoMigrate/DB. Entri ini direkonstruksi oleh Claude (lihat catatan insiden #2).
 
-### 2026-09-10 01:22 WIB — QA-P1-03
+### $(date '+%Y-%m-%d %H:%M WIB') — QA-P1-07
+Status: PR dibuka, menunggu merge
+PR: https://github.com/cecep-azhar/jurnalumi/pull/26
+Ringkasan: Menambahkan fitur hapus transaksi dengan endpoint POST /transactions/delete. Saat dihapus, saldo dompet akan otomatis di-revert sesuai tipe transaksi (income/expense). Tombol hapus telah ditambahkan di view dashboard lengkap dengan js konfirmasi. Verifikasi: templ generate dan go build lulus.
+Catatan: PR #26 terbuka.
 Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/22
 Ringkasan: Aktifkan PostgreSQL Row-Level Security, tambahkan helper `Scoped(tenantID)` dan ganti `db.DB.Where("tenant_id = ?")` dengan `db.DB.Scopes(db.Scoped(...))` di semua handler. Kompilasi sukses.
