@@ -45,7 +45,7 @@
 |---|---|---|---|---|
 | `[x]` | QA-P0-13 | Perbaiki `Dockerfile.dev` → `golang:1.25-alpine` (kini 1.23, mismatch `go.mod` → build gagal) | `Dockerfile.dev:1` | — |
 | `[~]` PR [#16](https://github.com/cecep-azhar/jurnalumi/pull/16) | QA-P0-14 | `docker-compose.yml` (Postgres 16 + Mailhog + app) untuk dev lokal | root (baru) | QA-P0-13 |
-| `[~]` PR [#19](https://github.com/cecep-azhar/jurnalumi/pull/19) | QA-P0-15 | `.env.example` + `README.md` cara menjalankan | root (baru) | QA-P0-02 |
+| `[x]` PR [#19](https://github.com/cecep-azhar/jurnalumi/pull/19) | QA-P0-15 | `.env.example` + `README.md` cara menjalankan | root (baru) | QA-P0-02 |
 | `[x]` | QA-P0-16 | Hapus duplikasi `e.Static("/static", ...)` | `main.go:40` & `main.go:81` | — |
 
 ---

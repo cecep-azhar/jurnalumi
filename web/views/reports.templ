@@ -5,11 +5,11 @@ import (
 	"github.com/cecep-azhar/jurnalumi/internal/models"
 )
 
-templ ReportView(tenant models.Tenant, user models.User, transactions []models.Transaction, totalIncome float64, totalExpense float64) {
+templ ReportView(tenant models.Tenant, user models.User, transactions []models.Transaction, totalIncome int64, totalExpense int64) {
 	@Layout("Laporan Finansial & Cetak", tenant, user, reportContent(transactions, totalIncome, totalExpense))
 }
 
-templ reportContent(transactions []models.Transaction, totalIncome float64, totalExpense float64) {
+templ reportContent(transactions []models.Transaction, totalIncome int64, totalExpense int64) {
 	<div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100" x-data="{ filterType: 'all', search: '' }">
 		<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b pb-4 gap-4">
 			<div>

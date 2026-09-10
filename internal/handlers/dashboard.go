@@ -36,13 +36,13 @@ func DashboardHandler(c echo.Context) error {
 	db.DB.Where("tenant_id = ?", userCtx.TenantID).Order("transaction_date desc").Find(&transactions)
 
 	// Calculate Metrics
-	var liquidBalance float64 = 0.0
+	var liquidBalance int64 = 0.0
 	for _, w := range wallets {
 		liquidBalance += w.Balance
 	}
 
-	var totalIncome float64 = 0.0
-	var totalExpense float64 = 0.0
+	var totalIncome int64 = 0.0
+	var totalExpense int64 = 0.0
 	for _, t := range transactions {
 		if t.Type == "income" {
 			totalIncome += t.Amount
@@ -64,7 +64,7 @@ func TransactionPOST(c echo.Context) error {
 	category := c.FormValue("category")
 	description := c.FormValue("description")
 
-	amount, err := strconv.ParseFloat(amountStr, 64)
+	amount, err := strconv.ParseInt(amountStr, 10, 64)
 	if err != nil || amount <= 0 {
 		return c.Redirect(http.StatusFound, "/dashboard?error=invalid_amount")
 	}
@@ -119,8 +119,8 @@ func WalletPOST(c echo.Context) error {
 	balanceStr := c.FormValue("balance")
 	targetStr := c.FormValue("target_amount") // Added for Phase 5 (Sinking Funds)
 
-	balance, _ := strconv.ParseFloat(balanceStr, 64)
-	targetAmount, _ := strconv.ParseFloat(targetStr, 64)
+	balance, _ := strconv.ParseInt(balanceStr, 10, 64)
+	targetAmount, _ := strconv.ParseInt(targetStr, 10, 64)
 
 	wallet := models.Wallet{
 		TenantID:     userCtx.TenantID,
@@ -149,7 +149,7 @@ func CategoryPOST(c echo.Context) error {
 	categoryType := c.FormValue("type")
 	budgetLimitStr := c.FormValue("budget_limit")
 
-	budgetLimit, _ := strconv.ParseFloat(budgetLimitStr, 64)
+	budgetLimit, _ := strconv.ParseInt(budgetLimitStr, 10, 64)
 
 	category := models.Category{
 		TenantID:    userCtx.TenantID,

@@ -30,8 +30,8 @@ func DebtGET(c echo.Context) error {
 	var wallets []models.Wallet
 	db.DB.Where("tenant_id = ?", userCtx.TenantID).Find(&wallets)
 
-	var totalDebt float64 = 0
-	var totalReceivable float64 = 0
+	var totalDebt int64 = 0
+	var totalReceivable int64 = 0
 
 	for _, d := range debts {
 		if d.Type == "debt" {
@@ -55,8 +55,8 @@ func DebtPOST(c echo.Context) error {
 	interestRateStr := c.FormValue("interest_rate")
 	dueDateStr := c.FormValue("due_date")
 
-	totalAmount, _ := strconv.ParseFloat(totalAmountStr, 64)
-	interestRate, _ := strconv.ParseFloat(interestRateStr, 64)
+	totalAmount, _ := strconv.ParseInt(totalAmountStr, 10, 64)
+	interestRate, _ := strconv.ParseInt(interestRateStr, 10, 64)
 
 	var dueDate *time.Time
 	if dueDateStr != "" {
@@ -95,7 +95,7 @@ func DebtPayPOST(c echo.Context) error {
 	amountStr := c.FormValue("amount")
 	walletID := c.FormValue("wallet_id")
 
-	amount, err := strconv.ParseFloat(amountStr, 64)
+	amount, err := strconv.ParseInt(amountStr, 10, 64)
 	if err != nil || amount <= 0 {
 		return c.Redirect(http.StatusFound, "/debts")
 	}

@@ -5,11 +5,11 @@ import (
 	"github.com/cecep-azhar/jurnalumi/internal/models"
 )
 
-templ AssetManagement(tenant models.Tenant, user models.User, assets []models.CommodityAsset, totalAssetValue float64) {
+templ AssetManagement(tenant models.Tenant, user models.User, assets []models.CommodityAsset, totalAssetValue int64) {
 	@Layout("Manajemen Aset Emas & Dinar", tenant, user, assetContent(assets, totalAssetValue))
 }
 
-templ assetContent(assets []models.CommodityAsset, totalAssetValue float64) {
+templ assetContent(assets []models.CommodityAsset, totalAssetValue int64) {
 	<div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100" x-data="{ addAssetModal: false }">
 		<div class="flex justify-between items-center mb-6 border-b pb-4">
 			<div>

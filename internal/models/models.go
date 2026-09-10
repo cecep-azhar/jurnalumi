@@ -39,7 +39,7 @@ type Category struct {
 	Type       string    `gorm:"size:50;not null" json:"type"` // income, expense
 	Name       string    `gorm:"size:255;not null" json:"name"`
 	Color      string    `gorm:"size:50;default:'gray'" json:"color"`
-	BudgetLimit float64   `gorm:"type:numeric(18,2);default:0.00" json:"budget_limit"` // Phase 3: Budget Capping
+	BudgetLimit int64   `gorm:"type:bigint;default:0.00" json:"budget_limit"` // Phase 3: Budget Capping
 }
 
 // Wallet represents Bank, Cash, or E-Wallet accounts (and Sinking Funds)
@@ -48,8 +48,8 @@ type Wallet struct {
 	TenantID     uuid.UUID `gorm:"type:uuid;not null;index" json:"tenant_id"`
 	Name         string    `gorm:"size:255;not null" json:"name"`
 	Type         string    `gorm:"size:50;not null" json:"type"` 
-	Balance      float64   `gorm:"type:numeric(18,2);default:0.00" json:"balance"`
-	TargetAmount float64   `gorm:"type:numeric(18,2);default:0.00" json:"target_amount"` // Sinking/Emergency Fund Target
+	Balance      int64   `gorm:"type:bigint;default:0.00" json:"balance"`
+	TargetAmount int64   `gorm:"type:bigint;default:0.00" json:"target_amount"` // Sinking/Emergency Fund Target
 }
 
 // Transaction represents financial ledger items
@@ -61,7 +61,7 @@ type Transaction struct {
 	CategoryID      *uuid.UUID `gorm:"type:uuid;index" json:"category_id"` // Link to Category DB
 	Type            string    `gorm:"size:50;not null" json:"type"` 
 	CategoryName    string    `gorm:"size:100;not null" json:"category_name"` // Legacy / Denormalized
-	Amount          float64   `gorm:"type:numeric(18,2);not null" json:"amount"`
+	Amount          int64   `gorm:"type:bigint;not null" json:"amount"`
 	Description     string    `gorm:"type:text" json:"description"`
 	TransactionDate time.Time `json:"transaction_date"`
 }
@@ -72,10 +72,10 @@ type CommodityAsset struct {
 	TenantID     uuid.UUID `gorm:"type:uuid;not null;index" json:"tenant_id"`
 	Type         string    `gorm:"size:50;not null" json:"type"` 
 	Name         string    `gorm:"size:255;not null" json:"name"`
-	WeightGram   float64   `gorm:"type:numeric(10,4);not null" json:"weight_gram"`
-	Karatage     float64   `gorm:"type:numeric(5,2);default:24.00" json:"karatage"`
-	BuyPrice     float64   `gorm:"type:numeric(18,2);not null" json:"buy_price"`
-	CurrentValue float64   `gorm:"type:numeric(18,2);default:0.00" json:"current_value"`
+	WeightGram   int64   `gorm:"type:bigint;not null" json:"weight_gram"`
+	Karatage     int64   `gorm:"type:bigint;default:24.00" json:"karatage"`
+	BuyPrice     int64   `gorm:"type:bigint;not null" json:"buy_price"`
+	CurrentValue int64   `gorm:"type:bigint;default:0.00" json:"current_value"`
 }
 
 // Debt represents Utang and Piutang
@@ -85,9 +85,9 @@ type Debt struct {
 	Type            string     `gorm:"size:50;not null" json:"type"` 
 	Title           string     `gorm:"size:255;not null" json:"title"`
 	Counterparty    string     `gorm:"size:255;not null" json:"counterparty"`
-	TotalAmount     float64    `gorm:"type:numeric(18,2);not null" json:"total_amount"`
-	RemainingAmount float64    `gorm:"type:numeric(18,2);not null" json:"remaining_amount"`
-	InterestRate    float64    `gorm:"type:numeric(5,2);default:0.00" json:"interest_rate"`
+	TotalAmount     int64    `gorm:"type:bigint;not null" json:"total_amount"`
+	RemainingAmount int64    `gorm:"type:bigint;not null" json:"remaining_amount"`
+	InterestRate    int64    `gorm:"type:bigint;default:0.00" json:"interest_rate"`
 	DueDate         *time.Time `json:"due_date"`
 	Status          string     `gorm:"size:50;default:'active'" json:"status"` 
 }
