@@ -72,7 +72,7 @@
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
 | `[~]` | QA-P1-07 🔴 | Edit & hapus transaksi (soft delete) — penyebab #1 orang berhenti pakai app keuangan | `internal/handlers/dashboard.go`, route baru | QA-P1-01, QA-P1-05 |
-| `[ ]` | QA-P1-08 | `FormatRupiah` format Indonesia (`Rp 500.000`, kini `Rp 500000.00`) | `web/views/dashboard.templ:9-11` | — |
+| `[~]` | QA-P1-08 | `FormatRupiah` format Indonesia (`Rp 500.000`, kini `Rp 500000.00`) | `web/views/dashboard.templ:9-11` | — |
 | `[ ]` | QA-P1-09 🔴 | Filter periode di dashboard — label "Bulan Ini" kini menjumlah SELURUH transaksi sepanjang masa (data menyesatkan) | `internal/handlers/dashboard.go:44-51` | — |
 
 ### C. Fitur yang selama ini cuma teks statis di HTML (janji jual yang belum ditepati)
