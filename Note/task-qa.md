@@ -429,3 +429,9 @@ Ringkasan: Plafon tercapai. 4 PR terbuka (#29, #30, #31, #32). Menunggu review P
 Status: skip
 PR: -
 Ringkasan: Plafon tercapai. 4 PR terbuka (#29, #30, #31, #32). Menunggu review Prof. Cron idle.
+
+### $(date +'%Y-%m-%d %H:%M WIB') — QA-P1-13
+Status: PR dibuka, menunggu merge
+PR: https://github.com/cecep-azhar/jurnalumi/pull/33
+Ringkasan: Implementasi progress bar sederhana untuk sinking fund / emergency fund target di dompet list view dashboard. Health score di-skip sesuai prioritas soft launch. Verifikasi: templ generate dan go build sukses.
+Catatan: UI form target sudah dibuat di run (QA-P1-04) sebelumnya.
