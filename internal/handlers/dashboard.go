@@ -32,22 +32,28 @@ func DashboardHandler(c echo.Context) error {
 	var categories []models.Category
 	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Find(&categories)
 
+	now := time.Now()
+	firstOfMonth := time.Date(now.Year(), now.Month(), 1, 0, 0, 0, 0, now.Location())
+	lastOfMonth := firstOfMonth.AddDate(0, 1, -1).Add(23*time.Hour + 59*time.Minute + 59*time.Second)
+
 	var transactions []models.Transaction
 	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Order("transaction_date desc").Find(&transactions)
 
 	// Calculate Metrics
-	var liquidBalance int64 = 0.0
+	var liquidBalance int64 = 0
 	for _, w := range wallets {
 		liquidBalance += w.Balance
 	}
 
-	var totalIncome int64 = 0.0
-	var totalExpense int64 = 0.0
+	var totalIncome int64 = 0
+	var totalExpense int64 = 0
 	for _, t := range transactions {
-		if t.Type == "income" {
-			totalIncome += t.Amount
-		} else if t.Type == "expense" {
-			totalExpense += t.Amount
+		if t.TransactionDate.After(firstOfMonth.Add(-1*time.Second)) && t.TransactionDate.Before(lastOfMonth.Add(1*time.Second)) {
+			if t.Type == "income" {
+				totalIncome += t.Amount
+			} else if t.Type == "expense" {
+				totalExpense += t.Amount
+			}
 		}
 	}
 
