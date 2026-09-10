@@ -66,12 +66,12 @@
 | `[x]` PR [#22](https://github.com/cecep-azhar/jurnalumi/pull/22) | QA-P1-03 🔴 | Aktifkan PostgreSQL Row-Level Security + `SET LOCAL app.tenant_id` per request + helper `Scoped(c)` (lihat S9 di `review.md`) | `internal/db/`, semua handler (ganti `db.DB` langsung) | QA-P0-04 |
 | `[x]` PR [#23](https://github.com/cecep-azhar/jurnalumi/pull/23) | QA-P1-04 | Tabel baru: `budgets(tenant,category,period)`, `price_snapshots`, `payments` (recurring_rules & audit_logs DITUNDA, lihat non-kritis) | `internal/models/models.go`, migration | QA-P1-01, QA-P1-02 |
 | `[x]` | QA-P1-05 | Transaksi `opening_balance` saat wallet dibuat + job rekonsiliasi saldo harian (deteksi saldo vs histori divergen) | `internal/handlers/dashboard.go:116-134` | QA-P1-01 |
-| `[~]` PR [#25](https://github.com/cecep-azhar/jurnalumi/pull/25) | QA-P1-06 🔴 | Test minimal: perhitungan uang (rounding, konversi), isolasi tenant (RLS bocor?), RBAC (role rendah tidak bisa akses route tinggi) | `internal/**/*_test.go` (baru) | QA-P1-03, QA-P0-04 |
+| `[x]` PR [#25](https://github.com/cecep-azhar/jurnalumi/pull/25) | QA-P1-06 🔴 | Test minimal: perhitungan uang (rounding, konversi), isolasi tenant (RLS bocor?), RBAC (role rendah tidak bisa akses route tinggi) | `internal/**/*_test.go` (baru) | QA-P1-03, QA-P0-04 |
 
 ### B. Ledger inti (kejujuran angka & kebiasaan dasar user)
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[ ]` | QA-P1-07 🔴 | Edit & hapus transaksi (soft delete) — penyebab #1 orang berhenti pakai app keuangan | `internal/handlers/dashboard.go`, route baru | QA-P1-01, QA-P1-05 |
+| `[~]` | QA-P1-07 🔴 | Edit & hapus transaksi (soft delete) — penyebab #1 orang berhenti pakai app keuangan | `internal/handlers/dashboard.go`, route baru | QA-P1-01, QA-P1-05 |
 | `[ ]` | QA-P1-08 | `FormatRupiah` format Indonesia (`Rp 500.000`, kini `Rp 500000.00`) | `web/views/dashboard.templ:9-11` | — |
 | `[ ]` | QA-P1-09 🔴 | Filter periode di dashboard — label "Bulan Ini" kini menjumlah SELURUH transaksi sepanjang masa (data menyesatkan) | `internal/handlers/dashboard.go:44-51` | — |
 
