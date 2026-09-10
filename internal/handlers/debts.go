@@ -32,16 +32,22 @@ func DebtGET(c echo.Context) error {
 
 	var totalDebt int64 = 0
 	var totalReceivable int64 = 0
+	var snowballDebt *models.Debt = nil
 
-	for _, d := range debts {
+	for i, d := range debts {
 		if d.Type == "debt" {
 			totalDebt += d.RemainingAmount
+			if d.RemainingAmount > 0 {
+				if snowballDebt == nil || d.RemainingAmount < snowballDebt.RemainingAmount {
+					snowballDebt = &debts[i]
+				}
+			}
 		} else if d.Type == "receivable" {
 			totalReceivable += d.RemainingAmount
 		}
 	}
 
-	return Render(c, views.DebtManagement(tenant, user, debts, wallets, totalDebt, totalReceivable))
+	return Render(c, views.DebtManagement(tenant, user, debts, wallets, totalDebt, totalReceivable, snowballDebt))
 }
 
 // DebtPOST handles adding a new debt or receivable

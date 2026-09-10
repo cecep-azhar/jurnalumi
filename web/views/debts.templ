@@ -5,11 +5,11 @@ import (
 	"github.com/cecep-azhar/jurnalumi/internal/models"
 )
 
-templ DebtManagement(tenant models.Tenant, user models.User, debts []models.Debt, wallets []models.Wallet, totalDebt int64, totalReceivable int64) {
-	@Layout("Utang, Piutang & Calculator Snowball", tenant, user, debtContent(debts, wallets, totalDebt, totalReceivable))
+templ DebtManagement(tenant models.Tenant, user models.User, debts []models.Debt, wallets []models.Wallet, totalDebt int64, totalReceivable int64, snowballDebt *models.Debt) {
+	@Layout("Utang, Piutang & Calculator Snowball", tenant, user, debtContent(debts, wallets, totalDebt, totalReceivable, snowballDebt))
 }
 
-templ debtContent(debts []models.Debt, wallets []models.Wallet, totalDebt int64, totalReceivable int64) {
+templ debtContent(debts []models.Debt, wallets []models.Wallet, totalDebt int64, totalReceivable int64, snowballDebt *models.Debt) {
 	<div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100" x-data="{ addDebtModal: false, activeTab: 'all' }">
 		<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b pb-4 gap-4">
 			<div>
@@ -34,10 +34,15 @@ templ debtContent(debts []models.Debt, wallets []models.Wallet, totalDebt int64,
 				<p class="text-xs text-blue-600 mt-1">Uang keluarga yang ada di luar</p>
 			</div>
 			<div class="bg-emerald-50 border border-emerald-200 p-5 rounded-2xl">
-				<p class="text-xs font-bold text-emerald-700 uppercase">Rekomendasi Snowball</p>
-				<h4 class="text-lg font-bold text-emerald-900">Fokus Pelunasan Terkecil First</h4>
-				<p class="text-xs text-emerald-600 mt-1">Metode Snowball menghemat mental & mempercepat bebas utang</p>
-			</div>
+			<p class="text-xs font-bold text-emerald-700 uppercase">Rekomendasi Snowball</p>
+			if snowballDebt != nil {
+				<h4 class="text-lg font-bold text-emerald-900">Fokus: { snowballDebt.Title }</h4>
+				<p class="text-xs text-emerald-600 mt-1">Sisa { FormatRupiah(snowballDebt.RemainingAmount) }. Lunasi ini dulu!</p>
+			} else {
+				<h4 class="text-lg font-bold text-emerald-900">Tidak ada utang aktif</h4>
+				<p class="text-xs text-emerald-600 mt-1">Bebas utang!</p>
+			}
+		</div>
 		</div>
 
 		<!-- Table Debts -->
