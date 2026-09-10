@@ -420,7 +420,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 41, "</select></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Kategori</label> <select name=\"category\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50 outline-none\" required><option value=\"\" disabled selected>Pilih Kategori...</option> ")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 41, "</select></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Kategori</label> <select name=\"category_id\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50 outline-none\" required><option value=\"\" disabled selected>Pilih Kategori...</option> ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -443,9 +443,9 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var25 string
-			templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.ResolveAttributeValue(c.Name)
+			templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.ResolveAttributeValue(c.ID.String())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 207, Col: 80}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 207, Col: 87}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var25)
 			if templ_7745c5c3_Err != nil {
@@ -458,7 +458,7 @@ func Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, 
 			var templ_7745c5c3_Var26 string
 			templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.JoinStringErrs(c.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 207, Col: 91}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 207, Col: 98}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var26))
 			if templ_7745c5c3_Err != nil {
