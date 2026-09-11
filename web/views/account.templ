@@ -1,0 +1,59 @@
+package views
+
+import "github.com/cecep-azhar/jurnalumi/internal/models"
+
+templ AccountSettings(tenant models.Tenant, user models.User) {
+	@Layout("Pengaturan & Privasi", tenant, user, accountContent(tenant, user))
+}
+
+templ accountContent(tenant models.Tenant, user models.User) {
+	<div class="max-w-3xl mx-auto space-y-6">
+		<div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+			<h3 class="font-bold text-2xl mb-2">Ekspor Data (UU PDP)</h3>
+			<p class="text-gray-500 text-sm mb-6">Unduh seluruh riwayat finansial, aset, dan data keluarga Anda dalam format JSON. Anda memiliki hak penuh atas data Anda.</p>
+			
+			<div class="flex items-center space-x-4">
+				<a href="/account/export" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-xl shadow transition">
+					Unduh Data Anda (JSON)
+				</a>
+			</div>
+		</div>
+
+		<div class="bg-red-50 p-6 rounded-2xl border border-red-200">
+			<h3 class="font-bold text-2xl text-red-700 mb-2">Hapus Akun & Data (Danger Zone)</h3>
+			<p class="text-red-600 text-sm mb-6">Tindakan ini akan menghapus akun beserta seluruh data transaksi, utang, dompet, dan profil anggota keluarga. Tindakan ini tidak dapat dibatalkan.</p>
+			
+			if user.Role != "owner" {
+				<div class="bg-red-100 p-4 rounded-lg text-red-800 text-sm font-semibold">
+					Hanya owner (pembuat akun) yang dapat menghapus data ini.
+				</div>
+			} else {
+				<div x-data="{ confirmDelete: false }">
+					<button @click="confirmDelete = true" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl shadow transition">
+						Hapus Seluruh Data Saya
+					</button>
+
+					<div x-cloak x-show="confirmDelete" class="fixed inset-0 z-50 flex items-center justify-center p-4" x-transition.opacity>
+						<div class="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm" @click="confirmDelete = false"></div>
+						<div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative z-10" x-transition.scale>
+							<h3 class="text-xl font-bold text-gray-900 mb-4">Konfirmasi Hapus Akun</h3>
+							<p class="text-gray-600 text-sm mb-6">Apakah Anda yakin ingin menghapus seluruh data Anda? Anda tidak akan bisa mengembalikannya.</p>
+							
+							<form action="/account/delete" method="POST" class="space-y-4">
+								<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+								<div class="flex space-x-3">
+									<button type="button" @click="confirmDelete = false" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 rounded-xl transition">
+										Batal
+									</button>
+									<button type="submit" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-xl shadow transition">
+										Ya, Hapus Permanen
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+}

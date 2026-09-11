@@ -105,6 +105,11 @@ func main() {
 	appGroup.GET("/family", handlers.FamilyGET)
 	appGroup.POST("/family", handlers.FamilyPOST, appMiddleware.RequireRole("owner", "spouse"))
 
+	// Account settings & data management (UU PDP compliance)
+	appGroup.GET("/account", handlers.AccountGET)
+	appGroup.GET("/account/export", handlers.AccountExportGET, appMiddleware.RequireRole("owner"))
+	appGroup.POST("/account/delete", handlers.AccountDeletePOST, appMiddleware.RequireRole("owner"))
+
 	// Static files for PWA (Phase 6)
 	e.Static("/static", "web/static")
 

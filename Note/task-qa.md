@@ -121,7 +121,7 @@
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
 | `[!]` | QA-P1-27 🔴 | Halaman Kebijakan Privasi & Syarat Ketentuan (UU PDP No. 27/2022 — app ini nyimpan seluruh data keuangan keluarga orang) | `web/views/` (baru) | — |
-| `[!]` | QA-P1-28 🔴 | Hapus akun mandiri + ekspor data mandiri (hak subjek data, prasyarat UU PDP) | `internal/handlers/` (baru) | QA-P1-01 |
+| `[x]` | QA-P1-28 🔴 | Hapus akun mandiri + ekspor data mandiri (hak subjek data, prasyarat UU PDP) | `internal/handlers/` (baru) | QA-P1-01 |
 | `[!]` | QA-P1-29 🔴 | Backup `pg_dump` harian terenkripsi + **uji restore minimal 1×, catat tanggal ujinya di sini** | infra deploy (Coolify scheduled task / cron VPS) | QA-P0-14 |
 | `[!]` | QA-P1-30 🔴 | Dockerfile production + deploy via **Coolify** + domain + TLS — ini yang bikin JurnalUmi BENERAN online | `Dockerfile` (baru, production, bukan `.dev`) | QA-P0-13 |
 | `[!]` | QA-P1-31 | FAQ keamanan data di landing page (bundling murah dengan QA-P1-27) | `web/views/landing.html` | QA-P1-27 |
@@ -403,3 +403,9 @@ Status: selesai & terverifikasi
 PR: direct commit (override)
 Ringkasan: Memperbaiki perhitungan nilai dinar agar merespons input `WeightGram` sebagai keping (1 keping = 4.25 gram). Label di form disesuaikan menjadi "Berat (Gram) / Jumlah Keping (Dinar)". Nilai perak di-refactor ke named constant fallback, dan label asset disesuaikan untuk tipe dinar menjadi keping.
 Catatan: -
+
+### 2026-09-12 07:15 WIB - QA-P1-28
+Status: selesai
+PR: direct commit
+Ringkasan: Implementasi halaman Pengaturan Akun (GET /account), ekspor data (GET /account/export JSON), dan hapus akun mandiri (POST /account/delete). UI menggunakan konfirmasi modal, role-gated hanya owner. Link ditambahkan ke layout. Verifikasi: templ generate dan go build ./... sukses.
+Catatan: Sesuai UU PDP No. 27/2022.
