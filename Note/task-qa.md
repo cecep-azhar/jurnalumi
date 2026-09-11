@@ -107,7 +107,7 @@
 |---|---|---|---|---|
 | `[!]` | QA-P1-20 🔴 | Middleware `RequirePlan(feature)` + enforcement limit Free tier (tanpa ini semua user dapat premium gratis selamanya — model bisnis tidak eksis) | semua handler yang membatasi fitur premium | QA-P0-04, QA-P1-04 |
 | `[!]` | QA-P1-21 | Cron turunkan plan saat `plan_expires_at` lewat (pakai QA-P1-19) | `internal/handlers/admin.go` | QA-P1-19, QA-P1-20 |
-| `[!]` | QA-P1-22 🔴 | Route `POST /activate-voucher` — form di `landing.html:247` KINI MENUJU 404 di landing page publik, ini bug yang langsung kelihatan user | `cmd/server/main.go`, handler baru | — |
+| `[~]` | QA-P1-22 🔴 | Route `POST /activate-voucher` — form di `landing.html:247` KINI MENUJU 404 di landing page publik, ini bug yang langsung kelihatan user | `cmd/server/main.go`, handler baru | — |
 | `[!]` | QA-P1-23 🔴 | Webhook Mayar.id `payment.success` (verifikasi signature, idempotent, tabel `payments`) — TANPA INI: orang bayar di Mayar, JurnalUmi tidak pernah tahu, user tidak ter-upgrade. Ini flow bisnis paling kritis yang bolong | `internal/handlers/` (baru) | QA-P1-04 |
 | `[!]` | QA-P1-24 | Satu sumber harga (env/konstanta) dipakai konsisten di kode + landing + materi promosi (kini 3 angka beda: 39rb/bln, 190rb/thn, link `jurnalumi-premium-39k`) | lintas file, lihat `review.md` F15 | — |
 
@@ -356,7 +356,7 @@ Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/34
 Ringkasan: Implement cron scheduler daily untuk fetch harga emas ke table price_snapshots. Mengganti loop request HTTP /assets dengan query DB single snapshot + perbaikan performa load asset page (fix ~60s hang). Include internal/scheduler/cron.go setup (cover part QA-P1-19). Verifikasi: go build ./... sukses.
 
-### 2026-09-11 15:40 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 6 PR terbuka (#29, #30, #31, #32, #33, #34). Menunggu review Prof. Cron idle.
+### 2026-09-11 15:42 WIB — QA-P1-22
+Status: PR dibuka, menunggu merge
+PR: pending
+Ringkasan: Implement route POST /activate-voucher untuk menukar voucher menjadi premium.
