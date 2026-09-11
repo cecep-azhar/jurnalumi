@@ -89,7 +89,7 @@
 |---|---|---|---|---|
 | `[~]` PR [#34](https://github.com/cecep-azhar/jurnalumi/pull/34) | QA-P1-14 🔴 | Cron harian ambil harga → `price_snapshots`; halaman `/assets` HANYA baca snapshot (fix bug: 20 aset = 20×timeout 3 detik = halaman hang ~60 detik) | `internal/handlers/assets.go:31-35`, scheduler baru | QA-P1-04, QA-P1-19 |
 | `[!]` | QA-P1-15 🔴 | Ganti/verifikasi sumber harga (`api.logammulia.com` tidak eksis, selalu fallback konstanta) ATAU label jelas "harga manual, update berkala" — jangan sebut "real-time" kalau bohong | `internal/services/gold.go:17` | QA-P1-14 |
-| `[!]` | QA-P1-16 | Perbaiki perhitungan dinar (keping→gram) & perak (kini hardcoded 16.500/gram) | `internal/services/gold.go`, `assets.go` | — |
+| `[x]` | QA-P1-16 | Perbaiki perhitungan dinar (keping→gram) & perak (kini hardcoded 16.500/gram) | `internal/services/gold.go`, `assets.go` | — |
 
 ### E. Akun dasar (bukan email marketing — ini keamanan akun)
 | Status | ID | Task | Lokasi | Depends on |
@@ -397,3 +397,9 @@ Catatan: -
 Status: selesai & terverifikasi
 PR: direct commit (sesuai override user)
 Ringkasan: Implementasi middleware CheckPlan dan RequirePremiumFeature untuk membatasi fitur berdasarkan paket langganan. Membatasi Free Tier: max 1 user (FamilyPOST), max 2 wallets + no sinking fund (WalletPOST), block asset route, dan history 3 bulan (ReportGET, ReportExportCSV). Verifikasi via go build.
+
+### 2026-09-11 23:45 WIB — QA-P1-16
+Status: selesai & terverifikasi
+PR: direct commit (override)
+Ringkasan: Memperbaiki perhitungan nilai dinar agar merespons input `WeightGram` sebagai keping (1 keping = 4.25 gram). Label di form disesuaikan menjadi "Berat (Gram) / Jumlah Keping (Dinar)". Nilai perak di-refactor ke named constant fallback, dan label asset disesuaikan untuk tipe dinar menjadi keping.
+Catatan: -
