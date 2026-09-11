@@ -71,7 +71,7 @@
 ### B. Ledger inti (kejujuran angka & kebiasaan dasar user)
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[~]` | QA-P1-07 🔴 | Edit & hapus transaksi (soft delete) — penyebab #1 orang berhenti pakai app keuangan | `internal/handlers/dashboard.go`, route baru | QA-P1-01, QA-P1-05 |
+| `[x]` | QA-P1-07 🔴 | Edit & hapus transaksi (soft delete) — penyebab #1 orang berhenti pakai app keuangan | `internal/handlers/dashboard.go`, route baru | QA-P1-01, QA-P1-05 |
 | `[x]` | QA-P1-08 | `FormatRupiah` format Indonesia (`Rp 500.000`, kini `Rp 500000.00`) | `web/views/dashboard.templ:9-11` | — |
 | `[x]` | QA-P1-09 🔴 | Filter periode di dashboard — label "Bulan Ini" kini menjumlah SELURUH transaksi sepanjang masa (data menyesatkan) | `internal/handlers/dashboard.go:44-51` | — |
 
@@ -374,3 +374,9 @@ Ringkasan: Plafon tercapai. 7 PR terbuka (#29, #30, #31, #32, #33, #34, #35). Me
 Status: skip
 PR: -
 Ringkasan: Plafon tercapai. 7 PR terbuka (#29, #30, #31, #32, #33, #34, #35). Menunggu review Prof. Cron idle.
+
+### 2026-09-11 16:52 WIB — QA-P1-07
+Status: selesai & terverifikasi
+PR: direct commit
+Ringkasan: Implementasi soft delete transaksi dengan revert saldo v3.
+Catatan: -
