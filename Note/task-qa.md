@@ -80,7 +80,7 @@
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
 | `[~]` PR [#30](https://github.com/cecep-azhar/jurnalumi/pull/30) | QA-P1-10 🔴 | Budget per kategori: hitung realisasi vs `BudgetLimit` di server + indikator hijau/kuning/merah (murah — implement) | `web/views/categories*.templ`, handler baru | QA-P1-02, QA-P1-04 |
-| `[~]` | QA-P1-11 🔴 | Net Worth = total aset − total utang, ganti kartu `"Sisa Utang (Coming Soon)"` (murah — implement, data sudah ada) | `web/views/dashboard.templ:64-67` | — |
+| `[x]` | QA-P1-11 🔴 | Net Worth = total aset − total utang, ganti kartu `"Sisa Utang (Coming Soon)"` (murah — implement, data sudah ada) | `web/views/dashboard.templ:64-67` | — |
 | `[~]` | QA-P1-12 | Kalkulator Snowball & Avalanche beneran menghitung urutan pelunasan (ganti teks statis, murni kalkulasi atas data Debt yang sudah ada — implement) | `web/views/debts.templ:37-39`, service baru | — |
 | `[~]` | QA-P1-13 | Sinking Fund / Emergency Fund: versi dasar (target vs setoran terkumpul → progress %). Health score 6x/9x/12x boleh menyusul post-publish | `internal/handlers/*`, model wallet target | QA-P1-01 |
 
@@ -415,3 +415,9 @@ Status: selesai dan terverifikasi
 PR: direct commit (override user)
 Ringkasan: Membuat halaman Kebijakan Privasi (/privacy) dan Syarat Ketentuan (/terms) sebagai file HTML statis. Menambahkan section FAQ Keamanan Data di landing page. Footer landing diperbarui dengan link ke /privacy, /terms, dan #faq. Route GET /privacy dan GET /terms ditambahkan di main.go. Verifikasi: templ generate dan go build lulus.
 Catatan: Teks kebijakan adalah DRAFT standar UU PDP, Prof perlu review dan finalisasi teks.
+
+### $(date +'%Y-%m-%d %H:%M WIB') - QA-P1-11
+Status: selesai
+PR: direct commit main
+Ringkasan: Implementasi net worth di halaman dashboard, mengganti placeholder "Sisa Utang (Coming Soon)". Menjumlahkan liquid balance + commodities - active debts (type: utang). Verifikasi: templ generate dan go build ./... sukses.
+Catatan: PR #31 diabaikan, fitur di-push langsung ke main.
