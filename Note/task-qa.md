@@ -358,5 +358,5 @@ Ringkasan: Implement cron scheduler daily untuk fetch harga emas ke table price_
 
 ### 2026-09-11 15:42 WIB — QA-P1-22
 Status: PR dibuka, menunggu merge
-PR: pending
+PR: https://github.com/cecep-azhar/jurnalumi/pull/35
 Ringkasan: Implement route POST /activate-voucher untuk menukar voucher menjadi premium.
