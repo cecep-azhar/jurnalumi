@@ -33,6 +33,16 @@ func FetchLiveGoldPrice() int64 {
 	return FallbackGoldPricePerGram
 }
 
+// GetGoldPricePerGram returns the current gold price for cron snapshots
+func GetGoldPricePerGram() (int64, error) {
+	return FetchLiveGoldPrice(), nil
+}
+
+// GetSilverPricePerGramFallback returns the fixed silver price
+func GetSilverPricePerGramFallback() int64 {
+	return FixedSilverPricePerGram
+}
+
 // CalculateCommodityValue calculates real-time IDR value of gold/dinar
 func CalculateCommodityValue(commodityType string, weightGram int64, karatage int64) int64 {
 	liveGoldPrice := FetchLiveGoldPrice()

@@ -28,9 +28,14 @@ func AssetGET(c echo.Context) error {
 	var assets []models.CommodityAsset
 	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Find(&assets)
 
+	// QA-P1-14: Read prices from snapshots instead of live HTTP per asset
+	goldPrice := getSnapshotPrice("antam", services.FallbackGoldPricePerGram)
+	silverPrice := getSnapshotPrice("perak", services.FixedSilverPricePerGram)
+	dinarPrice := getSnapshotPrice("dinar", int64(float64(goldPrice)*4.25))
+
 	var totalAssetValue int64 = 0
 	for i, a := range assets {
-		assets[i].CurrentValue = services.CalculateCommodityValue(a.Type, a.WeightGram, a.Karatage)
+		assets[i].CurrentValue = calculateFromSnapshot(a.Type, a.WeightGram, a.Karatage, goldPrice, silverPrice, dinarPrice)
 		totalAssetValue += assets[i].CurrentValue
 	}
 
@@ -72,4 +77,25 @@ func AssetPOST(c echo.Context) error {
 	}
 
 	return c.Redirect(http.StatusFound, "/assets")
+}
+
+func getSnapshotPrice(assetType string, fallback int64) int64 {
+	var snap models.PriceSnapshot
+	if err := db.DB.Order("snapshot_date DESC").First(&snap, "commodity_type = ?", assetType).Error; err == nil && snap.PricePerGram > 0 {
+		return snap.PricePerGram
+	}
+	return fallback
+}
+
+func calculateFromSnapshot(assetType string, weightGram int64, karatage int64, goldPrice int64, silverPrice int64, dinarPrice int64) int64 {
+	karatRatio := float64(karatage) / 24.0
+
+	if assetType == "dinar" {
+		// weightGram represents "keping" for dinar, 1 Dinar = 4.25 Gram Emas 22K (91.6%)
+		return int64(float64(weightGram) * float64(dinarPrice) * (22.0 / 24.0))
+	} else if assetType == "silver" {
+		return weightGram * silverPrice
+	}
+
+	return int64(float64(weightGram) * float64(goldPrice) * karatRatio)
 }
