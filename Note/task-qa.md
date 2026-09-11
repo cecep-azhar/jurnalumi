@@ -107,7 +107,7 @@
 |---|---|---|---|---|
 | `[x]` | QA-P1-20 🔴 | Middleware `RequirePlan(feature)` + enforcement limit Free tier (tanpa ini semua user dapat premium gratis selamanya — model bisnis tidak eksis) | semua handler yang membatasi fitur premium | QA-P0-04, QA-P1-04 |
 | `[!]` | QA-P1-21 | Cron turunkan plan saat `plan_expires_at` lewat (pakai QA-P1-19) | `internal/handlers/admin.go` | QA-P1-19, QA-P1-20 |
-| `[~]` | QA-P1-22 🔴 | Route `POST /activate-voucher` — form di `landing.html:247` KINI MENUJU 404 di landing page publik, ini bug yang langsung kelihatan user | `cmd/server/main.go`, handler baru | — |
+| `[x]` | QA-P1-22 🔴 | Route `POST /activate-voucher` — form di `landing.html:247` KINI MENUJU 404 di landing page publik, ini bug yang langsung kelihatan user | `cmd/server/main.go`, handler baru | — |
 | `[!]` | QA-P1-23 🔴 | Webhook Mayar.id `payment.success` (verifikasi signature, idempotent, tabel `payments`) — TANPA INI: orang bayar di Mayar, JurnalUmi tidak pernah tahu, user tidak ter-upgrade. Ini flow bisnis paling kritis yang bolong | `internal/handlers/` (baru) | QA-P1-04 |
 | `[!]` | QA-P1-24 | Satu sumber harga (env/konstanta) dipakai konsisten di kode + landing + materi promosi (kini 3 angka beda: 39rb/bln, 190rb/thn, link `jurnalumi-premium-39k`) | lintas file, lihat `review.md` F15 | — |
 
@@ -443,3 +443,9 @@ Ringkasan: Implementasi progress bar untuk dompet dengan target_amount (sinking/
 Status: selesai & terverifikasi
 PR: direct commit main (override user)
 Ringkasan: Setup robfig/cron dengan pg_try_advisory_xact_lock (QA-P1-19) untuk mencegah duplikasi eksekusi. Cronjob setiap jam 00:05 menyimpan snapshot harga antam, perak, dinar ke db (QA-P1-14). Endpoint /assets kini membaca dari data snapshot terakhir daripada fetch http langsung, mengatasi isu delay 60s. Verifikasi: go build ./... lulus.
+
+### 2026-09-12 05:20 WIB - QA-P1-22
+Status: selesai
+PR: direct commit main (override user)
+Ringkasan: Membuat handler untuk aktivasi voucher GET dan POST. Pada landing page, form diubah menjadi direct link ke GET /activate-voucher (membutuhkan autentikasi). Jika berhasil, voucher di-set is_used = true dan plan di-upgrade ke premium dalam satu transaksi DB. Verifikasi: templ generate dan go build ./... sukses.
+Catatan: -
