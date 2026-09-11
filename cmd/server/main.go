@@ -79,6 +79,8 @@ func main() {
 	adminGroup.POST("/tenant/upgrade", handlers.AdminUpgradeTenantPOST)
 	adminGroup.POST("/vouchers/generate", handlers.AdminGenerateVoucherPOST)
 
+	e.POST("/activate-voucher", handlers.ActivateVoucherPOST, appMiddleware.RequireAuth)
+
 	// App Dashboard Route (Protected by Auth Middleware)
 	e.GET("/dashboard", handlers.DashboardHandler, appMiddleware.RequireAuth)
 	e.POST("/transactions", handlers.TransactionPOST, appMiddleware.RequireAuth, appMiddleware.RequireRole("owner", "spouse", "member"))
