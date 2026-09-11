@@ -120,11 +120,11 @@
 ### I. Kepatuhan & operasional — syarat hukum & syarat "beneran bisa diakses publik"
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[!]` | QA-P1-27 🔴 | Halaman Kebijakan Privasi & Syarat Ketentuan (UU PDP No. 27/2022 — app ini nyimpan seluruh data keuangan keluarga orang) | `web/views/` (baru) | — |
+| `[x]` | QA-P1-27 🔴 | Halaman Kebijakan Privasi & Syarat Ketentuan (UU PDP No. 27/2022 — app ini nyimpan seluruh data keuangan keluarga orang) | `web/views/` (baru) | — |
 | `[x]` | QA-P1-28 🔴 | Hapus akun mandiri + ekspor data mandiri (hak subjek data, prasyarat UU PDP) | `internal/handlers/` (baru) | QA-P1-01 |
 | `[!]` | QA-P1-29 🔴 | Backup `pg_dump` harian terenkripsi + **uji restore minimal 1×, catat tanggal ujinya di sini** | infra deploy (Coolify scheduled task / cron VPS) | QA-P0-14 |
 | `[!]` | QA-P1-30 🔴 | Dockerfile production + deploy via **Coolify** + domain + TLS — ini yang bikin JurnalUmi BENERAN online | `Dockerfile` (baru, production, bukan `.dev`) | QA-P0-13 |
-| `[!]` | QA-P1-31 | FAQ keamanan data di landing page (bundling murah dengan QA-P1-27) | `web/views/landing.html` | QA-P1-27 |
+| `[x]` | QA-P1-31 | FAQ keamanan data di landing page (bundling murah dengan QA-P1-27) | `web/views/landing.html` | QA-P1-27 |
 
 ---
 
@@ -409,3 +409,9 @@ Status: selesai
 PR: direct commit
 Ringkasan: Implementasi halaman Pengaturan Akun (GET /account), ekspor data (GET /account/export JSON), dan hapus akun mandiri (POST /account/delete). UI menggunakan konfirmasi modal, role-gated hanya owner. Link ditambahkan ke layout. Verifikasi: templ generate dan go build ./... sukses.
 Catatan: Sesuai UU PDP No. 27/2022.
+
+### 2026-09-12 08:30 WIB - QA-P1-27 dan QA-P1-31
+Status: selesai dan terverifikasi
+PR: direct commit (override user)
+Ringkasan: Membuat halaman Kebijakan Privasi (/privacy) dan Syarat Ketentuan (/terms) sebagai file HTML statis. Menambahkan section FAQ Keamanan Data di landing page. Footer landing diperbarui dengan link ke /privacy, /terms, dan #faq. Route GET /privacy dan GET /terms ditambahkan di main.go. Verifikasi: templ generate dan go build lulus.
+Catatan: Teks kebijakan adalah DRAFT standar UU PDP, Prof perlu review dan finalisasi teks.
