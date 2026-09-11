@@ -22,6 +22,12 @@ func Start() {
 		log.Printf("[Cron] Failed to schedule gold snapshot: %v", err)
 	}
 
+	// QA-P1-21: Downgrade expired premium plans hourly
+	_, err = c.AddFunc("0 * * * *", downgradeExpiredPlans)
+	if err != nil {
+		log.Printf("[Cron] Failed to schedule plan downgrade: %v", err)
+	}
+
 	c.Start()
 	log.Println("[Cron] Scheduler started.")
 }
@@ -82,5 +88,42 @@ func fetchGoldPrices() {
 
 	if err != nil {
 		log.Printf("[Cron] Snapshot transaction failed: %v", err)
+	}
+}
+
+func downgradeExpiredPlans() {
+	log.Println("[Cron] Starting to downgrade expired plans...")
+	
+	err := db.DB.Transaction(func(tx *gorm.DB) error {
+		var locked bool
+		// Advisory lock for downgrade task
+		tx.Raw("SELECT pg_try_advisory_xact_lock(12346)").Scan(&locked)
+		if !locked {
+			log.Println("[Cron] Could not acquire lock for plan downgrade, skipping.")
+			return nil
+		}
+
+		res := tx.Model(&models.Tenant{}).
+			Where("plan = ? AND plan_expires_at < ?", "premium", time.Now()).
+			Updates(map[string]interface{}{
+				"plan":            "free",
+				"plan_expires_at": nil,
+			})
+
+		if res.Error != nil {
+			return res.Error
+		}
+
+		if res.RowsAffected > 0 {
+			log.Printf("[Cron] Successfully downgraded %d expired plan(s) to free.", res.RowsAffected)
+		} else {
+			log.Println("[Cron] No expired plans found.")
+		}
+		
+		return nil
+	})
+
+	if err != nil {
+		log.Printf("[Cron] Plan downgrade transaction failed: %v", err)
 	}
 }
