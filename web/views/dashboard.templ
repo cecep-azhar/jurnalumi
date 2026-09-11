@@ -13,11 +13,11 @@ func FormatRupiah(amount int64) string {
 	return p.Sprintf("Rp %d", amount)
 }
 
-templ Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, categories []models.Category, transactions []models.Transaction, liquidBalance int64, totalIncome int64, totalExpense int64) {
-	@Layout("Dashboard", tenant, user, dashboardContent(tenant, user, wallets, categories, transactions, liquidBalance, totalIncome, totalExpense))
+templ Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, categories []models.Category, transactions []models.Transaction, liquidBalance int64, totalIncome int64, totalExpense int64, totalNetWorth int64) {
+	@Layout("Dashboard", tenant, user, dashboardContent(tenant, user, wallets, categories, transactions, liquidBalance, totalIncome, totalExpense, totalNetWorth))
 }
 
-templ dashboardContent(tenant models.Tenant, user models.User, wallets []models.Wallet, categories []models.Category, transactions []models.Transaction, liquidBalance int64, totalIncome int64, totalExpense int64) {
+templ dashboardContent(tenant models.Tenant, user models.User, wallets []models.Wallet, categories []models.Category, transactions []models.Transaction, liquidBalance int64, totalIncome int64, totalExpense int64, totalNetWorth int64) {
 	<div class="space-y-6" x-data="{ addTransactionModal: false, addWalletModal: false, addCategoryModal: false }">
 			
 			<!-- Top Metrics -->
@@ -35,8 +35,8 @@ templ dashboardContent(tenant models.Tenant, user models.User, wallets []models.
 					<h3 class="text-2xl font-bold text-red-600">{ FormatRupiah(totalExpense) }</h3>
 				</div>
 				<div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-purple-500">
-					<p class="text-sm text-gray-500 mb-1">Sisa Utang (Coming Soon)</p>
-					<h3 class="text-2xl font-bold text-gray-400">Rp 0.00</h3>
+					<p class="text-sm text-gray-500 mb-1">Kekayaan Bersih</p>
+					<h3 class="text-2xl font-bold text-gray-800">{ FormatRupiah(totalNetWorth) }</h3>
 				</div>
 			</div>
 

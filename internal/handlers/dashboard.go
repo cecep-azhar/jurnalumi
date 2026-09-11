@@ -45,6 +45,25 @@ func DashboardHandler(c echo.Context) error {
 		liquidBalance += w.Balance
 	}
 
+	var totalAsset int64 = liquidBalance
+
+	var commodities []models.CommodityAsset
+	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Find(&commodities)
+	for _, com := range commodities {
+		totalAsset += com.CurrentValue
+	}
+
+	var totalDebt int64 = 0
+	var debts []models.Debt
+	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Find(&debts)
+	for _, d := range debts {
+		if d.Type == "utang" && d.Status == "active" {
+			totalDebt += d.RemainingAmount
+		}
+	}
+
+	var totalNetWorth int64 = totalAsset - totalDebt
+
 	var totalIncome int64 = 0
 	var totalExpense int64 = 0
 	for _, t := range transactions {
@@ -57,7 +76,7 @@ func DashboardHandler(c echo.Context) error {
 		}
 	}
 
-	return Render(c, views.Dashboard(tenant, user, wallets, categories, transactions, liquidBalance, totalIncome, totalExpense))
+	return Render(c, views.Dashboard(tenant, user, wallets, categories, transactions, liquidBalance, totalIncome, totalExpense, totalNetWorth))
 }
 
 // TransactionPOST handles inserting a new income/expense into DB
