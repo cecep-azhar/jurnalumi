@@ -81,7 +81,7 @@
 |---|---|---|---|---|
 | `[x]` | QA-P1-10 🔴 | Budget per kategori: hitung realisasi vs `BudgetLimit` di server + indikator hijau/kuning/merah (murah — implement) | `web/views/categories*.templ`, handler baru | QA-P1-02, QA-P1-04 |
 | `[x]` | QA-P1-11 🔴 | Net Worth = total aset − total utang, ganti kartu `"Sisa Utang (Coming Soon)"` (murah — implement, data sudah ada) | `web/views/dashboard.templ:64-67` | — |
-| `[~]` | QA-P1-12 | Kalkulator Snowball & Avalanche beneran menghitung urutan pelunasan (ganti teks statis, murni kalkulasi atas data Debt yang sudah ada — implement) | `web/views/debts.templ:37-39`, service baru | — |
+| `[x]` | QA-P1-12 | Kalkulator Snowball & Avalanche beneran menghitung urutan pelunasan (ganti teks statis, murni kalkulasi atas data Debt yang sudah ada — implement) | `web/views/debts.templ:37-39`, service baru | — |
 | `[~]` | QA-P1-13 | Sinking Fund / Emergency Fund: versi dasar (target vs setoran terkumpul → progress %). Health score 6x/9x/12x boleh menyusul post-publish | `internal/handlers/*`, model wallet target | QA-P1-01 |
 
 ### D. Aset & harga logam mulia (bug fungsional aktif, bukan cuma fitur kurang)
@@ -427,3 +427,9 @@ Status: selesai
 PR: direct commit main (sesuai override)
 Ringkasan: Implementasi hitung realisasi budget per kategori. Menghitung transaksi expense bulan berjalan vs budget limit kategori, dan menampilkan progress bar warna (hijau/kuning/merah) di dashboard. Menambahkan input batas budget (opsional) di modal tambah kategori. Verifikasi: templ generate dan go build ./... sukses.
 Catatan: PR #30 diabaikan, fitur di-push langsung ke main.
+
+### 2026-09-12 12:00 WIB — QA-P1-12
+Status: selesai & terverifikasi
+PR: direct commit main (override user)
+Ringkasan: Mengganti teks statis "Fokus Pelunasan Terkecil First" dengan kalkulasi snowball nyata dari data utang. Handler sort utang aktif ascending by RemainingAmount, kirim rekomendasi ke template. Jika tidak ada utang aktif, tampilkan "Bebas utang! Alhamdulillah". Verifikasi: templ generate + go build ./... sukses.
+Catatan: -
