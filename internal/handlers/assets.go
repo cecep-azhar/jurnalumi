@@ -28,10 +28,16 @@ func AssetGET(c echo.Context) error {
 	var assets []models.CommodityAsset
 	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Find(&assets)
 
-	// Phase 4: API Provider Integration (Live Gold Pricing)
-	var totalAssetValue int64 = 0.0
+	// QA-P1-14: Baca dari snapshot terbaru
+	var latestSnapshot models.PriceSnapshot
+	if err := db.DB.Order("snapshot_date desc").First(&latestSnapshot).Error; err != nil {
+		// Fallback if no snapshot found yet
+		latestSnapshot.PricePerGram = services.FetchLiveGoldPrice()
+	}
+
+	var totalAssetValue int64 = 0
 	for i, a := range assets {
-		assets[i].CurrentValue = services.CalculateCommodityValue(a.Type, a.WeightGram, a.Karatage)
+		assets[i].CurrentValue = services.CalculateCommodityValueWithPrice(a.Type, a.WeightGram, a.Karatage, latestSnapshot.PricePerGram)
 		totalAssetValue += assets[i].CurrentValue
 	}
 
@@ -52,8 +58,12 @@ func AssetPOST(c echo.Context) error {
 	karatage, _ := strconv.ParseInt(karatageStr, 10, 64)
 	buyPrice, _ := strconv.ParseInt(buyPriceStr, 10, 64)
 
-	// In real world, we fetch current value from API
-	currentValue := services.CalculateCommodityValue(assetType, weight, karatage)
+	// Read latest snapshot
+	var latestSnapshot models.PriceSnapshot
+	if err := db.DB.Order("snapshot_date desc").First(&latestSnapshot).Error; err != nil {
+		latestSnapshot.PricePerGram = services.FetchLiveGoldPrice()
+	}
+	currentValue := services.CalculateCommodityValueWithPrice(assetType, weight, karatage, latestSnapshot.PricePerGram)
 
 	asset := models.CommodityAsset{
 		TenantID:     userCtx.TenantID,

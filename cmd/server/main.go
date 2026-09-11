@@ -10,6 +10,7 @@ import (
 
 	"github.com/cecep-azhar/jurnalumi/internal/db"
 	"github.com/cecep-azhar/jurnalumi/internal/handlers"
+	"github.com/cecep-azhar/jurnalumi/internal/scheduler"
 	appMiddleware "github.com/cecep-azhar/jurnalumi/internal/middleware"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
@@ -24,6 +25,9 @@ func main() {
 
 	// Connect Database & Migrate
 	db.InitDB(dsn)
+	
+	// Start Scheduler
+	scheduler.InitScheduler()
 
 	e := echo.New()
 
