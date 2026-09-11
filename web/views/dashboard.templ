@@ -61,12 +61,25 @@ templ dashboardContent(tenant models.Tenant, user models.User, wallets []models.
 						</div>
 						<div class="space-y-3">
 							for _, w := range wallets {
-								<div class="flex justify-between items-center p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
-									<div>
-										<p class="font-semibold text-gray-900">{ w.Name }</p>
-										<p class="text-xs text-gray-500 capitalize">{ w.Type }</p>
+								<div class="flex flex-col p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
+									<div class="flex justify-between items-center mb-1">
+										<div>
+											<p class="font-semibold text-gray-900">{ w.Name }</p>
+											<p class="text-xs text-gray-500 capitalize">{ w.Type }</p>
+										</div>
+										<div class="font-bold text-gray-800">{ FormatRupiah(w.Balance) }</div>
 									</div>
-									<div class="font-bold text-gray-800">{ FormatRupiah(w.Balance) }</div>
+									if w.TargetAmount > 0 {
+										<div class="mt-1 w-full text-xs text-gray-500">
+											<div class="flex justify-between mb-1">
+												<span>Progress</span>
+												<span class="font-semibold">{ fmt.Sprintf("%d%%", min(int((float64(w.Balance)/float64(w.TargetAmount))*100), 100)) } dari { FormatRupiah(w.TargetAmount) }</span>
+											</div>
+											<div class="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden">
+												<div class="bg-blue-500 h-full" style={ fmt.Sprintf("width: %d%%", min(int((float64(w.Balance)/float64(w.TargetAmount))*100), 100)) }></div>
+											</div>
+										</div>
+									}
 								</div>
 							}
 							if len(wallets) == 0 {
