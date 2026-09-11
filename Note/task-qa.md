@@ -455,3 +455,9 @@ Status: selesai & terverifikasi
 PR: direct commit main (override user)
 Ringkasan: Implementasi cronjob per jam untuk memeriksa dan menurunkan plan tenant yang kedaluwarsa (`plan_expires_at < NOW()`) dari premium menjadi free. Menggunakan `pg_try_advisory_xact_lock` untuk mencegah konkurensi di instance ganda. Verifikasi: go build ./... sukses.
 Catatan: -
+
+### $(date +'%Y-%m-%d %H:%M WIB') - Idle / Blocked
+Status: skip
+PR: -
+Ringkasan: Tidak ada task `[ ]` tersisa di P0 maupun P1-KRITIS. Semua task yang belum `[x]` (QA-P1-15, 17, 18, 23, 24, 29, 30) berstatus `[!]` yang menunggu keputusan atau kredensial nyata dari Prof (SMTP, Mayar, Docker/Coolify, harga final). Cron idle (Kondisi STOP total).
+Catatan: Mohon Prof berikan keputusan/kredensial pada item `[!]` tersebut.
