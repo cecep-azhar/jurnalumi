@@ -122,11 +122,19 @@ type PriceSnapshot struct {
 
 // Payment represents subscription payments
 type Payment struct {
-	Base
-	TenantID      uuid.UUID  `gorm:"type:uuid;not null;index" json:"tenant_id"`
-	ExternalID    string     `gorm:"size:100;uniqueIndex;not null" json:"external_id"`
-	Amount        int64      `gorm:"type:bigint;not null" json:"amount"`
-	Status        string     `gorm:"size:50;not null" json:"status"`
+	ID            uuid.UUID  `gorm:"type:uuid;primary_key;default:gen_random_uuid()"`
+	TenantID      uuid.UUID  `gorm:"type:uuid;not null;index"`
+	ExternalID    string     `gorm:"size:255;not null;uniqueIndex"`
+	Amount        int64      `gorm:"not null"`
+	Status        string     `gorm:"size:50;not null;default:'pending'"` // pending, success, failed, expired
 	PaymentMethod string     `gorm:"size:50" json:"payment_method"`
 	PaidAt        *time.Time `json:"paid_at"`
+}
+
+// CategoryWithBudget extends Category with realized budget info for UI
+type CategoryWithBudget struct {
+	Category
+	RealizedAmount int64
+	BudgetAmount   int64
+	Percentage     int
 }

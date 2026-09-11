@@ -13,11 +13,18 @@ func FormatRupiah(amount int64) string {
 	return p.Sprintf("Rp %d", amount)
 }
 
-templ Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, categories []models.Category, transactions []models.Transaction, liquidBalance int64, totalIncome int64, totalExpense int64, totalNetWorth int64) {
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+templ Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet, categories []models.CategoryWithBudget, transactions []models.Transaction, liquidBalance int64, totalIncome int64, totalExpense int64, totalNetWorth int64) {
 	@Layout("Dashboard", tenant, user, dashboardContent(tenant, user, wallets, categories, transactions, liquidBalance, totalIncome, totalExpense, totalNetWorth))
 }
 
-templ dashboardContent(tenant models.Tenant, user models.User, wallets []models.Wallet, categories []models.Category, transactions []models.Transaction, liquidBalance int64, totalIncome int64, totalExpense int64, totalNetWorth int64) {
+templ dashboardContent(tenant models.Tenant, user models.User, wallets []models.Wallet, categories []models.CategoryWithBudget, transactions []models.Transaction, liquidBalance int64, totalIncome int64, totalExpense int64, totalNetWorth int64) {
 	<div class="space-y-6" x-data="{ addTransactionModal: false, addWalletModal: false, addCategoryModal: false }">
 			
 			<!-- Top Metrics -->
@@ -77,13 +84,28 @@ templ dashboardContent(tenant models.Tenant, user models.User, wallets []models.
 							</h3>
 							<button @click="addCategoryModal = true" class="text-emerald-600 text-sm hover:underline font-semibold">+ Kategori</button>
 						</div>
-						<div class="flex flex-wrap gap-2">
+						<div class="flex flex-col gap-2">
 							for _, c := range categories {
-								if c.Type == "expense" {
-									<span class="bg-red-50 text-red-700 border border-red-200 px-3 py-1 rounded-full text-xs font-semibold">{ c.Name }</span>
-								} else {
-									<span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-full text-xs font-semibold">{ c.Name }</span>
-								}
+								<div class="flex items-center justify-between border-b pb-2">
+									<div>
+										if c.Type == "expense" {
+											<span class="bg-red-50 text-red-700 border border-red-200 px-3 py-1 rounded-full text-xs font-semibold">{ c.Name }</span>
+										} else {
+											<span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-full text-xs font-semibold">{ c.Name }</span>
+										}
+									</div>
+									if c.Type == "expense" && c.BudgetLimit > 0 {
+										<div class="text-xs text-gray-500 text-right">
+											<div class="font-bold text-gray-800">Budget: { FormatRupiah(c.BudgetLimit) }</div>
+											<div class="mt-1 flex items-center justify-end gap-2">
+												<span class={ "font-semibold", templ.KV("text-emerald-600", c.Percentage < 80), templ.KV("text-yellow-600", c.Percentage >= 80 && c.Percentage < 100), templ.KV("text-red-600", c.Percentage >= 100) }>{ fmt.Sprintf("%d%%", c.Percentage) }</span>
+												<div class="w-24 bg-gray-200 h-1.5 rounded-full overflow-hidden ml-auto">
+													<div class={ "h-full", templ.KV("bg-emerald-500", c.Percentage < 80), templ.KV("bg-yellow-500", c.Percentage >= 80 && c.Percentage < 100), templ.KV("bg-red-500", c.Percentage >= 100) } style={ fmt.Sprintf("width: %d%%", min(c.Percentage, 100)) }></div>
+												</div>
+											</div>
+										</div>
+									}
+								</div>
 							}
 							if len(categories) == 0 {
 								<div class="text-sm text-gray-500 text-center py-2">Belum ada kategori diset.</div>
@@ -218,9 +240,8 @@ t			<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } 
 						<button @click="addCategoryModal = false" class="text-gray-400 hover:text-gray-600">✖</button>
 					</div>
 					<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
-<form action="/categories" method="POST" class="space-y-4">
-				<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
-t			<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+					<form action="/categories" method="POST" class="space-y-4">
+						<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
 						<div>
 							<label class="block text-sm font-bold text-gray-700 mb-1">Nama Kategori</label>
 							<input type="text" name="name" placeholder="e.g. Servis Motor" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-purple-500 outline-none">
@@ -231,6 +252,14 @@ t			<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } 
 								<option value="expense">Pengeluaran</option>
 								<option value="income">Pemasukan</option>
 							</select>
+						</div>
+						<div>
+							<label class="block text-sm font-bold text-gray-700 mb-1">Batas Budget (Opsional)</label>
+							<div class="relative">
+								<span class="absolute left-4 top-2 text-gray-500 font-bold">Rp</span>
+								<input type="number" name="budget_limit" value="0" min="0" class="w-full border-2 border-gray-200 rounded-xl pl-12 pr-4 py-2 focus:border-purple-500 outline-none">
+							</div>
+							<p class="text-xs text-gray-400 mt-1">Isi 0 jika tidak ada batas</p>
 						</div>
 						<button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition">Simpan Kategori</button>
 					</form>
