@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"sort"
 	"strconv"
 	"time"
 
@@ -30,18 +31,35 @@ func DebtGET(c echo.Context) error {
 	var wallets []models.Wallet
 	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Find(&wallets)
 
+
 	var totalDebt int64 = 0
 	var totalReceivable int64 = 0
+	var activeDebts []models.Debt
 
 	for _, d := range debts {
 		if d.Type == "debt" {
 			totalDebt += d.RemainingAmount
+			if d.Status == "active" || d.RemainingAmount > 0 {
+				activeDebts = append(activeDebts, d)
+			}
 		} else if d.Type == "receivable" {
 			totalReceivable += d.RemainingAmount
 		}
 	}
 
-	return Render(c, views.DebtManagement(tenant, user, debts, wallets, totalDebt, totalReceivable))
+	sort.Slice(activeDebts, func(i, j int) bool {
+		return activeDebts[i].RemainingAmount < activeDebts[j].RemainingAmount
+	})
+
+	var snowballRecommendation string
+	if len(activeDebts) > 0 {
+		snowballRecommendation = "Fokus lunasi " + activeDebts[0].Title + " dulu"
+	} else {
+		snowballRecommendation = "Bebas utang! Alhamdulillah"
+	}
+
+	return Render(c, views.DebtManagement(tenant, user, debts, wallets, totalDebt, totalReceivable, snowballRecommendation))
+
 }
 
 // DebtPOST handles adding a new debt or receivable
