@@ -87,7 +87,7 @@
 ### D. Aset & harga logam mulia (bug fungsional aktif, bukan cuma fitur kurang)
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[!]` | QA-P1-14 🔴 | Cron harian ambil harga → `price_snapshots`; halaman `/assets` HANYA baca snapshot (fix bug: 20 aset = 20×timeout 3 detik = halaman hang ~60 detik) | `internal/handlers/assets.go:31-35`, scheduler baru | QA-P1-04, QA-P1-19 |
+| `[~]` PR [#34](https://github.com/cecep-azhar/jurnalumi/pull/34) | QA-P1-14 🔴 | Cron harian ambil harga → `price_snapshots`; halaman `/assets` HANYA baca snapshot (fix bug: 20 aset = 20×timeout 3 detik = halaman hang ~60 detik) | `internal/handlers/assets.go:31-35`, scheduler baru | QA-P1-04, QA-P1-19 |
 | `[!]` | QA-P1-15 🔴 | Ganti/verifikasi sumber harga (`api.logammulia.com` tidak eksis, selalu fallback konstanta) ATAU label jelas "harga manual, update berkala" — jangan sebut "real-time" kalau bohong | `internal/services/gold.go:17` | QA-P1-14 |
 | `[!]` | QA-P1-16 | Perbaiki perhitungan dinar (keping→gram) & perak (kini hardcoded 16.500/gram) | `internal/services/gold.go`, `assets.go` | — |
 
@@ -350,3 +350,8 @@ Ringkasan: Plafon tercapai. 5 PR terbuka (#29, #30, #31, #32, #33). Menunggu rev
 Status: skip
 PR: -
 Ringkasan: Plafon tercapai. 5 PR terbuka (#29, #30, #31, #32, #33). Menunggu review Prof. Cron idle.
+
+### 2026-09-11 15:24 WIB — QA-P1-14 & QA-P1-19
+Status: PR dibuka, menunggu merge
+PR: https://github.com/cecep-azhar/jurnalumi/pull/34
+Ringkasan: Implement cron scheduler daily untuk fetch harga emas ke table price_snapshots. Mengganti loop request HTTP /assets dengan query DB single snapshot + perbaikan performa load asset page (fix ~60s hang). Include internal/scheduler/cron.go setup (cover part QA-P1-19). Verifikasi: go build ./... sukses.
