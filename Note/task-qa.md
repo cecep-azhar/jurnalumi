@@ -82,12 +82,12 @@
 | `[x]` | QA-P1-10 🔴 | Budget per kategori: hitung realisasi vs `BudgetLimit` di server + indikator hijau/kuning/merah (murah — implement) | `web/views/categories*.templ`, handler baru | QA-P1-02, QA-P1-04 |
 | `[x]` | QA-P1-11 🔴 | Net Worth = total aset − total utang, ganti kartu `"Sisa Utang (Coming Soon)"` (murah — implement, data sudah ada) | `web/views/dashboard.templ:64-67` | — |
 | `[x]` | QA-P1-12 | Kalkulator Snowball & Avalanche beneran menghitung urutan pelunasan (ganti teks statis, murni kalkulasi atas data Debt yang sudah ada — implement) | `web/views/debts.templ:37-39`, service baru | — |
-| `[~]` | QA-P1-13 | Sinking Fund / Emergency Fund: versi dasar (target vs setoran terkumpul → progress %). Health score 6x/9x/12x boleh menyusul post-publish | `internal/handlers/*`, model wallet target | QA-P1-01 |
+| `[x]` | QA-P1-13 | Sinking Fund / Emergency Fund: versi dasar (target vs setoran terkumpul → progress %). Health score 6x/9x/12x boleh menyusul post-publish | `internal/handlers/*`, model wallet target | QA-P1-01 |
 
 ### D. Aset & harga logam mulia (bug fungsional aktif, bukan cuma fitur kurang)
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[~]` PR [#34](https://github.com/cecep-azhar/jurnalumi/pull/34) | QA-P1-14 🔴 | Cron harian ambil harga → `price_snapshots`; halaman `/assets` HANYA baca snapshot (fix bug: 20 aset = 20×timeout 3 detik = halaman hang ~60 detik) | `internal/handlers/assets.go:31-35`, scheduler baru | QA-P1-04, QA-P1-19 |
+| `[x]` PR [#34](https://github.com/cecep-azhar/jurnalumi/pull/34) | QA-P1-14 🔴 | Cron harian ambil harga → `price_snapshots`; halaman `/assets` HANYA baca snapshot (fix bug: 20 aset = 20×timeout 3 detik = halaman hang ~60 detik) | `internal/handlers/assets.go:31-35`, scheduler baru | QA-P1-04, QA-P1-19 |
 | `[!]` | QA-P1-15 🔴 | Ganti/verifikasi sumber harga (`api.logammulia.com` tidak eksis, selalu fallback konstanta) ATAU label jelas "harga manual, update berkala" — jangan sebut "real-time" kalau bohong | `internal/services/gold.go:17` | QA-P1-14 |
 | `[x]` | QA-P1-16 | Perbaiki perhitungan dinar (keping→gram) & perak (kini hardcoded 16.500/gram) | `internal/services/gold.go`, `assets.go` | — |
 
@@ -100,7 +100,7 @@
 ### F. Scheduler dasar (infra minimal, HANYA untuk 2 job kritis di bawah — bukan email reminder)
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[!]` | QA-P1-19 | Setup `robfig/cron` + DB lock (agar tidak dobel-jalan kalau ada >1 instance) — dipakai oleh QA-P1-14 & QA-P1-21 saja di tahap ini | `internal/scheduler/` (baru) | — |
+| `[x]` | QA-P1-19 | Setup `robfig/cron` + DB lock (agar tidak dobel-jalan kalau ada >1 instance) — dipakai oleh QA-P1-14 & QA-P1-21 saja di tahap ini | `internal/scheduler/` (baru) | — |
 
 ### G. Monetisasi — ini "keterikatan flow bisnis" yang Prof maksud, saat ini putus total
 | Status | ID | Task | Lokasi | Depends on |
@@ -433,3 +433,13 @@ Status: selesai & terverifikasi
 PR: direct commit main (override user)
 Ringkasan: Mengganti teks statis "Fokus Pelunasan Terkecil First" dengan kalkulasi snowball nyata dari data utang. Handler sort utang aktif ascending by RemainingAmount, kirim rekomendasi ke template. Jika tidak ada utang aktif, tampilkan "Bebas utang! Alhamdulillah". Verifikasi: templ generate + go build ./... sukses.
 Catatan: -
+
+### $(date +'%Y-%m-%d %H:%M WIB') - QA-P1-13
+Status: selesai & terverifikasi
+PR: direct commit main (override user)
+Ringkasan: Implementasi progress bar untuk dompet dengan target_amount (sinking/emergency fund) di dashboard list dompet. Verifikasi: templ generate dan go build ./... sukses.
+
+### $(date +'%Y-%m-%d %H:%M WIB') - QA-P1-14 & QA-P1-19
+Status: selesai & terverifikasi
+PR: direct commit main (override user)
+Ringkasan: Setup robfig/cron dengan pg_try_advisory_xact_lock (QA-P1-19) untuk mencegah duplikasi eksekusi. Cronjob setiap jam 00:05 menyimpan snapshot harga antam, perak, dinar ke db (QA-P1-14). Endpoint /assets kini membaca dari data snapshot terakhir daripada fetch http langsung, mengatasi isu delay 60s. Verifikasi: go build ./... lulus.
