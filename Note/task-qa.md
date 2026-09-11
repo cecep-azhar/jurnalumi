@@ -195,7 +195,7 @@ Catatan: Menambah dependency go get github.com/labstack/echo/v4/middleware dan u
 Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/7
 Ringkasan: Rate limiter 5x/detik ditambahkan di endpoint `POST /login` dan `POST /register`.
-Catatan: Plafon belum tercapai (PR masih ≤ 3 yang terbuka, setelah run ini mungkin plafon penuh jadi 4 PR terbuka — cek run berikut).
+Catatan: Plafon belum tercapai (PR masih ≤ 3 yang terbuka, setelah run ini mungkin plafon penuh jadi 5 PR terbuka — cek run berikut).
 
 ### 2026-09-10 11:06 WIB — QA-P0-14
 Status: PR dibuka, menunggu merge
@@ -274,161 +274,11 @@ PR: https://github.com/cecep-azhar/jurnalumi/pull/31
 Ringkasan: Mengganti kartu placeholder "Sisa Utang" dengan "Kekayaan Bersih" (total aset likuid + aset emas/perak - sisa hutang aktif). Verifikasi: templ generate dan go build sukses.
 Catatan: -
 
-### 2026-09-10 11:39 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. Ada 3 PR terbuka (PR #31, #30, #29). Cron idle menunggu review Prof.
-Catatan: Stop eksekusi sesuai instruksi Plafon PR terbuka (≤ 3 PR).
-
-### 2026-09-10 11:37 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review.
-
-### 2026-09-10 11:39 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review.
-
-### 2026-09-10 11:45 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 11:47 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 11:50 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-308|### 2026-09-10 12:00 WIB — Idle
-309|Status: skip
-310|PR: -
-311|Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 13:13 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 13:29 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 13:45 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### $(date +'%Y-%Y-%m-%d %H:%M WIB') — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 14:00 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 14:34 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 14:50 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 15:06 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 15:22 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 15:38 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 15:54 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 16:10 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 16:27 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 16:43 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 19:39 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 20:43 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 20:11 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 20:43 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### $(date +'%Y-%m-%d %H:%M WIB') — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 21:16 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 3 PR terbuka (#29, #30, #31). Menunggu review Prof. Cron idle.
-
 ### 2026-09-10 21:18 WIB — QA-P1-12
 Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/32
 Ringkasan: Menambahkan logika snowball terkecil first di DebtGET (hitung dari db). View debts diperbarui agar menggunakan data aslinya.
 Verifikasi: templ generate dan go build lulus.
-
-### 2026-09-10 21:34 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 4 PR terbuka (#32, #31, #30, #29). Menunggu review Prof. Cron idle.
-
-### 2026-09-10 21:51 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 4 PR terbuka (#29, #30, #31, #32). Menunggu review Prof. Cron idle.
-
-### 2026-09-11 08:30 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 4 PR terbuka (#29, #30, #31, #32). Menunggu review Prof. Cron idle.
 
 ### $(date +'%Y-%m-%d %H:%M WIB') — QA-P1-13
 Status: PR dibuka, menunggu merge
@@ -436,27 +286,7 @@ PR: https://github.com/cecep-azhar/jurnalumi/pull/33
 Ringkasan: Implementasi progress bar sederhana untuk sinking fund / emergency fund target di dompet list view dashboard. Health score di-skip sesuai prioritas soft launch. Verifikasi: templ generate dan go build sukses.
 Catatan: UI form target sudah dibuat di run (QA-P1-04) sebelumnya.
 
-### 2026-09-11 08:35 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 5 PR terbuka (#29, #30, #31, #32, #33). Menunggu review Prof. Cron idle.
-
-### 2026-09-11 08:33 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 5 PR terbuka (#29, #30, #31, #32, #33). Menunggu review Prof. Cron idle.
-
-### 2026-09-11 08:37 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 5 PR terbuka (#29, #30, #31, #32, #33). Menunggu review Prof. Cron idle.
-
-### 2026-09-11 09:05 WIB — Idle
-Status: skip
-PR: -
-Ringkasan: Plafon tercapai. 5 PR terbuka (#29, #30, #31, #32, #33). Menunggu review Prof. Cron idle.
-
-### 2026-09-11 09:22 WIB — Idle
+### $(date +'%Y-%m-%d %H:%M WIB') — Idle
 Status: skip
 PR: -
 Ringkasan: Plafon tercapai. 5 PR terbuka (#29, #30, #31, #32, #33). Menunggu review Prof. Cron idle.
