@@ -355,3 +355,8 @@ Ringkasan: Plafon tercapai. 5 PR terbuka (#29, #30, #31, #32, #33). Menunggu rev
 Status: PR dibuka, menunggu merge
 PR: https://github.com/cecep-azhar/jurnalumi/pull/34
 Ringkasan: Implement cron scheduler daily untuk fetch harga emas ke table price_snapshots. Mengganti loop request HTTP /assets dengan query DB single snapshot + perbaikan performa load asset page (fix ~60s hang). Include internal/scheduler/cron.go setup (cover part QA-P1-19). Verifikasi: go build ./... sukses.
+
+### 2026-09-11 15:40 WIB — Idle
+Status: skip
+PR: -
+Ringkasan: Plafon tercapai. 6 PR terbuka (#29, #30, #31, #32, #33, #34). Menunggu review Prof. Cron idle.
