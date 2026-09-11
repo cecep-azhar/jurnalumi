@@ -135,14 +135,14 @@ func dashboardContent(tenant models.Tenant, user models.User, wallets []models.W
 			return templ_7745c5c3_Err
 		}
 		for _, w := range wallets {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div class=\"flex justify-between items-center p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition\"><div><p class=\"font-semibold text-gray-900\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div class=\"flex flex-col p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition\"><div class=\"flex justify-between items-center mb-1\"><div><p class=\"font-semibold text-gray-900\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(w.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 66, Col: 57}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 67, Col: 58}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
@@ -155,7 +155,7 @@ func dashboardContent(tenant models.Tenant, user models.User, wallets []models.W
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(w.Type)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 67, Col: 62}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 68, Col: 63}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
@@ -168,7 +168,7 @@ func dashboardContent(tenant models.Tenant, user models.User, wallets []models.W
 			var templ_7745c5c3_Var9 string
 			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(w.Balance))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 69, Col: 71}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 70, Col: 72}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
@@ -178,122 +178,136 @@ func dashboardContent(tenant models.Tenant, user models.User, wallets []models.W
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-		}
-		if len(wallets) == 0 {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div class=\"text-sm text-gray-500 text-center py-4\">Belum ada dompet terdaftar.</div>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</div></div><!-- Master Data Kategori --><div class=\"bg-white p-6 rounded-2xl shadow-sm border border-gray-100\"><div class=\"flex justify-between items-center mb-4 border-b pb-2\"><h3 class=\"font-bold text-lg flex items-center\"><svg class=\"w-5 h-5 mr-2 text-purple-500\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M7 7h10M7 12h10m-5 5h5\"></path></svg> Kategori Transaksi</h3><button @click=\"addCategoryModal = true\" class=\"text-emerald-600 text-sm hover:underline font-semibold\">+ Kategori</button></div><div class=\"flex flex-col gap-2\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		for _, c := range categories {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<div class=\"flex items-center justify-between border-b pb-2\"><div>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			if c.Type == "expense" {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<span class=\"bg-red-50 text-red-700 border border-red-200 px-3 py-1 rounded-full text-xs font-semibold\">")
+			if w.TargetAmount > 0 {
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div class=\"mt-1 w-full text-xs text-gray-500\"><div class=\"flex justify-between mb-1\"><span>Progress</span> <span class=\"font-semibold\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var10 string
-				templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(c.Name)
+				templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%d%%", min(int((float64(w.Balance)/float64(w.TargetAmount))*100), 100)))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 92, Col: 123}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 76, Col: 126}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</span>")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-			} else {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "<span class=\"bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-full text-xs font-semibold\">")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, " dari ")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var11 string
-				templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(c.Name)
+				templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(w.TargetAmount))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 94, Col: 135}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 76, Col: 164}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</span>")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "</div>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			if c.Type == "expense" && c.BudgetLimit > 0 {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "<div class=\"text-xs text-gray-500 text-right\"><div class=\"font-bold text-gray-800\">Budget: ")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</span></div><div class=\"w-full bg-gray-200 h-1.5 rounded-full overflow-hidden\"><div class=\"bg-blue-500 h-full\" style=\"")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var12 string
-				templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(c.BudgetLimit))
+				templ_7745c5c3_Var12, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues(fmt.Sprintf("width: %d%%", min(int((float64(w.Balance)/float64(w.TargetAmount))*100), 100)))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 99, Col: 85}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 79, Col: 143}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "</div><div class=\"mt-1 flex items-center justify-end gap-2\">")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "\"></div></div></div>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var13 = []any{"font-semibold", templ.KV("text-emerald-600", c.Percentage < 80), templ.KV("text-yellow-600", c.Percentage >= 80 && c.Percentage < 100), templ.KV("text-red-600", c.Percentage >= 100)}
-				templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var13...)
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		if len(wallets) == 0 {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "<div class=\"text-sm text-gray-500 text-center py-4\">Belum ada dompet terdaftar.</div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</div></div><!-- Master Data Kategori --><div class=\"bg-white p-6 rounded-2xl shadow-sm border border-gray-100\"><div class=\"flex justify-between items-center mb-4 border-b pb-2\"><h3 class=\"font-bold text-lg flex items-center\"><svg class=\"w-5 h-5 mr-2 text-purple-500\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M7 7h10M7 12h10m-5 5h5\"></path></svg> Kategori Transaksi</h3><button @click=\"addCategoryModal = true\" class=\"text-emerald-600 text-sm hover:underline font-semibold\">+ Kategori</button></div><div class=\"flex flex-col gap-2\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		for _, c := range categories {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "<div class=\"flex items-center justify-between border-b pb-2\"><div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			if c.Type == "expense" {
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "<span class=\"bg-red-50 text-red-700 border border-red-200 px-3 py-1 rounded-full text-xs font-semibold\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "<span class=\"")
+				var templ_7745c5c3_Var13 string
+				templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(c.Name)
+				if templ_7745c5c3_Err != nil {
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 105, Col: 123}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "</span>")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			} else {
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "<span class=\"bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-full text-xs font-semibold\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var14 string
-				templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.CSSClasses(templ_7745c5c3_Var13).String())
+				templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(c.Name)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 1, Col: 0}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 107, Col: 135}
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var14)
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, "\">")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, "</span>")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "</div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			if c.Type == "expense" && c.BudgetLimit > 0 {
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "<div class=\"text-xs text-gray-500 text-right\"><div class=\"font-bold text-gray-800\">Budget: ")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var15 string
-				templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%d%%", c.Percentage))
+				templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(c.BudgetLimit))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 101, Col: 246}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 112, Col: 85}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "</span><div class=\"w-24 bg-gray-200 h-1.5 rounded-full overflow-hidden ml-auto\">")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "</div><div class=\"mt-1 flex items-center justify-end gap-2\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var16 = []any{"h-full", templ.KV("bg-emerald-500", c.Percentage < 80), templ.KV("bg-yellow-500", c.Percentage >= 80 && c.Percentage < 100), templ.KV("bg-red-500", c.Percentage >= 100)}
+				var templ_7745c5c3_Var16 = []any{"font-semibold", templ.KV("text-emerald-600", c.Percentage < 80), templ.KV("text-yellow-600", c.Percentage >= 80 && c.Percentage < 100), templ.KV("text-red-600", c.Percentage >= 100)}
 				templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var16...)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "<div class=\"")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "<span class=\"")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -306,286 +320,272 @@ func dashboardContent(tenant models.Tenant, user models.User, wallets []models.W
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "\" style=\"")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var18 string
-				templ_7745c5c3_Var18, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues(fmt.Sprintf("width: %d%%", min(c.Percentage, 100)))
+				templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%d%%", c.Percentage))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 103, Col: 256}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 114, Col: 246}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "\"></div></div></div></div>")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, "</span><div class=\"w-24 bg-gray-200 h-1.5 rounded-full overflow-hidden ml-auto\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "</div>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
-		if len(categories) == 0 {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, "<div class=\"text-sm text-gray-500 text-center py-2\">Belum ada kategori diset.</div>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 28, "</div></div></div><!-- Recent Transactions --><div class=\"bg-white p-6 rounded-2xl shadow-sm border border-gray-100 col-span-1 lg:col-span-2\"><div class=\"flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 border-b pb-4 gap-4\"><h3 class=\"font-bold text-lg\">Histori Transaksi Terakhir</h3><button @click=\"addTransactionModal = true\" class=\"bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-md shadow-emerald-200 transition flex items-center w-full sm:w-auto justify-center\"><svg class=\"w-5 h-5 mr-1\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 6v6m0 0v6m0-6h6m-6 0H6\"></path></svg> Catat Transaksi</button></div><div class=\"overflow-x-auto\"><table class=\"w-full text-left border-collapse whitespace-nowrap min-w-full\"><thead><tr class=\"text-gray-400 text-xs uppercase tracking-wider border-b\"><th class=\"pb-3 font-medium\">Tanggal</th><th class=\"pb-3 font-medium\">Kategori</th><th class=\"pb-3 font-medium\">Keterangan</th><th class=\"pb-3 font-medium text-right\">Nominal</th><th class=\"pb-3 font-medium text-center\">Aksi</th></tr></thead> <tbody class=\"text-sm\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		for _, t := range transactions {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 29, "<tr class=\"border-b border-gray-50 hover:bg-gray-50 transition\"><td class=\"py-4 text-gray-500\">")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var19 string
-			templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(t.TransactionDate.Format("02 Jan 2006, 15:04"))
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 141, Col: 89}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 30, "</td><td class=\"py-4\">")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			if t.Type == "expense" {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 31, "<span class=\"bg-red-100 text-red-700 px-2.5 py-1 rounded-lg text-xs font-bold uppercase\">")
+				var templ_7745c5c3_Var19 = []any{"h-full", templ.KV("bg-emerald-500", c.Percentage < 80), templ.KV("bg-yellow-500", c.Percentage >= 80 && c.Percentage < 100), templ.KV("bg-red-500", c.Percentage >= 100)}
+				templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var19...)
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 28, "<div class=\"")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var20 string
-				templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs(t.CategoryName)
+				templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.CSSClasses(templ_7745c5c3_Var19).String())
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 144, Col: 117}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 1, Col: 0}
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 32, "</span>")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var20)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-			} else {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 33, "<span class=\"bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-lg text-xs font-bold uppercase\">")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 29, "\" style=\"")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var21 string
-				templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.JoinStringErrs(t.CategoryName)
+				templ_7745c5c3_Var21, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues(fmt.Sprintf("width: %d%%", min(c.Percentage, 100)))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 146, Col: 125}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 116, Col: 256}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var21))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 34, "</span>")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 30, "\"></div></div></div></div>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 35, "</td><td class=\"py-4 text-gray-700 truncate max-w-[200px]\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 31, "</div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		if len(categories) == 0 {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 32, "<div class=\"text-sm text-gray-500 text-center py-2\">Belum ada kategori diset.</div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 33, "</div></div></div><!-- Recent Transactions --><div class=\"bg-white p-6 rounded-2xl shadow-sm border border-gray-100 col-span-1 lg:col-span-2\"><div class=\"flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 border-b pb-4 gap-4\"><h3 class=\"font-bold text-lg\">Histori Transaksi Terakhir</h3><button @click=\"addTransactionModal = true\" class=\"bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-md shadow-emerald-200 transition flex items-center w-full sm:w-auto justify-center\"><svg class=\"w-5 h-5 mr-1\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 6v6m0 0v6m0-6h6m-6 0H6\"></path></svg> Catat Transaksi</button></div><div class=\"overflow-x-auto\"><table class=\"w-full text-left border-collapse whitespace-nowrap min-w-full\"><thead><tr class=\"text-gray-400 text-xs uppercase tracking-wider border-b\"><th class=\"pb-3 font-medium\">Tanggal</th><th class=\"pb-3 font-medium\">Kategori</th><th class=\"pb-3 font-medium\">Keterangan</th><th class=\"pb-3 font-medium text-right\">Nominal</th><th class=\"pb-3 font-medium text-center\">Aksi</th></tr></thead> <tbody class=\"text-sm\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		for _, t := range transactions {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 34, "<tr class=\"border-b border-gray-50 hover:bg-gray-50 transition\"><td class=\"py-4 text-gray-500\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var22 string
-			templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.JoinStringErrs(t.Description)
+			templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.JoinStringErrs(t.TransactionDate.Format("02 Jan 2006, 15:04"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 149, Col: 79}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 154, Col: 89}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var22))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 36, "</td><td class=\"py-4 font-bold text-right\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 35, "</td><td class=\"py-4\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			if t.Type == "expense" {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 37, "<span class=\"text-red-600\">- ")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 36, "<span class=\"bg-red-100 text-red-700 px-2.5 py-1 rounded-lg text-xs font-bold uppercase\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var23 string
-				templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(t.Amount))
+				templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs(t.CategoryName)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 152, Col: 65}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 157, Col: 117}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 38, "</span>")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 37, "</span>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			} else {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 39, "<span class=\"text-emerald-600\">+ ")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 38, "<span class=\"bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-lg text-xs font-bold uppercase\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var24 string
-				templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(t.Amount))
+				templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs(t.CategoryName)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 154, Col: 69}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 159, Col: 125}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var24))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 40, "</span>")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 39, "</span>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 41, "</td><td class=\"py-4 text-center\"><form action=\"/transactions/delete\" method=\"POST\" class=\"inline\" onsubmit=\"return confirm('Yakin ingin menghapus transaksi ini? Saldo dompet akan disesuaikan otomatis.');\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 40, "</td><td class=\"py-4 text-gray-700 truncate max-w-[200px]\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var25 string
-			templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+			templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.JoinStringErrs(t.Description)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 159, Col: 85}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 162, Col: 79}
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var25)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 42, "\"> <input type=\"hidden\" name=\"id\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var25))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var26 string
-			templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.ResolveAttributeValue(t.ID.String())
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 160, Col: 64}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var26)
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 41, "</td><td class=\"py-4 font-bold text-right\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 43, "\"> <button type=\"submit\" class=\"text-xs bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded font-bold transition\">Hapus</button></form></td></tr>")
+			if t.Type == "expense" {
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 42, "<span class=\"text-red-600\">- ")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				var templ_7745c5c3_Var26 string
+				templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(t.Amount))
+				if templ_7745c5c3_Err != nil {
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 165, Col: 65}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var26))
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 43, "</span>")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			} else {
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 44, "<span class=\"text-emerald-600\">+ ")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				var templ_7745c5c3_Var27 string
+				templ_7745c5c3_Var27, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(t.Amount))
+				if templ_7745c5c3_Err != nil {
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 167, Col: 69}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var27))
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 45, "</span>")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 46, "</td><td class=\"py-4 text-center\"><form action=\"/transactions/delete\" method=\"POST\" class=\"inline\" onsubmit=\"return confirm('Yakin ingin menghapus transaksi ini? Saldo dompet akan disesuaikan otomatis.');\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var28 string
+			templ_7745c5c3_Var28, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 172, Col: 85}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var28)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 47, "\"> <input type=\"hidden\" name=\"id\" value=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var29 string
+			templ_7745c5c3_Var29, templ_7745c5c3_Err = templ.ResolveAttributeValue(t.ID.String())
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 173, Col: 64}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var29)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 48, "\"> <button type=\"submit\" class=\"text-xs bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded font-bold transition\">Hapus</button></form></td></tr>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
 		if len(transactions) == 0 {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 44, "<tr><td colspan=\"4\" class=\"py-8 text-center text-gray-400\">Belum ada transaksi bulan ini. Ayo mulai mencatat!</td></tr>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 49, "<tr><td colspan=\"4\" class=\"py-8 text-center text-gray-400\">Belum ada transaksi bulan ini. Ayo mulai mencatat!</td></tr>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 45, "</tbody></table></div></div></div><!-- MODAL: Tambah Transaksi --><div x-cloak x-show=\"addTransactionModal\" class=\"fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0\" x-transition.opacity><div class=\"fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm\" @click=\"addTransactionModal = false\"></div><div class=\"bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 sm:p-8 relative z-10\" x-transition.scale><div class=\"flex justify-between items-center mb-6\"><h3 class=\"text-xl font-bold text-gray-900\">Catat Transaksi Cepat</h3><button @click=\"addTransactionModal = false\" class=\"text-gray-400 hover:text-gray-600 bg-gray-100 p-2 rounded-full\">✖</button></div><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 50, "</tbody></table></div></div></div><!-- MODAL: Tambah Transaksi --><div x-cloak x-show=\"addTransactionModal\" class=\"fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0\" x-transition.opacity><div class=\"fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm\" @click=\"addTransactionModal = false\"></div><div class=\"bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 sm:p-8 relative z-10\" x-transition.scale><div class=\"flex justify-between items-center mb-6\"><h3 class=\"text-xl font-bold text-gray-900\">Catat Transaksi Cepat</h3><button @click=\"addTransactionModal = false\" class=\"text-gray-400 hover:text-gray-600 bg-gray-100 p-2 rounded-full\">✖</button></div><input type=\"hidden\" name=\"csrf_token\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var27 string
-		templ_7745c5c3_Var27, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		var templ_7745c5c3_Var30 string
+		templ_7745c5c3_Var30, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 186, Col: 78}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 199, Col: 78}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var27)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 46, "\"><form action=\"/transactions\" method=\"POST\" class=\"space-y-5\" x-data=\"{ type: 'expense' }\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var30)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var28 string
-		templ_7745c5c3_Var28, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 188, Col: 77}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var28)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 51, "\"><form action=\"/transactions\" method=\"POST\" class=\"space-y-5\" x-data=\"{ type: 'expense' }\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 47, "\"> t\t\t\t<input type=\"hidden\" name=\"csrf_token\" value=\"")
+		var templ_7745c5c3_Var31 string
+		templ_7745c5c3_Var31, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 201, Col: 77}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var31)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var29 string
-		templ_7745c5c3_Var29, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 189, Col: 77}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var29)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 52, "\"> t\t\t\t<input type=\"hidden\" name=\"csrf_token\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 48, "\"><div class=\"flex space-x-2 bg-gray-100 p-1.5 rounded-xl\"><button type=\"button\" @click=\"type = 'expense'\" :class=\"type === 'expense' ? 'bg-white shadow text-red-600 font-bold' : 'text-gray-500 font-medium'\" class=\"flex-1 py-2 rounded-lg text-sm transition\">Pengeluaran</button> <button type=\"button\" @click=\"type = 'income'\" :class=\"type === 'income' ? 'bg-white shadow text-emerald-600 font-bold' : 'text-gray-500 font-medium'\" class=\"flex-1 py-2 rounded-lg text-sm transition\">Pemasukan</button></div><input type=\"hidden\" name=\"type\" x-model=\"type\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Nominal (Rp)</label> <input type=\"number\" name=\"amount\" step=\"0.01\" min=\"1\" placeholder=\"0\" class=\"w-full text-right text-2xl font-bold border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-emerald-500 outline-none transition bg-gray-50\" required></div><div class=\"grid grid-cols-1 sm:grid-cols-2 gap-4\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Dompet</label> <select name=\"wallet_id\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50 outline-none\" required><option value=\"\" disabled selected>Pilih Dompet...</option> ")
+		var templ_7745c5c3_Var32 string
+		templ_7745c5c3_Var32, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 202, Col: 77}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var32)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 53, "\"><div class=\"flex space-x-2 bg-gray-100 p-1.5 rounded-xl\"><button type=\"button\" @click=\"type = 'expense'\" :class=\"type === 'expense' ? 'bg-white shadow text-red-600 font-bold' : 'text-gray-500 font-medium'\" class=\"flex-1 py-2 rounded-lg text-sm transition\">Pengeluaran</button> <button type=\"button\" @click=\"type = 'income'\" :class=\"type === 'income' ? 'bg-white shadow text-emerald-600 font-bold' : 'text-gray-500 font-medium'\" class=\"flex-1 py-2 rounded-lg text-sm transition\">Pemasukan</button></div><input type=\"hidden\" name=\"type\" x-model=\"type\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Nominal (Rp)</label> <input type=\"number\" name=\"amount\" step=\"0.01\" min=\"1\" placeholder=\"0\" class=\"w-full text-right text-2xl font-bold border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-emerald-500 outline-none transition bg-gray-50\" required></div><div class=\"grid grid-cols-1 sm:grid-cols-2 gap-4\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Dompet</label> <select name=\"wallet_id\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50 outline-none\" required><option value=\"\" disabled selected>Pilih Dompet...</option> ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		for _, w := range wallets {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 49, "<option value=\"")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var30 string
-			templ_7745c5c3_Var30, templ_7745c5c3_Err = templ.ResolveAttributeValue(w.ID.String())
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 207, Col: 39}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var30)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 50, "\">")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var31 string
-			templ_7745c5c3_Var31, templ_7745c5c3_Err = templ.JoinStringErrs(w.Name)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 207, Col: 50}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var31))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 51, "</option>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 52, "</select></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Kategori</label> <select name=\"category_id\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50 outline-none\" required><option value=\"\" disabled selected>Pilih Kategori...</option> ")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		for _, c := range categories {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 53, "<option x-show=\"")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var32 string
-			templ_7745c5c3_Var32, templ_7745c5c3_Err = templ.ResolveAttributeValue(fmt.Sprintf("type === '%s'", c.Type))
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 216, Col: 63}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var32)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 54, "\" value=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 54, "<option value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var33 string
-			templ_7745c5c3_Var33, templ_7745c5c3_Err = templ.ResolveAttributeValue(c.ID.String())
+			templ_7745c5c3_Var33, templ_7745c5c3_Err = templ.ResolveAttributeValue(w.ID.String())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 216, Col: 87}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 220, Col: 39}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var33)
 			if templ_7745c5c3_Err != nil {
@@ -596,9 +596,9 @@ func dashboardContent(tenant models.Tenant, user models.User, wallets []models.W
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var34 string
-			templ_7745c5c3_Var34, templ_7745c5c3_Err = templ.JoinStringErrs(c.Name)
+			templ_7745c5c3_Var34, templ_7745c5c3_Err = templ.JoinStringErrs(w.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 216, Col: 98}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 220, Col: 50}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var34))
 			if templ_7745c5c3_Err != nil {
@@ -609,72 +609,121 @@ func dashboardContent(tenant models.Tenant, user models.User, wallets []models.W
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 57, "</select></div></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Keterangan Singkat</label> <input type=\"text\" name=\"description\" placeholder=\"Beli apa / dari siapa?\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50 focus:border-emerald-500 outline-none\" required></div><button type=\"submit\" class=\"w-full mt-4 flex justify-center items-center bg-gray-900 hover:bg-black text-white font-bold py-3.5 px-4 rounded-xl transition shadow-lg text-lg\">Simpan Transaksi</button></form></div></div><!-- MODAL: Tambah Kategori --><div x-cloak x-show=\"addCategoryModal\" class=\"fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0\" x-transition.opacity><div class=\"fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm\" @click=\"addCategoryModal = false\"></div><div class=\"bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 relative z-10\" x-transition.scale><div class=\"flex justify-between items-center mb-4\"><h3 class=\"text-lg font-bold text-gray-900\">Tambah Kategori Baru</h3><button @click=\"addCategoryModal = false\" class=\"text-gray-400 hover:text-gray-600\">✖</button></div><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 57, "</select></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Kategori</label> <select name=\"category_id\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50 outline-none\" required><option value=\"\" disabled selected>Pilih Kategori...</option> ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var35 string
-		templ_7745c5c3_Var35, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 242, Col: 78}
+		for _, c := range categories {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 58, "<option x-show=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var35 string
+			templ_7745c5c3_Var35, templ_7745c5c3_Err = templ.ResolveAttributeValue(fmt.Sprintf("type === '%s'", c.Type))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 229, Col: 63}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var35)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 59, "\" value=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var36 string
+			templ_7745c5c3_Var36, templ_7745c5c3_Err = templ.ResolveAttributeValue(c.ID.String())
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 229, Col: 87}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var36)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 60, "\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var37 string
+			templ_7745c5c3_Var37, templ_7745c5c3_Err = templ.JoinStringErrs(c.Name)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 229, Col: 98}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var37))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 61, "</option>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var35)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 58, "\"><form action=\"/categories\" method=\"POST\" class=\"space-y-4\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var36 string
-		templ_7745c5c3_Var36, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 244, Col: 79}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var36)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 59, "\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Nama Kategori</label> <input type=\"text\" name=\"name\" placeholder=\"e.g. Servis Motor\" required class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-purple-500 outline-none\"></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Tipe Kategori</label> <select name=\"type\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required><option value=\"expense\">Pengeluaran</option> <option value=\"income\">Pemasukan</option></select></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Batas Budget (Opsional)</label><div class=\"relative\"><span class=\"absolute left-4 top-2 text-gray-500 font-bold\">Rp</span> <input type=\"number\" name=\"budget_limit\" value=\"0\" min=\"0\" class=\"w-full border-2 border-gray-200 rounded-xl pl-12 pr-4 py-2 focus:border-purple-500 outline-none\"></div><p class=\"text-xs text-gray-400 mt-1\">Isi 0 jika tidak ada batas</p></div><button type=\"submit\" class=\"w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition\">Simpan Kategori</button></form></div></div><!-- MODAL: Tambah Dompet --><div x-cloak x-show=\"addWalletModal\" class=\"fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0\" x-transition.opacity><div class=\"fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm\" @click=\"addWalletModal = false\"></div><div class=\"bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 relative z-10\" x-transition.scale><div class=\"flex justify-between items-center mb-4\"><h3 class=\"text-lg font-bold text-gray-900\">Tambah Dompet / Tabungan</h3><button @click=\"addWalletModal = false\" class=\"text-gray-400 hover:text-gray-600\">✖</button></div><input type=\"hidden\" name=\"csrf_token\" value=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var37 string
-		templ_7745c5c3_Var37, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 277, Col: 78}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var37)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 60, "\"><form action=\"/wallets\" method=\"POST\" class=\"space-y-4\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 62, "</select></div></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Keterangan Singkat</label> <input type=\"text\" name=\"description\" placeholder=\"Beli apa / dari siapa?\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50 focus:border-emerald-500 outline-none\" required></div><button type=\"submit\" class=\"w-full mt-4 flex justify-center items-center bg-gray-900 hover:bg-black text-white font-bold py-3.5 px-4 rounded-xl transition shadow-lg text-lg\">Simpan Transaksi</button></form></div></div><!-- MODAL: Tambah Kategori --><div x-cloak x-show=\"addCategoryModal\" class=\"fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0\" x-transition.opacity><div class=\"fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm\" @click=\"addCategoryModal = false\"></div><div class=\"bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 relative z-10\" x-transition.scale><div class=\"flex justify-between items-center mb-4\"><h3 class=\"text-lg font-bold text-gray-900\">Tambah Kategori Baru</h3><button @click=\"addCategoryModal = false\" class=\"text-gray-400 hover:text-gray-600\">✖</button></div><input type=\"hidden\" name=\"csrf_token\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var38 string
 		templ_7745c5c3_Var38, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 279, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 255, Col: 78}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var38)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 61, "\"> t\t\t\t<input type=\"hidden\" name=\"csrf_token\" value=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 63, "\"><form action=\"/categories\" method=\"POST\" class=\"space-y-4\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var39 string
 		templ_7745c5c3_Var39, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 280, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 257, Col: 79}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var39)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 62, "\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Nama Dompet</label> <input type=\"text\" name=\"name\" required class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-blue-500 outline-none\"></div><div x-data=\"{ walletType: 'cash' }\"><label class=\"block text-sm font-bold text-gray-700 mb-1\">Tipe Dompet</label> <select name=\"type\" x-model=\"walletType\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required><option value=\"cash\">Uang Tunai (Cash)</option> <option value=\"bank\">Rekening Bank</option> <option value=\"ewallet\">E-Wallet (Gopay/OVO)</option> <option value=\"emergency\">Dana Darurat (Emergency Fund)</option> <option value=\"sinking_fund\">Tabungan Sinking Fund</option></select><div x-show=\"walletType === 'emergency' || walletType === 'sinking_fund'\" class=\"mt-3 p-3 bg-purple-50 rounded-xl border border-purple-100\" x-transition><label class=\"block text-xs font-bold text-purple-700 mb-1\">Target Nominal (Rp)</label> <input type=\"number\" name=\"target_amount\" placeholder=\"e.g. 50000000\" class=\"w-full border-2 border-purple-200 rounded-xl px-3 py-1.5 text-sm outline-none focus:border-purple-500\"></div></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Saldo Awal (Rp)</label> <input type=\"number\" name=\"balance\" step=\"0.01\" value=\"0\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-blue-500 outline-none\" required></div><button type=\"submit\" class=\"w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition\">Simpan Dompet</button></form></div></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 64, "\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Nama Kategori</label> <input type=\"text\" name=\"name\" placeholder=\"e.g. Servis Motor\" required class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-purple-500 outline-none\"></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Tipe Kategori</label> <select name=\"type\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required><option value=\"expense\">Pengeluaran</option> <option value=\"income\">Pemasukan</option></select></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Batas Budget (Opsional)</label><div class=\"relative\"><span class=\"absolute left-4 top-2 text-gray-500 font-bold\">Rp</span> <input type=\"number\" name=\"budget_limit\" value=\"0\" min=\"0\" class=\"w-full border-2 border-gray-200 rounded-xl pl-12 pr-4 py-2 focus:border-purple-500 outline-none\"></div><p class=\"text-xs text-gray-400 mt-1\">Isi 0 jika tidak ada batas</p></div><button type=\"submit\" class=\"w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition\">Simpan Kategori</button></form></div></div><!-- MODAL: Tambah Dompet --><div x-cloak x-show=\"addWalletModal\" class=\"fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0\" x-transition.opacity><div class=\"fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm\" @click=\"addWalletModal = false\"></div><div class=\"bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 relative z-10\" x-transition.scale><div class=\"flex justify-between items-center mb-4\"><h3 class=\"text-lg font-bold text-gray-900\">Tambah Dompet / Tabungan</h3><button @click=\"addWalletModal = false\" class=\"text-gray-400 hover:text-gray-600\">✖</button></div><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var40 string
+		templ_7745c5c3_Var40, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 290, Col: 78}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var40)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 65, "\"><form action=\"/wallets\" method=\"POST\" class=\"space-y-4\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var41 string
+		templ_7745c5c3_Var41, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 292, Col: 77}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var41)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 66, "\"> t\t\t\t<input type=\"hidden\" name=\"csrf_token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var42 string
+		templ_7745c5c3_Var42, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/dashboard.templ`, Line: 293, Col: 77}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var42)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 67, "\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Nama Dompet</label> <input type=\"text\" name=\"name\" required class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-blue-500 outline-none\"></div><div x-data=\"{ walletType: 'cash' }\"><label class=\"block text-sm font-bold text-gray-700 mb-1\">Tipe Dompet</label> <select name=\"type\" x-model=\"walletType\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required><option value=\"cash\">Uang Tunai (Cash)</option> <option value=\"bank\">Rekening Bank</option> <option value=\"ewallet\">E-Wallet (Gopay/OVO)</option> <option value=\"emergency\">Dana Darurat (Emergency Fund)</option> <option value=\"sinking_fund\">Tabungan Sinking Fund</option></select><div x-show=\"walletType === 'emergency' || walletType === 'sinking_fund'\" class=\"mt-3 p-3 bg-purple-50 rounded-xl border border-purple-100\" x-transition><label class=\"block text-xs font-bold text-purple-700 mb-1\">Target Nominal (Rp)</label> <input type=\"number\" name=\"target_amount\" placeholder=\"e.g. 50000000\" class=\"w-full border-2 border-purple-200 rounded-xl px-3 py-1.5 text-sm outline-none focus:border-purple-500\"></div></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Saldo Awal (Rp)</label> <input type=\"number\" name=\"balance\" step=\"0.01\" value=\"0\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-blue-500 outline-none\" required></div><button type=\"submit\" class=\"w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition\">Simpan Dompet</button></form></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
