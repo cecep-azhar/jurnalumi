@@ -131,11 +131,29 @@ func TransactionPOST(c echo.Context) error {
 // WalletPOST handles adding a new wallet
 func WalletPOST(c echo.Context) error {
 	userCtx := c.Get("user_context").(middleware.UserContext)
+	isPremiumRaw := c.Get("is_premium")
+	isPremium := false
+	if isPremiumRaw != nil {
+		isPremium = isPremiumRaw.(bool)
+	}
 
 	name := c.FormValue("name")
 	walletType := c.FormValue("type")
 	balanceStr := c.FormValue("balance")
 	targetStr := c.FormValue("target_amount") // Added for Phase 5 (Sinking Funds)
+
+	// Free tier limits
+	if !isPremium {
+		if walletType == "sinking" || walletType == "emergency" {
+			return c.String(http.StatusForbidden, "Dana Darurat & Sinking Fund hanya untuk Premium")
+		}
+
+		var count int64
+		db.DB.Model(&models.Wallet{}).Scopes(db.Scoped(userCtx.TenantID)).Count(&count)
+		if count >= 2 {
+			return c.String(http.StatusForbidden, "Batas maksimal 2 dompet untuk paket Free. Upgrade ke Premium untuk dompet tak terbatas.")
+		}
+	}
 
 	balance, _ := strconv.ParseInt(balanceStr, 10, 64)
 	targetAmount, _ := strconv.ParseInt(targetStr, 10, 64)

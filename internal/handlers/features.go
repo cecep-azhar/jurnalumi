@@ -18,6 +18,11 @@ import (
 // ReportGET renders the Financial Audit & Report page
 func ReportGET(c echo.Context) error {
 	userCtx := c.Get("user_context").(middleware.UserContext)
+	isPremiumRaw := c.Get("is_premium")
+	isPremium := false
+	if isPremiumRaw != nil {
+		isPremium = isPremiumRaw.(bool)
+	}
 
 	var tenant models.Tenant
 	db.DB.First(&tenant, "id = ?", userCtx.TenantID)
@@ -27,8 +32,15 @@ func ReportGET(c echo.Context) error {
 		Role: userCtx.Role,
 	}
 
+	query := db.DB.Scopes(db.Scoped(userCtx.TenantID)).Order("transaction_date desc")
+	if !isPremium {
+		// ponytail: Free tier = 3 months history; upgrade adds full+yearly report
+		threeMonthsAgo := time.Now().AddDate(0, -3, 0)
+		query = query.Where("transaction_date >= ?", threeMonthsAgo)
+	}
+
 	var transactions []models.Transaction
-	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Order("transaction_date desc").Find(&transactions)
+	query.Find(&transactions)
 
 	var totalIncome int64 = 0.0
 	var totalExpense int64 = 0.0
@@ -46,9 +58,20 @@ func ReportGET(c echo.Context) error {
 // ReportExportCSV exports transactions to downloadable CSV format
 func ReportExportCSV(c echo.Context) error {
 	userCtx := c.Get("user_context").(middleware.UserContext)
+	isPremiumRaw := c.Get("is_premium")
+	isPremium := false
+	if isPremiumRaw != nil {
+		isPremium = isPremiumRaw.(bool)
+	}
+
+	query := db.DB.Scopes(db.Scoped(userCtx.TenantID)).Order("transaction_date desc")
+	if !isPremium {
+		threeMonthsAgo := time.Now().AddDate(0, -3, 0)
+		query = query.Where("transaction_date >= ?", threeMonthsAgo)
+	}
 
 	var transactions []models.Transaction
-	db.DB.Scopes(db.Scoped(userCtx.TenantID)).Order("transaction_date desc").Find(&transactions)
+	query.Find(&transactions)
 
 	c.Response().Header().Set(echo.HeaderContentType, "text/csv")
 	c.Response().Header().Set(echo.HeaderContentDisposition, fmt.Sprintf("attachment; filename=Laporan_Keuangan_JurnalUmi_%s.csv", time.Now().Format("2006-01-02")))
@@ -94,6 +117,15 @@ func FamilyGET(c echo.Context) error {
 // FamilyPOST creates a new family member (Spouse / Member)
 func FamilyPOST(c echo.Context) error {
 	userCtx := c.Get("user_context").(middleware.UserContext)
+	isPremiumRaw := c.Get("is_premium")
+	isPremium := false
+	if isPremiumRaw != nil {
+		isPremium = isPremiumRaw.(bool)
+	}
+
+	if !isPremium {
+		return c.String(http.StatusForbidden, "Paket Free hanya untuk 1 pengguna (kepala keluarga). Upgrade ke Premium untuk menambah anggota keluarga.")
+	}
 
 	name := c.FormValue("name")
 	email := c.FormValue("email")
