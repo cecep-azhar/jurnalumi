@@ -114,7 +114,7 @@
 ### H. Frontend — hanya yang menyangkut privasi/konsistensi, murah
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[!]` | QA-P1-25 | `dashboard.templ` pakai `@Layout` (kini nav di-copy-paste manual, hilang manifest PWA & hx-boost di halaman terpenting) | `web/views/dashboard.templ:15-42` | — |
+| `[x]` | QA-P1-25 | `dashboard.templ` pakai `@Layout` (kini nav di-copy-paste manual, hilang manifest PWA & hx-boost di halaman terpenting) | `web/views/dashboard.templ:15-42` | — |
 | `[!]` | QA-P1-26 🔴 | `sw.js`: network-first untuk route data + hapus cache saat logout — BUG PRIVASI: data keuangan keluarga masih tampil dari cache di HP yang dipinjam orang lain setelah logout | `web/static/sw.js:20-26` | — |
 
 ### I. Kepatuhan & operasional — syarat hukum & syarat "beneran bisa diakses publik"
@@ -380,3 +380,9 @@ Status: selesai & terverifikasi
 PR: direct commit
 Ringkasan: Implementasi soft delete transaksi dengan revert saldo v3.
 Catatan: -
+
+### 2026-09-11 17:11 WIB — QA-P1-25
+Status: selesai dan terverifikasi (direct commit main)
+PR: -
+Ringkasan: Refactor dashboard.templ agar menggunakan @Layout() — menghapus hardcoded head, nav, body, html dan menggantinya dengan wrapper @Layout("Dashboard", ...) + dashboardContent(). Dashboard kini dapat manifest PWA, hx-boost, HTMX, dan nav menu konsisten dengan halaman lain.
+Verifikasi: templ generate + go build ./... sukses.
