@@ -59,6 +59,13 @@ func main() {
 	rateLimiter := middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(5))
 	
 	// Landing Page Route
+	e.GET("/privacy", func(c echo.Context) error {
+		return c.File("web/views/privacy.html")
+	})
+	e.GET("/terms", func(c echo.Context) error {
+		return c.File("web/views/terms.html")
+	})
+
 	e.GET("/", func(c echo.Context) error {
 		return c.File("web/views/landing.html")
 	})
