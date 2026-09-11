@@ -87,44 +87,44 @@
 ### D. Aset & harga logam mulia (bug fungsional aktif, bukan cuma fitur kurang)
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[ ]` | QA-P1-14 🔴 | Cron harian ambil harga → `price_snapshots`; halaman `/assets` HANYA baca snapshot (fix bug: 20 aset = 20×timeout 3 detik = halaman hang ~60 detik) | `internal/handlers/assets.go:31-35`, scheduler baru | QA-P1-04, QA-P1-19 |
-| `[ ]` | QA-P1-15 🔴 | Ganti/verifikasi sumber harga (`api.logammulia.com` tidak eksis, selalu fallback konstanta) ATAU label jelas "harga manual, update berkala" — jangan sebut "real-time" kalau bohong | `internal/services/gold.go:17` | QA-P1-14 |
-| `[ ]` | QA-P1-16 | Perbaiki perhitungan dinar (keping→gram) & perak (kini hardcoded 16.500/gram) | `internal/services/gold.go`, `assets.go` | — |
+| `[!]` | QA-P1-14 🔴 | Cron harian ambil harga → `price_snapshots`; halaman `/assets` HANYA baca snapshot (fix bug: 20 aset = 20×timeout 3 detik = halaman hang ~60 detik) | `internal/handlers/assets.go:31-35`, scheduler baru | QA-P1-04, QA-P1-19 |
+| `[!]` | QA-P1-15 🔴 | Ganti/verifikasi sumber harga (`api.logammulia.com` tidak eksis, selalu fallback konstanta) ATAU label jelas "harga manual, update berkala" — jangan sebut "real-time" kalau bohong | `internal/services/gold.go:17` | QA-P1-14 |
+| `[!]` | QA-P1-16 | Perbaiki perhitungan dinar (keping→gram) & perak (kini hardcoded 16.500/gram) | `internal/services/gold.go`, `assets.go` | — |
 
 ### E. Akun dasar (bukan email marketing — ini keamanan akun)
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[ ]` | QA-P1-17 | Verifikasi email saat register | `internal/handlers/auth.go`, `internal/services/email.go` (sudah ada SMTP client, belum dipakai) | QA-P0-15 |
-| `[ ]` | QA-P1-18 | Reset password (lupa password) | `internal/handlers/auth.go` (baru) | QA-P1-17 |
+| `[!]` | QA-P1-17 | Verifikasi email saat register | `internal/handlers/auth.go`, `internal/services/email.go` (sudah ada SMTP client, belum dipakai) | QA-P0-15 |
+| `[!]` | QA-P1-18 | Reset password (lupa password) | `internal/handlers/auth.go` (baru) | QA-P1-17 |
 
 ### F. Scheduler dasar (infra minimal, HANYA untuk 2 job kritis di bawah — bukan email reminder)
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[ ]` | QA-P1-19 | Setup `robfig/cron` + DB lock (agar tidak dobel-jalan kalau ada >1 instance) — dipakai oleh QA-P1-14 & QA-P1-21 saja di tahap ini | `internal/scheduler/` (baru) | — |
+| `[!]` | QA-P1-19 | Setup `robfig/cron` + DB lock (agar tidak dobel-jalan kalau ada >1 instance) — dipakai oleh QA-P1-14 & QA-P1-21 saja di tahap ini | `internal/scheduler/` (baru) | — |
 
 ### G. Monetisasi — ini "keterikatan flow bisnis" yang Prof maksud, saat ini putus total
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[ ]` | QA-P1-20 🔴 | Middleware `RequirePlan(feature)` + enforcement limit Free tier (tanpa ini semua user dapat premium gratis selamanya — model bisnis tidak eksis) | semua handler yang membatasi fitur premium | QA-P0-04, QA-P1-04 |
-| `[ ]` | QA-P1-21 | Cron turunkan plan saat `plan_expires_at` lewat (pakai QA-P1-19) | `internal/handlers/admin.go` | QA-P1-19, QA-P1-20 |
-| `[ ]` | QA-P1-22 🔴 | Route `POST /activate-voucher` — form di `landing.html:247` KINI MENUJU 404 di landing page publik, ini bug yang langsung kelihatan user | `cmd/server/main.go`, handler baru | — |
-| `[ ]` | QA-P1-23 🔴 | Webhook Mayar.id `payment.success` (verifikasi signature, idempotent, tabel `payments`) — TANPA INI: orang bayar di Mayar, JurnalUmi tidak pernah tahu, user tidak ter-upgrade. Ini flow bisnis paling kritis yang bolong | `internal/handlers/` (baru) | QA-P1-04 |
-| `[ ]` | QA-P1-24 | Satu sumber harga (env/konstanta) dipakai konsisten di kode + landing + materi promosi (kini 3 angka beda: 39rb/bln, 190rb/thn, link `jurnalumi-premium-39k`) | lintas file, lihat `review.md` F15 | — |
+| `[!]` | QA-P1-20 🔴 | Middleware `RequirePlan(feature)` + enforcement limit Free tier (tanpa ini semua user dapat premium gratis selamanya — model bisnis tidak eksis) | semua handler yang membatasi fitur premium | QA-P0-04, QA-P1-04 |
+| `[!]` | QA-P1-21 | Cron turunkan plan saat `plan_expires_at` lewat (pakai QA-P1-19) | `internal/handlers/admin.go` | QA-P1-19, QA-P1-20 |
+| `[!]` | QA-P1-22 🔴 | Route `POST /activate-voucher` — form di `landing.html:247` KINI MENUJU 404 di landing page publik, ini bug yang langsung kelihatan user | `cmd/server/main.go`, handler baru | — |
+| `[!]` | QA-P1-23 🔴 | Webhook Mayar.id `payment.success` (verifikasi signature, idempotent, tabel `payments`) — TANPA INI: orang bayar di Mayar, JurnalUmi tidak pernah tahu, user tidak ter-upgrade. Ini flow bisnis paling kritis yang bolong | `internal/handlers/` (baru) | QA-P1-04 |
+| `[!]` | QA-P1-24 | Satu sumber harga (env/konstanta) dipakai konsisten di kode + landing + materi promosi (kini 3 angka beda: 39rb/bln, 190rb/thn, link `jurnalumi-premium-39k`) | lintas file, lihat `review.md` F15 | — |
 
 ### H. Frontend — hanya yang menyangkut privasi/konsistensi, murah
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[ ]` | QA-P1-25 | `dashboard.templ` pakai `@Layout` (kini nav di-copy-paste manual, hilang manifest PWA & hx-boost di halaman terpenting) | `web/views/dashboard.templ:15-42` | — |
-| `[ ]` | QA-P1-26 🔴 | `sw.js`: network-first untuk route data + hapus cache saat logout — BUG PRIVASI: data keuangan keluarga masih tampil dari cache di HP yang dipinjam orang lain setelah logout | `web/static/sw.js:20-26` | — |
+| `[!]` | QA-P1-25 | `dashboard.templ` pakai `@Layout` (kini nav di-copy-paste manual, hilang manifest PWA & hx-boost di halaman terpenting) | `web/views/dashboard.templ:15-42` | — |
+| `[!]` | QA-P1-26 🔴 | `sw.js`: network-first untuk route data + hapus cache saat logout — BUG PRIVASI: data keuangan keluarga masih tampil dari cache di HP yang dipinjam orang lain setelah logout | `web/static/sw.js:20-26` | — |
 
 ### I. Kepatuhan & operasional — syarat hukum & syarat "beneran bisa diakses publik"
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[ ]` | QA-P1-27 🔴 | Halaman Kebijakan Privasi & Syarat Ketentuan (UU PDP No. 27/2022 — app ini nyimpan seluruh data keuangan keluarga orang) | `web/views/` (baru) | — |
-| `[ ]` | QA-P1-28 🔴 | Hapus akun mandiri + ekspor data mandiri (hak subjek data, prasyarat UU PDP) | `internal/handlers/` (baru) | QA-P1-01 |
-| `[ ]` | QA-P1-29 🔴 | Backup `pg_dump` harian terenkripsi + **uji restore minimal 1×, catat tanggal ujinya di sini** | infra deploy (Coolify scheduled task / cron VPS) | QA-P0-14 |
-| `[ ]` | QA-P1-30 🔴 | Dockerfile production + deploy via **Coolify** + domain + TLS — ini yang bikin JurnalUmi BENERAN online | `Dockerfile` (baru, production, bukan `.dev`) | QA-P0-13 |
-| `[ ]` | QA-P1-31 | FAQ keamanan data di landing page (bundling murah dengan QA-P1-27) | `web/views/landing.html` | QA-P1-27 |
+| `[!]` | QA-P1-27 🔴 | Halaman Kebijakan Privasi & Syarat Ketentuan (UU PDP No. 27/2022 — app ini nyimpan seluruh data keuangan keluarga orang) | `web/views/` (baru) | — |
+| `[!]` | QA-P1-28 🔴 | Hapus akun mandiri + ekspor data mandiri (hak subjek data, prasyarat UU PDP) | `internal/handlers/` (baru) | QA-P1-01 |
+| `[!]` | QA-P1-29 🔴 | Backup `pg_dump` harian terenkripsi + **uji restore minimal 1×, catat tanggal ujinya di sini** | infra deploy (Coolify scheduled task / cron VPS) | QA-P0-14 |
+| `[!]` | QA-P1-30 🔴 | Dockerfile production + deploy via **Coolify** + domain + TLS — ini yang bikin JurnalUmi BENERAN online | `Dockerfile` (baru, production, bukan `.dev`) | QA-P0-13 |
+| `[!]` | QA-P1-31 | FAQ keamanan data di landing page (bundling murah dengan QA-P1-27) | `web/views/landing.html` | QA-P1-27 |
 
 ---
 
