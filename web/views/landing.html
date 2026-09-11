@@ -275,14 +275,14 @@
                 <p class="text-gray-500 text-sm mt-2">Masukkan 16 digit kode voucher aktivasi Anda</p>
             </div>
             
-            <form action="/activate-voucher" method="POST" class="space-y-4">
+            <div class="space-y-4">
                 <div>
-                    <input type="text" name="voucher_code" placeholder="JURNALUMI-XXXX-XXXX" required class="w-full text-center font-mono text-lg font-bold border-2 border-gray-300 rounded-xl px-4 py-3 focus:border-emerald-500 focus:ring-emerald-500 uppercase tracking-widest outline-none transition">
+                    <input type="text" name="voucher_code" placeholder="JURNALUMI-XXXX-XXXX" disabled class="w-full text-center font-mono text-lg font-bold border-2 border-gray-300 rounded-xl px-4 py-3 focus:border-emerald-500 focus:ring-emerald-500 uppercase tracking-widest outline-none transition bg-gray-50 opacity-70">
                 </div>
-                <button type="submit" class="w-full flex justify-center items-center bg-gray-900 hover:bg-black text-white font-bold py-3 px-4 rounded-xl transition shadow-lg">
+                <a href="/activate-voucher" class="w-full flex justify-center items-center bg-gray-900 hover:bg-black text-white font-bold py-3 px-4 rounded-xl transition shadow-lg">
                     Tukarkan Voucher Sekarang
-                </button>
-            </form>
+                </a>
+            </div>
         </div>
     </div>
 

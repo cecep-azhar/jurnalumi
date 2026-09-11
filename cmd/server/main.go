@@ -122,6 +122,10 @@ func main() {
 	appGroup.GET("/account/export", handlers.AccountExportGET, appMiddleware.RequireRole("owner"))
 	appGroup.POST("/account/delete", handlers.AccountDeletePOST, appMiddleware.RequireRole("owner"))
 
+	// Voucher activation (QA-P1-22)
+	appGroup.GET("/activate-voucher", handlers.ActivateVoucherGET)
+	appGroup.POST("/activate-voucher", handlers.ActivateVoucherPOST, appMiddleware.RequireRole("owner"))
+
 	// Static files for PWA (Phase 6)
 	e.Static("/static", "web/static")
 
