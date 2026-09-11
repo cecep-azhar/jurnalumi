@@ -134,6 +134,7 @@ templ Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet,
 									<th class="pb-3 font-medium">Kategori</th>
 									<th class="pb-3 font-medium">Keterangan</th>
 									<th class="pb-3 font-medium text-right">Nominal</th>
+									<th class="pb-3 font-medium text-center">Aksi</th>
 								</tr>
 							</thead>
 							<tbody class="text-sm">
@@ -154,6 +155,13 @@ templ Dashboard(tenant models.Tenant, user models.User, wallets []models.Wallet,
 											} else {
 												<span class="text-emerald-600">+ { FormatRupiah(t.Amount) }</span>
 											}
+										</td>
+										<td class="py-4 text-center">
+											<form action="/transactions/delete" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus transaksi ini? Saldo dompet akan disesuaikan otomatis.');">
+												<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+												<input type="hidden" name="id" value={ t.ID.String() } />
+												<button type="submit" class="text-xs bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded font-bold transition">Hapus</button>
+											</form>
 										</td>
 									</tr>
 								}
