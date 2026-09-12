@@ -88,7 +88,7 @@
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
 | `[x]` PR [#34](https://github.com/cecep-azhar/jurnalumi/pull/34) | QA-P1-14 🔴 | Cron harian ambil harga → `price_snapshots`; halaman `/assets` HANYA baca snapshot (fix bug: 20 aset = 20×timeout 3 detik = halaman hang ~60 detik) | `internal/handlers/assets.go:31-35`, scheduler baru | QA-P1-04, QA-P1-19 |
-| `[!]` | QA-P1-15 🔴 | Ganti/verifikasi sumber harga (`api.logammulia.com` tidak eksis, selalu fallback konstanta) ATAU label jelas "harga manual, update berkala" — jangan sebut "real-time" kalau bohong | `internal/services/gold.go:17` | QA-P1-14 |
+| `[x]` | QA-P1-15 🔴 | Ganti/verifikasi sumber harga (`api.logammulia.com` tidak eksis, selalu fallback konstanta) ATAU label jelas "harga manual, update berkala" — jangan sebut "real-time" kalau bohong | `internal/services/gold.go:17` | QA-P1-14 |
 | `[x]` | QA-P1-16 | Perbaiki perhitungan dinar (keping→gram) & perak (kini hardcoded 16.500/gram) | `internal/services/gold.go`, `assets.go` | — |
 
 ### E. Akun dasar (bukan email marketing — ini keamanan akun)
@@ -461,3 +461,8 @@ Status: skip
 PR: -
 Ringkasan: Tidak ada task `[ ]` tersisa di P0 maupun P1-KRITIS. Semua task yang belum `[x]` (QA-P1-15, 17, 18, 23, 24, 29, 30) berstatus `[!]` yang menunggu keputusan atau kredensial nyata dari Prof (SMTP, Mayar, Docker/Coolify, harga final). Cron idle (Kondisi STOP total).
 Catatan: Mohon Prof berikan keputusan/kredensial pada item `[!]` tersebut.
+
+### 2026-09-12 07:04 WIB - QA-P1-15
+Status: selesai
+PR: direct commit main (mengikuti opsi 2)
+Ringkasan: Menghapus HTTP call ke api.logammulia.com yang tidak eksis di `internal/services/gold.go` dan menggunakan harga fallback secara statis. Menambahkan label disclaimer eksplisit di `assets.templ` bahwa harga menggunakan estimasi manual (update berkala), bukan real-time. Memperbaiki bug double/typo csrf_token di form tambah aset. Verifikasi: templ generate dan go build sukses.

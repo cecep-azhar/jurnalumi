@@ -63,14 +63,14 @@ func assetContent(assets []models.CommodityAsset, totalAssetValue int64) templ.C
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"bg-white p-6 rounded-2xl shadow-sm border border-gray-100\" x-data=\"{ addAssetModal: false }\"><div class=\"flex justify-between items-center mb-6 border-b pb-4\"><div><h3 class=\"font-bold text-2xl\">Manajemen Aset Logam Mulia</h3><p class=\"text-gray-500 text-sm mt-1\">Lacak kepemilikan Emas Antam, Dinar, dan Perak keluarga.</p></div><div class=\"flex items-center space-x-4\"><div class=\"text-right bg-yellow-50 border border-yellow-200 px-4 py-2 rounded-xl\"><p class=\"text-xs text-yellow-700 font-bold uppercase\">Total Nilai Aset Emas</p><p class=\"text-lg font-bold text-yellow-900\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"bg-white p-6 rounded-2xl shadow-sm border border-gray-100\" x-data=\"{ addAssetModal: false }\"><div class=\"flex justify-between items-center mb-6 border-b pb-4\"><div><h3 class=\"font-bold text-2xl\">Manajemen Aset Logam Mulia</h3><p class=\"text-gray-500 text-sm mt-1\">Lacak kepemilikan Emas Antam, Dinar, dan Perak keluarga.</p><p class=\"text-yellow-600 text-xs mt-1 font-semibold\">* Estimasi nilai menggunakan harga acuan manual (update berkala), bukan real-time pasar.</p></div><div class=\"flex items-center space-x-4\"><div class=\"text-right bg-yellow-50 border border-yellow-200 px-4 py-2 rounded-xl\"><p class=\"text-xs text-yellow-700 font-bold uppercase\">Total Nilai Aset Emas</p><p class=\"text-lg font-bold text-yellow-900\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(totalAssetValue))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 22, Col: 81}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 23, Col: 81}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -88,7 +88,7 @@ func assetContent(assets []models.CommodityAsset, totalAssetValue int64) templ.C
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(a.Type)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 34, Col: 14}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 35, Col: 14}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -101,7 +101,7 @@ func assetContent(assets []models.CommodityAsset, totalAssetValue int64) templ.C
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(a.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 36, Col: 64}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 37, Col: 64}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -119,7 +119,7 @@ func assetContent(assets []models.CommodityAsset, totalAssetValue int64) templ.C
 				var templ_7745c5c3_Var6 string
 				templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%d Keping | %d Karat", a.WeightGram, a.Karatage))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 38, Col: 109}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 39, Col: 109}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 				if templ_7745c5c3_Err != nil {
@@ -137,7 +137,7 @@ func assetContent(assets []models.CommodityAsset, totalAssetValue int64) templ.C
 				var templ_7745c5c3_Var7 string
 				templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%d Gram | %d Karat", a.WeightGram, a.Karatage))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 40, Col: 107}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 41, Col: 107}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 				if templ_7745c5c3_Err != nil {
@@ -155,7 +155,7 @@ func assetContent(assets []models.CommodityAsset, totalAssetValue int64) templ.C
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(a.BuyPrice))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 46, Col: 72}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 47, Col: 72}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
@@ -168,7 +168,7 @@ func assetContent(assets []models.CommodityAsset, totalAssetValue int64) templ.C
 			var templ_7745c5c3_Var9 string
 			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(FormatRupiah(a.CurrentValue))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 50, Col: 75}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 51, Col: 75}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
@@ -185,46 +185,20 @@ func assetContent(assets []models.CommodityAsset, totalAssetValue int64) templ.C
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</div><!-- MODAL: Tambah Aset --><div x-cloak x-show=\"addAssetModal\" class=\"fixed inset-0 z-50 flex items-center justify-center p-4\" x-transition.opacity><div class=\"fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm\" @click=\"addAssetModal = false\"></div><div class=\"bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative z-10\" x-transition.scale><div class=\"flex justify-between items-center mb-6\"><h3 class=\"text-lg font-bold text-gray-900\">Catat Aset Baru</h3><button @click=\"addAssetModal = false\" class=\"text-gray-400 hover:text-gray-600\">✖</button></div><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</div><!-- MODAL: Tambah Aset --><div x-cloak x-show=\"addAssetModal\" class=\"fixed inset-0 z-50 flex items-center justify-center p-4\" x-transition.opacity><div class=\"fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm\" @click=\"addAssetModal = false\"></div><div class=\"bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative z-10\" x-transition.scale><div class=\"flex justify-between items-center mb-6\"><h3 class=\"text-lg font-bold text-gray-900\">Catat Aset Baru</h3><button @click=\"addAssetModal = false\" class=\"text-gray-400 hover:text-gray-600\">✖</button></div><form action=\"/assets\" method=\"POST\" class=\"space-y-4\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var10 string
 		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 70, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 72, Col: 78}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var10)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "\"><form action=\"/assets\" method=\"POST\" class=\"space-y-4\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var11 string
-		templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 72, Col: 77}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var11)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "\"> t\t\t\t<input type=\"hidden\" name=\"csrf_token\" value=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var12 string
-		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/assets.templ`, Line: 73, Col: 77}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var12)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Nama Barang</label> <input type=\"text\" name=\"name\" placeholder=\"e.g. Emas Antam Keping\" required class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-yellow-500 outline-none\"></div><div class=\"grid grid-cols-2 gap-4\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Tipe</label> <select name=\"type\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required><option value=\"gold_bar\">Emas Batangan</option> <option value=\"dinar\">Dinar</option> <option value=\"silver\">Perak / Dirham</option></select></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Karatase</label> <input type=\"number\" name=\"karatage\" step=\"0.1\" value=\"24\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required></div></div><div class=\"grid grid-cols-2 gap-4\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Berat (Gram) / Jumlah Keping (Dinar)</label> <input type=\"number\" name=\"weight\" step=\"1\" placeholder=\"10\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Total Harga Beli (Rp)</label> <input type=\"number\" name=\"buy_price\" step=\"1000\" placeholder=\"14000000\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required></div></div><button type=\"submit\" class=\"w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 rounded-xl transition mt-4\">Simpan Aset</button></form></div></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Nama Barang</label> <input type=\"text\" name=\"name\" placeholder=\"e.g. Emas Antam Keping\" required class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-yellow-500 outline-none\"></div><div class=\"grid grid-cols-2 gap-4\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Tipe</label> <select name=\"type\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required><option value=\"gold_bar\">Emas Batangan</option> <option value=\"dinar\">Dinar</option> <option value=\"silver\">Perak / Dirham</option></select></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Karatase</label> <input type=\"number\" name=\"karatage\" step=\"0.1\" value=\"24\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required></div></div><div class=\"grid grid-cols-2 gap-4\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Berat (Gram) / Jumlah Keping (Dinar)</label> <input type=\"number\" name=\"weight\" step=\"1\" placeholder=\"10\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Total Harga Beli (Rp)</label> <input type=\"number\" name=\"buy_price\" step=\"1000\" placeholder=\"14000000\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required></div></div><button type=\"submit\" class=\"w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 rounded-xl transition mt-4\">Simpan Aset</button></form></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

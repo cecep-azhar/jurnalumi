@@ -1,41 +1,16 @@
 package services
 
-import (
-	"encoding/json"
-	"net/http"
-	"time"
-)
-
-type GoldPriceResponse struct {
-	PricePerGram int64  `json:"price_per_gram"`
-	Currency     string `json:"currency"`
-}
-
-// Fixed prices for soft-launch when API is unavailable.
+// Fixed prices for soft-launch (manual update required).
 // Update these periodically.
 const (
 	FallbackGoldPricePerGram = 1450000
 	FixedSilverPricePerGram  = 16500
 )
 
-// FetchLiveGoldPrice fetches real-time gold price (Mocked / Fallback to Antam standard)
-func FetchLiveGoldPrice() int64 {
-	client := &http.Client{Timeout: 3 * time.Second}
-	resp, err := client.Get("https://api.logammulia.com/v1/price")
-	if err == nil && resp.StatusCode == http.StatusOK {
-		var res GoldPriceResponse
-		if err := json.NewDecoder(resp.Body).Decode(&res); err == nil && res.PricePerGram > 0 {
-			return res.PricePerGram
-		}
-	}
-
-	// Standard Fallback Price (Antam 24K September 2026 ~ Rp 1.450.000 / gram)
-	return FallbackGoldPricePerGram
-}
-
 // GetGoldPricePerGram returns the current gold price for cron snapshots
+// Note: Currently uses manual periodic update, not real-time API.
 func GetGoldPricePerGram() (int64, error) {
-	return FetchLiveGoldPrice(), nil
+	return FallbackGoldPricePerGram, nil
 }
 
 // GetSilverPricePerGramFallback returns the fixed silver price
@@ -43,9 +18,9 @@ func GetSilverPricePerGramFallback() int64 {
 	return FixedSilverPricePerGram
 }
 
-// CalculateCommodityValue calculates real-time IDR value of gold/dinar
+// CalculateCommodityValue calculates the IDR value of gold/dinar based on manual pricing
 func CalculateCommodityValue(commodityType string, weightGram int64, karatage int64) int64 {
-	liveGoldPrice := FetchLiveGoldPrice()
+	liveGoldPrice := int64(FallbackGoldPricePerGram)
 	karatRatio := float64(karatage) / 24.0
 
 	if commodityType == "dinar" {
