@@ -466,3 +466,9 @@ Catatan: Mohon Prof berikan keputusan/kredensial pada item `[!]` tersebut.
 Status: selesai
 PR: direct commit main (mengikuti opsi 2)
 Ringkasan: Menghapus HTTP call ke api.logammulia.com yang tidak eksis di `internal/services/gold.go` dan menggunakan harga fallback secara statis. Menambahkan label disclaimer eksplisit di `assets.templ` bahwa harga menggunakan estimasi manual (update berkala), bukan real-time. Memperbaiki bug double/typo csrf_token di form tambah aset. Verifikasi: templ generate dan go build sukses.
+
+### $(date +'%Y-%m-%d %H:%M WIB') — Idle / Blocked
+Status: skip
+PR: -
+Ringkasan: Tidak ada task `[ ]` tersisa di P0 maupun P1-KRITIS. Semua task yang belum `[x]` (QA-P1-17, 18, 23, 24, 29, 30) berstatus `[!]` yang menunggu keputusan atau kredensial nyata dari Prof. Cron idle (Kondisi STOP total).
+Catatan: Mohon Prof berikan keputusan/kredensial pada item `[!]` tersebut.
