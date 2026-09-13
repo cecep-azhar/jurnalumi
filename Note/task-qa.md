@@ -534,3 +534,8 @@ PR: -
 Ringkasan: Tidak ada task `[ ]` tersisa di P0 maupun P1-KRITIS. Semua task yang belum `[x]` berstatus `[!]` yang menunggu keputusan atau kredensial nyata dari Prof. Cron idle (Kondisi STOP total).
 Catatan: Menunggu intervensi Prof (SMTP, Mayar, Docker/Coolify, harga final).
 
+### $(date +'%Y-%m-%d %H:%M WIB') — Idle / Blocked
+Status: skip
+PR: -
+Ringkasan: Tidak ada task `[ ]` tersisa di P0 maupun P1-KRITIS. Semua task yang belum `[x]` berstatus `[!]` yang menunggu keputusan atau kredensial nyata dari Prof. Cron idle (Kondisi STOP total).
+Catatan: Menunggu intervensi Prof (SMTP, Mayar, Docker/Coolify, harga final).
