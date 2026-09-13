@@ -673,3 +673,8 @@ Status: skip
 PR: -
 Ringkasan: Prosedur QA dijalankan ulang. Tidak ada task [ ] tersisa di P0 maupun P1-KRITIS. Seluruh item berstatus [x] kecuali 6 item berstatus [!] (QA-P1-17, 18, 23, 24, 29, 30). Kondisi STOP total aktif.
 Catatan: Menunggu intervensi Prof (kredensial SMTP, Mayar, harga final, skema backup/restore, deploy Coolify).
+### $(date +'%Y-%m-%d %H:%M WIB') — Idle / Blocked
+Status: skip
+PR: -
+Ringkasan: Tidak ada task `[ ]` tersisa di P0 maupun P1-KRITIS. Semua task yang belum `[x]` (QA-P1-17, 18, 23, 24, 29, 30) berstatus `[!]` yang menunggu keputusan atau kredensial nyata dari Prof. Cron idle (Kondisi STOP total).
+Catatan: Menunggu intervensi Prof (kredensial SMTP, Mayar, harga final, skema backup/restore, deploy Coolify).
