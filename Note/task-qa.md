@@ -803,3 +803,8 @@ Status: skip
 PR: -
 Ringkasan: Prosedur QA dijalankan dari langkah 0. Tidak ada PR terbuka. Semua checklist (P0 & P1-KRITIS) sudah dalam state `[x]` atau `[!]`. Tidak ada task `[ ]` maupun `[~]` yang tersedia. 6 task tersisa (QA-P1-17, 18, 23, 24, 29, 30) tetap diblok (membutuhkan kredensial SMTP, Mayar, konfirmasi harga, dan file deployment dari Prof). Aturan kondisi STOP total terpenuhi (tidak ada task P1 kritis / P0 yang dapat dieksekusi). Tidak ada perubahan kondisi.
 Catatan: Menunggu Prof menyuplai kredensial SMTP/Mayar, harga final, atau petunjuk Docker production/Coolify.
+### 2026-09-14 15:41 WIB — Idle / Blocked (verifikasi ulang)
+Status: skip
+PR: -
+Ringkasan: Prosedur QA dijalankan dari langkah 0. Tidak ada PR terbuka. Semua task P0 & P1-KRITIS sudah `[x]` atau `[!]`. Tidak ada task `[ ]` atau `[~]`. 6 task tersisa (QA-P1-17, 18, 23, 24, 29, 30) tetap diblok menunggu kredensial SMTP, Mayar, konfirmasi harga, dan file deployment dari Prof. Kondisi STOP total aktif.
+Catatan: Menunggu intervensi Prof (kredensial SMTP, Mayar, harga final, skema backup/restore, deploy Coolify).
