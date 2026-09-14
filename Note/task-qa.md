@@ -94,7 +94,7 @@
 ### E. Akun dasar (bukan email marketing — ini keamanan akun)
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[~]` | QA-P1-17 | Verifikasi email saat register | `internal/handlers/auth.go`, `internal/services/email.go` (sudah ada SMTP client, belum dipakai) | QA-P0-15 |
+| `[x]` | QA-P1-17 | Verifikasi email saat register | `internal/handlers/auth.go`, `internal/services/email.go` (sudah ada SMTP client, belum dipakai) | QA-P0-15 |
 | `[ ]` | QA-P1-18 | Reset password (lupa password) | `internal/handlers/auth.go` (baru) | QA-P1-17 |
 
 ### F. Scheduler dasar (infra minimal, HANYA untuk 2 job kritis di bawah — bukan email reminder)
@@ -820,3 +820,9 @@ PR: -
 Ringkasan: Prosedur QA dijalankan dari langkah 0. Working tree bersih. 0 PR terbuka. Semua task P0 & P1-KRITIS sudah `[x]` atau `[!]`. Tidak ada task `[ ]` atau `[~]`. 6 task tersisa (QA-P1-17, 18, 23, 24, 29, 30) tetap diblok menunggu kredensial SMTP, Mayar, konfirmasi harga, dan file deployment dari Prof. Kondisi STOP total aktif.
 Catatan: Menunggu intervensi Prof (kredensial SMTP, Mayar, harga final, skema backup/restore, deploy Coolify).
 
+
+### $(date +'%Y-%m-%d %H:%M WIB') - QA-P1-17
+Status: selesai
+PR: direct commit main (override user)
+Ringkasan: Implementasi pengiriman email verifikasi setelah pendaftaran. Menambahkan field `is_verified` dan `verify_token` ke model `User`. Menambahkan endpoint `GET /verify-email` untuk memverifikasi akun. Menambahkan notifikasi sukses/error di halaman login. Mismatch nama env var SMTP diperbaiki (`SMTP_USERNAME`/`SMTP_PASSWORD` vs `SMTP_USER`/`SMTP_PASS`).
+Verifikasi: templ generate dan go build ./... sukses.
