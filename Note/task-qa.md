@@ -94,7 +94,7 @@
 ### E. Akun dasar (bukan email marketing — ini keamanan akun)
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
-| `[ ]` | QA-P1-17 | Verifikasi email saat register | `internal/handlers/auth.go`, `internal/services/email.go` (sudah ada SMTP client, belum dipakai) | QA-P0-15 |
+| `[~]` | QA-P1-17 | Verifikasi email saat register | `internal/handlers/auth.go`, `internal/services/email.go` (sudah ada SMTP client, belum dipakai) | QA-P0-15 |
 | `[ ]` | QA-P1-18 | Reset password (lupa password) | `internal/handlers/auth.go` (baru) | QA-P1-17 |
 
 ### F. Scheduler dasar (infra minimal, HANYA untuk 2 job kritis di bawah — bukan email reminder)
