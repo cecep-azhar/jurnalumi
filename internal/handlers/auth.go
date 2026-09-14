@@ -4,6 +4,9 @@ import (
 	"net/http"
 	"os"
 
+	"crypto/rand"
+	"encoding/hex"
+
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
@@ -11,6 +14,7 @@ import (
 
 	"github.com/cecep-azhar/jurnalumi/internal/db"
 	"github.com/cecep-azhar/jurnalumi/internal/models"
+	"github.com/cecep-azhar/jurnalumi/internal/services"
 	"github.com/cecep-azhar/jurnalumi/web/views"
 )
 
@@ -27,6 +31,10 @@ func LoginPOST(c echo.Context) error {
 	var user models.User
 	if err := db.DB.Where("email = ?", email).First(&user).Error; err != nil {
 		return c.Redirect(http.StatusFound, "/login?error=invalid_credentials")
+	}
+
+	if !user.IsVerified {
+		return c.Redirect(http.StatusFound, "/login?error=email_not_verified")
 	}
 
 	// Check password hash
@@ -77,6 +85,11 @@ func RegisterPOST(c echo.Context) error {
 		return c.Redirect(http.StatusFound, "/register?error=server_error")
 	}
 
+	// Generate verification token
+	bytes := make([]byte, 32)
+	rand.Read(bytes)
+	verifyToken := hex.EncodeToString(bytes)
+
 	// Transaction to create Tenant & Owner User
 	tx := db.DB.Begin()
 
@@ -95,6 +108,8 @@ func RegisterPOST(c echo.Context) error {
 		Email:        email,
 		PasswordHash: string(hashedPassword),
 		Role:         "owner", // Primary Family Admin
+		IsVerified:   false,
+		VerifyToken:  verifyToken,
 	}
 	if err := tx.Create(&user).Error; err != nil {
 		tx.Rollback()
@@ -127,29 +142,37 @@ func RegisterPOST(c echo.Context) error {
 
 	tx.Commit()
 	
-	// Auto-login session after register
-	sess, _ := session.Get("jurnalumi_session", c)
-	sess.Options.MaxAge = -1
-	sess.Save(c.Request(), c.Response())
+	// Send verification email
+	go func() {
+		_ = services.SendVerificationEmail(email, verifyToken)
+	}()
 
-	sess, _ = session.Get("jurnalumi_session", c)
-	isProd := os.Getenv("APP_ENV") == "production"
+	return c.Redirect(http.StatusFound, "/login?success=registered")
+}
 
-	sess.Options = &sessions.Options{
-		Path:     "/",
-		MaxAge:   86400 * 30,
-		HttpOnly: true,
-		Secure:   isProd,
-		SameSite: http.SameSiteLaxMode,
+// VerifyEmailGET handles email verification link
+func VerifyEmailGET(c echo.Context) error {
+	token := c.QueryParam("token")
+	if token == "" {
+		return c.Redirect(http.StatusFound, "/login?error=invalid_token")
 	}
-	sess.Values["user_id"] = user.ID.String()
-	sess.Values["tenant_id"] = user.TenantID.String()
-	sess.Values["email"] = user.Email
-	sess.Values["name"] = user.Name
-	sess.Values["role"] = user.Role
-	sess.Save(c.Request(), c.Response())
 
-	return c.Redirect(http.StatusFound, "/dashboard")
+	var user models.User
+	if err := db.DB.Where("verify_token = ?", token).First(&user).Error; err != nil {
+		return c.Redirect(http.StatusFound, "/login?error=invalid_token")
+	}
+
+	if user.IsVerified {
+		return c.Redirect(http.StatusFound, "/login?success=already_verified")
+	}
+
+	user.IsVerified = true
+	user.VerifyToken = ""
+	if err := db.DB.Save(&user).Error; err != nil {
+		return c.Redirect(http.StatusFound, "/login?error=server_error")
+	}
+
+	return c.Redirect(http.StatusFound, "/login?success=verified")
 }
 
 // LogoutGET handles destroying the session

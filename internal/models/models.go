@@ -30,6 +30,8 @@ type User struct {
 	Email        string    `gorm:"size:255;uniqueIndex;not null" json:"email"`
 	PasswordHash string    `gorm:"size:255;not null" json:"-"`
 	Role         string    `gorm:"size:50;default:'member'" json:"role"`
+	IsVerified   bool      `gorm:"default:false" json:"is_verified"`
+	VerifyToken  string    `gorm:"size:100;index" json:"-"`
 }
 
 // Category represents Transaction Categories (Master Data)

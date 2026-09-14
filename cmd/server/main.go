@@ -78,6 +78,7 @@ func main() {
 	// Auth Routes
 	e.GET("/login", handlers.LoginGET)
 	e.POST("/login", handlers.LoginPOST, rateLimiter)
+	e.GET("/verify-email", handlers.VerifyEmailGET)
 	e.GET("/register", handlers.RegisterGET)
 	e.POST("/register", handlers.RegisterPOST, rateLimiter)
 	e.GET("/logout", handlers.LogoutGET)

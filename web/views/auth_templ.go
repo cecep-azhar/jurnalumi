@@ -29,14 +29,14 @@ func Login() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"id\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Masuk - JurnalUmi</title><script src=\"https://cdn.tailwindcss.com\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js\"></script></head><body class=\"bg-gray-50 flex items-center justify-center min-h-screen p-4\" x-data=\"{ email: '', password: '' }\"><div class=\"bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-gray-100 space-y-6\"><div class=\"text-center\"><h1 class=\"text-3xl font-extrabold text-emerald-600 mb-2\">JurnalUmi</h1><p class=\"text-gray-500 text-sm\">Masuk ke Akun Keuangan Keluarga Anda</p></div><!-- Quick Demo Login Buttons --><div class=\"bg-emerald-50 p-4 rounded-xl border border-emerald-100 space-y-2\"><p class=\"text-xs font-bold text-emerald-800 uppercase tracking-wider text-center\">⚡ Login Cepat (Demo Mode):</p><div class=\"grid grid-cols-2 gap-2\"><button type=\"button\" @click=\"email = 'cecep@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👨\u200d👩\u200d👦 Suami (Owner)</button> <button type=\"button\" @click=\"email = 'istri@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👩 Istri (Co-Owner)</button> <button type=\"button\" @click=\"email = 'anak@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👦 Anak (Member)</button> <a href=\"/admin/dashboard\" class=\"bg-gray-900 hover:bg-black text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm text-center flex items-center justify-center\">🔑 Super Admin</a></div></div><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"id\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Masuk - JurnalUmi</title><script src=\"https://cdn.tailwindcss.com\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js\"></script></head><body class=\"bg-gray-50 flex items-center justify-center min-h-screen p-4\" x-data=\"{ email: '', password: '' }\"><div class=\"bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-gray-100 space-y-6\"><div class=\"text-center\"><h1 class=\"text-3xl font-extrabold text-emerald-600 mb-2\">JurnalUmi</h1><p class=\"text-gray-500 text-sm\">Masuk ke Akun Keuangan Keluarga Anda</p></div><div x-data=\"{ error: new URLSearchParams(window.location.search).get('error'), success: new URLSearchParams(window.location.search).get('success') }\"><template x-if=\"error === 'email_not_verified'\"><div class=\"bg-red-50 border-l-4 border-red-500 p-4 mb-4\"><p class=\"text-sm text-red-700\">Email belum diverifikasi. Silakan cek kotak masuk Anda.</p></div></template><template x-if=\"success === 'registered'\"><div class=\"bg-blue-50 border-l-4 border-blue-500 p-4 mb-4\"><p class=\"text-sm text-blue-700\">Pendaftaran berhasil! Silakan cek email Anda untuk verifikasi sebelum login.</p></div></template><template x-if=\"success === 'verified'\"><div class=\"bg-green-50 border-l-4 border-green-500 p-4 mb-4\"><p class=\"text-sm text-green-700\">Email berhasil diverifikasi! Silakan login.</p></div></template></div><!-- Quick Demo Login Buttons --><div class=\"bg-emerald-50 p-4 rounded-xl border border-emerald-100 space-y-2\"><p class=\"text-xs font-bold text-emerald-800 uppercase tracking-wider text-center\">⚡ Login Cepat (Demo Mode):</p><div class=\"grid grid-cols-2 gap-2\"><button type=\"button\" @click=\"email = 'cecep@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👨\u200d👩\u200d👦 Suami (Owner)</button> <button type=\"button\" @click=\"email = 'istri@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👩 Istri (Co-Owner)</button> <button type=\"button\" @click=\"email = 'anak@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👦 Anak (Member)</button> <a href=\"/admin/dashboard\" class=\"bg-gray-900 hover:bg-black text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm text-center flex items-center justify-center\">🔑 Super Admin</a></div></div><input type=\"hidden\" name=\"csrf_token\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 39, Col: 76}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 57, Col: 76}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var2)
 		if templ_7745c5c3_Err != nil {
@@ -49,7 +49,7 @@ func Login() templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 41, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 59, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var3)
 		if templ_7745c5c3_Err != nil {
@@ -62,7 +62,7 @@ func Login() templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 42, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 60, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var4)
 		if templ_7745c5c3_Err != nil {
@@ -104,7 +104,7 @@ func Register() templ.Component {
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 80, Col: 76}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 98, Col: 76}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var6)
 		if templ_7745c5c3_Err != nil {
@@ -117,7 +117,7 @@ func Register() templ.Component {
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 82, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 100, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var7)
 		if templ_7745c5c3_Err != nil {
@@ -130,7 +130,7 @@ func Register() templ.Component {
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 83, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 101, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var8)
 		if templ_7745c5c3_Err != nil {

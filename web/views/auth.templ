@@ -17,6 +17,24 @@ templ Login() {
 				<p class="text-gray-500 text-sm">Masuk ke Akun Keuangan Keluarga Anda</p>
 			</div>
 
+			<div x-data="{ error: new URLSearchParams(window.location.search).get('error'), success: new URLSearchParams(window.location.search).get('success') }">
+				<template x-if="error === 'email_not_verified'">
+					<div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+						<p class="text-sm text-red-700">Email belum diverifikasi. Silakan cek kotak masuk Anda.</p>
+					</div>
+				</template>
+				<template x-if="success === 'registered'">
+					<div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+						<p class="text-sm text-blue-700">Pendaftaran berhasil! Silakan cek email Anda untuk verifikasi sebelum login.</p>
+					</div>
+				</template>
+				<template x-if="success === 'verified'">
+					<div class="bg-green-50 border-l-4 border-green-500 p-4 mb-4">
+						<p class="text-sm text-green-700">Email berhasil diverifikasi! Silakan login.</p>
+					</div>
+				</template>
+			</div>
+
 			<!-- Quick Demo Login Buttons -->
 			<div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100 space-y-2">
 				<p class="text-xs font-bold text-emerald-800 uppercase tracking-wider text-center">⚡ Login Cepat (Demo Mode):</p>
