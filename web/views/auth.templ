@@ -33,6 +33,11 @@ templ Login() {
 						<p class="text-sm text-green-700">Email berhasil diverifikasi! Silakan login.</p>
 					</div>
 				</template>
+				<template x-if="success === 'password_reset'">
+					<div class="bg-green-50 border-l-4 border-green-500 p-4 mb-4">
+						<p class="text-sm text-green-700">Kata sandi berhasil diperbarui! Silakan masuk dengan kata sandi baru.</p>
+					</div>
+				</template>
 			</div>
 
 			<!-- Quick Demo Login Buttons -->
@@ -63,7 +68,10 @@ t			<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } 
 					<input type="email" name="email" x-model="email" required placeholder="nama@keluarga.com" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition"/>
 				</div>
 				<div>
-					<label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+					<div class="flex items-center justify-between">
+						<label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+						<a href="/forgot-password" class="text-xs text-emerald-600 hover:underline">Lupa password?</a>
+					</div>
 					<input type="password" name="password" x-model="password" required placeholder="••••••••" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition"/>
 				</div>
 				<button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition text-base">
@@ -122,6 +130,110 @@ t			<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } 
 
 			<div class="mt-6 text-center text-sm text-gray-500">
 				Sudah punya akun? <a href="/login" class="text-emerald-600 font-bold hover:underline">Masuk</a>
+			</div>
+		</div>
+	</body>
+	</html>
+}
+
+templ ForgotPassword() {
+	<!DOCTYPE html>
+	<html lang="id">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>Lupa Kata Sandi - JurnalUmi</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+	</head>
+	<body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
+		<div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-gray-100 space-y-6">
+			<div class="text-center">
+				<h1 class="text-2xl font-bold text-gray-800 mb-2">Lupa Kata Sandi?</h1>
+				<p class="text-gray-500 text-sm">Masukkan email terdaftar akun Anda. Kami akan mengirimkan tautan reset kata sandi.</p>
+			</div>
+
+			<div x-data="{ error: new URLSearchParams(window.location.search).get('error'), success: new URLSearchParams(window.location.search).get('success') }">
+				<template x-if="success === 'sent'">
+					<div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+						<p class="text-sm text-blue-700">Jika email Anda terdaftar, tautan reset kata sandi telah dikirimkan. Silakan periksa kotak masuk email Anda.</p>
+					</div>
+				</template>
+				<template x-if="error === 'server_error'">
+					<div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+						<p class="text-sm text-red-700">Terjadi kesalahan sistem. Silakan coba lagi.</p>
+					</div>
+				</template>
+			</div>
+
+			<form action="/forgot-password" method="POST" class="space-y-4">
+				<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+				<div>
+					<label class="block text-sm font-medium text-gray-700 mb-1">Email Terdaftar</label>
+					<input type="email" name="email" required placeholder="nama@keluarga.com" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition"/>
+				</div>
+				<button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition text-base">
+					Kirim Tautan Reset
+				</button>
+			</form>
+
+			<div class="text-center text-sm text-gray-500">
+				Ingat kata sandi? <a href="/login" class="text-emerald-600 font-bold hover:underline">Kembali Masuk</a>
+			</div>
+		</div>
+	</body>
+	</html>
+}
+
+templ ResetPassword(token string) {
+	<!DOCTYPE html>
+	<html lang="id">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>Atur Ulang Kata Sandi - JurnalUmi</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+	</head>
+	<body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
+		<div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-gray-100 space-y-6">
+			<div class="text-center">
+				<h1 class="text-2xl font-bold text-gray-800 mb-2">Kata Sandi Baru</h1>
+				<p class="text-gray-500 text-sm">Masukkan kata sandi baru untuk akun Anda.</p>
+			</div>
+
+			<div x-data="{ error: new URLSearchParams(window.location.search).get('error') }">
+				<template x-if="error === 'invalid_or_expired'">
+					<div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+						<p class="text-sm text-red-700">Tautan reset tidak valid atau telah kedaluwarsa. Silakan ajukan reset kembali.</p>
+					</div>
+				</template>
+				<template x-if="error === 'empty_password'">
+					<div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+						<p class="text-sm text-red-700">Kata sandi baru tidak boleh kosong.</p>
+					</div>
+				</template>
+				<template x-if="error === 'server_error'">
+					<div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+						<p class="text-sm text-red-700">Terjadi kesalahan sistem. Silakan coba lagi.</p>
+					</div>
+				</template>
+			</div>
+
+			<form action="/reset-password" method="POST" class="space-y-4">
+				<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+				<input type="hidden" name="token" value={ token } />
+				<div>
+					<label class="block text-sm font-medium text-gray-700 mb-1">Kata Sandi Baru</label>
+					<input type="password" name="password" required placeholder="••••••••" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition"/>
+				</div>
+				<button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition text-base">
+					Simpan Kata Sandi Baru
+				</button>
+			</form>
+
+			<div class="text-center text-sm text-gray-500">
+				Batal? <a href="/login" class="text-emerald-600 font-bold hover:underline">Kembali ke Login</a>
 			</div>
 		</div>
 	</body>

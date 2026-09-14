@@ -42,3 +42,15 @@ func SendVerificationEmail(toEmail string, token string) error {
 	body := fmt.Sprintf("Halo,\n\nTerima kasih telah mendaftar di JurnalUmi. Silakan verifikasi email Anda dengan mengklik tautan berikut:\n\n%s/verify-email?token=%s\n\nTautan ini akan kedaluwarsa.\n\nSalam,\nTim JurnalUmi", baseURL, token)
 	return SendEmailNotification(toEmail, subject, body)
 }
+
+// SendResetPasswordEmail sends the password reset email with token link
+func SendResetPasswordEmail(toEmail string, token string) error {
+	subject := "Reset Password JurnalUmi"
+	baseURL := os.Getenv("APP_URL")
+	if baseURL == "" {
+		baseURL = "http://localhost:8080"
+	}
+	body := fmt.Sprintf("Halo,\n\nKami menerima permintaan untuk mereset kata sandi akun JurnalUmi Anda. Silakan klik tautan berikut untuk membuat kata sandi baru:\n\n%s/reset-password?token=%s\n\nTautan ini hanya berlaku selama 1 jam.\n\nJika Anda tidak merasa meminta reset password, abaikan email ini.\n\nSalam,\nTim JurnalUmi", baseURL, token)
+	return SendEmailNotification(toEmail, subject, body)
+}
+

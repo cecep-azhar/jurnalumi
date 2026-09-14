@@ -32,6 +32,8 @@ type User struct {
 	Role         string    `gorm:"size:50;default:'member'" json:"role"`
 	IsVerified   bool      `gorm:"default:false" json:"is_verified"`
 	VerifyToken  string    `gorm:"size:100;index" json:"-"`
+	ResetToken   string    `gorm:"size:100;index" json:"-"`
+	ResetExpires *time.Time `json:"reset_expires"`
 }
 
 // Category represents Transaction Categories (Master Data)

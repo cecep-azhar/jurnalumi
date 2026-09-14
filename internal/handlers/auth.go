@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 	"os"
+	"time"
 
 	"crypto/rand"
 	"encoding/hex"
@@ -181,4 +182,96 @@ func LogoutGET(c echo.Context) error {
 	sess.Options.MaxAge = -1
 	sess.Save(c.Request(), c.Response())
 	return c.Redirect(http.StatusFound, "/login")
+}
+
+// ForgotPasswordGET renders forgot password request page
+func ForgotPasswordGET(c echo.Context) error {
+	return Render(c, views.ForgotPassword())
+}
+
+// ForgotPasswordPOST generates reset token and sends email
+func ForgotPasswordPOST(c echo.Context) error {
+	email := c.FormValue("email")
+	if email == "" {
+		return c.Redirect(http.StatusFound, "/forgot-password")
+	}
+
+	var user models.User
+	if err := db.DB.Where("email = ?", email).First(&user).Error; err == nil {
+		bytes := make([]byte, 32)
+		rand.Read(bytes)
+		token := hex.EncodeToString(bytes)
+		expires := time.Now().Add(1 * time.Hour)
+
+		user.ResetToken = token
+		user.ResetExpires = &expires
+		if err := db.DB.Save(&user).Error; err == nil {
+			go func() {
+				_ = services.SendResetPasswordEmail(user.Email, token)
+			}()
+		}
+	}
+
+	// Always redirect with success message to prevent user enumeration
+	return c.Redirect(http.StatusFound, "/forgot-password?success=sent")
+}
+
+// ResetPasswordGET renders reset password page
+func ResetPasswordGET(c echo.Context) error {
+	token := c.QueryParam("token")
+	if token == "" {
+		return c.Redirect(http.StatusFound, "/login?error=invalid_token")
+	}
+
+	var user models.User
+	if err := db.DB.Where("reset_token = ?", token).First(&user).Error; err != nil {
+		return c.Redirect(http.StatusFound, "/login?error=invalid_token")
+	}
+
+	if user.ResetExpires == nil || user.ResetExpires.Before(time.Now()) {
+		return c.Redirect(http.StatusFound, "/reset-password?token="+token+"&error=invalid_or_expired")
+	}
+
+	return Render(c, views.ResetPassword(token))
+}
+
+// ResetPasswordPOST updates user's password with provided token
+func ResetPasswordPOST(c echo.Context) error {
+	token := c.FormValue("token")
+	password := c.FormValue("password")
+
+	if token == "" {
+		return c.Redirect(http.StatusFound, "/login?error=invalid_token")
+	}
+
+	if password == "" {
+		return c.Redirect(http.StatusFound, "/reset-password?token="+token+"&error=empty_password")
+	}
+
+	var user models.User
+	if err := db.DB.Where("reset_token = ?", token).First(&user).Error; err != nil {
+		return c.Redirect(http.StatusFound, "/reset-password?token="+token+"&error=invalid_or_expired")
+	}
+
+	if user.ResetExpires == nil || user.ResetExpires.Before(time.Now()) {
+		return c.Redirect(http.StatusFound, "/reset-password?token="+token+"&error=invalid_or_expired")
+	}
+
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return c.Redirect(http.StatusFound, "/reset-password?token="+token+"&error=server_error")
+	}
+
+	user.PasswordHash = string(hashedPassword)
+	user.ResetToken = ""
+	user.ResetExpires = nil
+	// Resetting password verifies email if not yet verified
+	user.IsVerified = true
+	user.VerifyToken = ""
+
+	if err := db.DB.Save(&user).Error; err != nil {
+		return c.Redirect(http.StatusFound, "/reset-password?token="+token+"&error=server_error")
+	}
+
+	return c.Redirect(http.StatusFound, "/login?success=password_reset")
 }

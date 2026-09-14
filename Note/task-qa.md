@@ -95,7 +95,7 @@
 | Status | ID | Task | Lokasi | Depends on |
 |---|---|---|---|---|
 | `[x]` | QA-P1-17 | Verifikasi email saat register | `internal/handlers/auth.go`, `internal/services/email.go` (sudah ada SMTP client, belum dipakai) | QA-P0-15 |
-| `[ ]` | QA-P1-18 | Reset password (lupa password) | `internal/handlers/auth.go` (baru) | QA-P1-17 |
+| `[x]` | QA-P1-18 | Reset password (lupa password) | `internal/handlers/auth.go` (baru) | QA-P1-17 |
 
 ### F. Scheduler dasar (infra minimal, HANYA untuk 2 job kritis di bawah — bukan email reminder)
 | Status | ID | Task | Lokasi | Depends on |
@@ -826,3 +826,10 @@ Status: selesai
 PR: direct commit main (override user)
 Ringkasan: Implementasi pengiriman email verifikasi setelah pendaftaran. Menambahkan field `is_verified` dan `verify_token` ke model `User`. Menambahkan endpoint `GET /verify-email` untuk memverifikasi akun. Menambahkan notifikasi sukses/error di halaman login. Mismatch nama env var SMTP diperbaiki (`SMTP_USERNAME`/`SMTP_PASSWORD` vs `SMTP_USER`/`SMTP_PASS`).
 Verifikasi: templ generate dan go build ./... sukses.
+
+### 2026-09-15 00:30 WIB — QA-P1-18
+Status: selesai & terverifikasi
+PR: direct commit main (override user)
+Ringkasan: Implementasi alur reset password (lupa password). Menambahkan `ResetToken` dan `ResetExpires` pada model `User`. Menambahkan rute dan handler `GET /forgot-password`, `POST /forgot-password`, `GET /reset-password`, dan `POST /reset-password`. Menambahkan fungsi `SendResetPasswordEmail` pada service email, template UI `ForgotPassword` dan `ResetPassword`, serta link 'Lupa password?' di halaman login. Unit test expiry dan hashing berhasil.
+Verifikasi: `templ generate`, `go test -v ./internal/handlers/...`, dan `go build ./...` lulus.
+

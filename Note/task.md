@@ -92,7 +92,7 @@
 - [ ] Debt reminder H-3 & H-1 (sambungkan `SendEmailNotification` yang kini dead code)
 - [ ] Budget alert 80% & 100% (maks 1 email per kategori per ambang per bulan)
 - [ ] Ringkasan bulanan email tanggal 1
-- [ ] Verifikasi email + reset password
+- [x] Verifikasi email + reset password
 
 ### Monetisasi
 - [ ] Middleware `RequirePlan(feature)` + enforcement limit Free (2 dompet, 1 user, histori 3 bulan)

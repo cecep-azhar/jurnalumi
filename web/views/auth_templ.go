@@ -29,14 +29,14 @@ func Login() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"id\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Masuk - JurnalUmi</title><script src=\"https://cdn.tailwindcss.com\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js\"></script></head><body class=\"bg-gray-50 flex items-center justify-center min-h-screen p-4\" x-data=\"{ email: '', password: '' }\"><div class=\"bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-gray-100 space-y-6\"><div class=\"text-center\"><h1 class=\"text-3xl font-extrabold text-emerald-600 mb-2\">JurnalUmi</h1><p class=\"text-gray-500 text-sm\">Masuk ke Akun Keuangan Keluarga Anda</p></div><div x-data=\"{ error: new URLSearchParams(window.location.search).get('error'), success: new URLSearchParams(window.location.search).get('success') }\"><template x-if=\"error === 'email_not_verified'\"><div class=\"bg-red-50 border-l-4 border-red-500 p-4 mb-4\"><p class=\"text-sm text-red-700\">Email belum diverifikasi. Silakan cek kotak masuk Anda.</p></div></template><template x-if=\"success === 'registered'\"><div class=\"bg-blue-50 border-l-4 border-blue-500 p-4 mb-4\"><p class=\"text-sm text-blue-700\">Pendaftaran berhasil! Silakan cek email Anda untuk verifikasi sebelum login.</p></div></template><template x-if=\"success === 'verified'\"><div class=\"bg-green-50 border-l-4 border-green-500 p-4 mb-4\"><p class=\"text-sm text-green-700\">Email berhasil diverifikasi! Silakan login.</p></div></template></div><!-- Quick Demo Login Buttons --><div class=\"bg-emerald-50 p-4 rounded-xl border border-emerald-100 space-y-2\"><p class=\"text-xs font-bold text-emerald-800 uppercase tracking-wider text-center\">⚡ Login Cepat (Demo Mode):</p><div class=\"grid grid-cols-2 gap-2\"><button type=\"button\" @click=\"email = 'cecep@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👨\u200d👩\u200d👦 Suami (Owner)</button> <button type=\"button\" @click=\"email = 'istri@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👩 Istri (Co-Owner)</button> <button type=\"button\" @click=\"email = 'anak@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👦 Anak (Member)</button> <a href=\"/admin/dashboard\" class=\"bg-gray-900 hover:bg-black text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm text-center flex items-center justify-center\">🔑 Super Admin</a></div></div><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"id\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Masuk - JurnalUmi</title><script src=\"https://cdn.tailwindcss.com\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js\"></script></head><body class=\"bg-gray-50 flex items-center justify-center min-h-screen p-4\" x-data=\"{ email: '', password: '' }\"><div class=\"bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-gray-100 space-y-6\"><div class=\"text-center\"><h1 class=\"text-3xl font-extrabold text-emerald-600 mb-2\">JurnalUmi</h1><p class=\"text-gray-500 text-sm\">Masuk ke Akun Keuangan Keluarga Anda</p></div><div x-data=\"{ error: new URLSearchParams(window.location.search).get('error'), success: new URLSearchParams(window.location.search).get('success') }\"><template x-if=\"error === 'email_not_verified'\"><div class=\"bg-red-50 border-l-4 border-red-500 p-4 mb-4\"><p class=\"text-sm text-red-700\">Email belum diverifikasi. Silakan cek kotak masuk Anda.</p></div></template><template x-if=\"success === 'registered'\"><div class=\"bg-blue-50 border-l-4 border-blue-500 p-4 mb-4\"><p class=\"text-sm text-blue-700\">Pendaftaran berhasil! Silakan cek email Anda untuk verifikasi sebelum login.</p></div></template><template x-if=\"success === 'verified'\"><div class=\"bg-green-50 border-l-4 border-green-500 p-4 mb-4\"><p class=\"text-sm text-green-700\">Email berhasil diverifikasi! Silakan login.</p></div></template><template x-if=\"success === 'password_reset'\"><div class=\"bg-green-50 border-l-4 border-green-500 p-4 mb-4\"><p class=\"text-sm text-green-700\">Kata sandi berhasil diperbarui! Silakan masuk dengan kata sandi baru.</p></div></template></div><!-- Quick Demo Login Buttons --><div class=\"bg-emerald-50 p-4 rounded-xl border border-emerald-100 space-y-2\"><p class=\"text-xs font-bold text-emerald-800 uppercase tracking-wider text-center\">⚡ Login Cepat (Demo Mode):</p><div class=\"grid grid-cols-2 gap-2\"><button type=\"button\" @click=\"email = 'cecep@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👨\u200d👩\u200d👦 Suami (Owner)</button> <button type=\"button\" @click=\"email = 'istri@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👩 Istri (Co-Owner)</button> <button type=\"button\" @click=\"email = 'anak@azhar.com'; password = 'password123'; $nextTick(() => $refs.loginForm.submit())\" class=\"bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm\">👦 Anak (Member)</button> <a href=\"/admin/dashboard\" class=\"bg-gray-900 hover:bg-black text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow-sm text-center flex items-center justify-center\">🔑 Super Admin</a></div></div><input type=\"hidden\" name=\"csrf_token\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 57, Col: 76}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 62, Col: 76}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var2)
 		if templ_7745c5c3_Err != nil {
@@ -49,7 +49,7 @@ func Login() templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 59, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 64, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var3)
 		if templ_7745c5c3_Err != nil {
@@ -62,13 +62,13 @@ func Login() templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 60, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 65, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var4)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\"><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Email Keluarga / Suami / Istri</label> <input type=\"email\" name=\"email\" x-model=\"email\" required placeholder=\"nama@keluarga.com\" class=\"w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition\"></div><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Password</label> <input type=\"password\" name=\"password\" x-model=\"password\" required placeholder=\"••••••••\" class=\"w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition\"></div><button type=\"submit\" class=\"w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition text-base\">Masuk Sekarang</button></form><div class=\"text-center text-sm text-gray-500\">Belum punya akun keluarga? <a href=\"/register\" class=\"text-emerald-600 font-bold hover:underline\">Daftar Gratis</a></div></div></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\"><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Email Keluarga / Suami / Istri</label> <input type=\"email\" name=\"email\" x-model=\"email\" required placeholder=\"nama@keluarga.com\" class=\"w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition\"></div><div><div class=\"flex items-center justify-between\"><label class=\"block text-sm font-medium text-gray-700 mb-1\">Password</label> <a href=\"/forgot-password\" class=\"text-xs text-emerald-600 hover:underline\">Lupa password?</a></div><input type=\"password\" name=\"password\" x-model=\"password\" required placeholder=\"••••••••\" class=\"w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition\"></div><button type=\"submit\" class=\"w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition text-base\">Masuk Sekarang</button></form><div class=\"text-center text-sm text-gray-500\">Belum punya akun keluarga? <a href=\"/register\" class=\"text-emerald-600 font-bold hover:underline\">Daftar Gratis</a></div></div></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -104,7 +104,7 @@ func Register() templ.Component {
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 98, Col: 76}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 106, Col: 76}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var6)
 		if templ_7745c5c3_Err != nil {
@@ -117,7 +117,7 @@ func Register() templ.Component {
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 100, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 108, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var7)
 		if templ_7745c5c3_Err != nil {
@@ -130,13 +130,110 @@ func Register() templ.Component {
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 101, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 109, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var8)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\"><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Nama Keluarga (e.g. Keluarga Azhar)</label> <input type=\"text\" name=\"family_name\" required placeholder=\"Keluarga...\" class=\"w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 outline-none\"></div><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Nama Anda (Kepala Keluarga / Pasangan)</label> <input type=\"text\" name=\"name\" required placeholder=\"Cecep Azhar\" class=\"w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 outline-none\"></div><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Email</label> <input type=\"email\" name=\"email\" required placeholder=\"nama@domain.com\" class=\"w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 outline-none\"></div><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Password</label> <input type=\"password\" name=\"password\" required placeholder=\"••••••••\" class=\"w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-emerald-500 outline-none\"></div><button type=\"submit\" class=\"w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-lg transition mt-2\">Daftar Akun Keluarga</button></form><div class=\"mt-6 text-center text-sm text-gray-500\">Sudah punya akun? <a href=\"/login\" class=\"text-emerald-600 font-bold hover:underline\">Masuk</a></div></div></body></html>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func ForgotPassword() templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var9 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var9 == nil {
+			templ_7745c5c3_Var9 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<!doctype html><html lang=\"id\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Lupa Kata Sandi - JurnalUmi</title><script src=\"https://cdn.tailwindcss.com\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js\"></script></head><body class=\"bg-gray-50 flex items-center justify-center min-h-screen p-4\"><div class=\"bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-gray-100 space-y-6\"><div class=\"text-center\"><h1 class=\"text-2xl font-bold text-gray-800 mb-2\">Lupa Kata Sandi?</h1><p class=\"text-gray-500 text-sm\">Masukkan email terdaftar akun Anda. Kami akan mengirimkan tautan reset kata sandi.</p></div><div x-data=\"{ error: new URLSearchParams(window.location.search).get('error'), success: new URLSearchParams(window.location.search).get('success') }\"><template x-if=\"success === 'sent'\"><div class=\"bg-blue-50 border-l-4 border-blue-500 p-4 mb-4\"><p class=\"text-sm text-blue-700\">Jika email Anda terdaftar, tautan reset kata sandi telah dikirimkan. Silakan periksa kotak masuk email Anda.</p></div></template><template x-if=\"error === 'server_error'\"><div class=\"bg-red-50 border-l-4 border-red-500 p-4 mb-4\"><p class=\"text-sm text-red-700\">Terjadi kesalahan sistem. Silakan coba lagi.</p></div></template></div><form action=\"/forgot-password\" method=\"POST\" class=\"space-y-4\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var10 string
+		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 170, Col: 77}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var10)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "\"><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Email Terdaftar</label> <input type=\"email\" name=\"email\" required placeholder=\"nama@keluarga.com\" class=\"w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition\"></div><button type=\"submit\" class=\"w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition text-base\">Kirim Tautan Reset</button></form><div class=\"text-center text-sm text-gray-500\">Ingat kata sandi? <a href=\"/login\" class=\"text-emerald-600 font-bold hover:underline\">Kembali Masuk</a></div></div></body></html>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func ResetPassword(token string) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var11 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var11 == nil {
+			templ_7745c5c3_Var11 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<!doctype html><html lang=\"id\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Atur Ulang Kata Sandi - JurnalUmi</title><script src=\"https://cdn.tailwindcss.com\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js\"></script></head><body class=\"bg-gray-50 flex items-center justify-center min-h-screen p-4\"><div class=\"bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-gray-100 space-y-6\"><div class=\"text-center\"><h1 class=\"text-2xl font-bold text-gray-800 mb-2\">Kata Sandi Baru</h1><p class=\"text-gray-500 text-sm\">Masukkan kata sandi baru untuk akun Anda.</p></div><div x-data=\"{ error: new URLSearchParams(window.location.search).get('error') }\"><template x-if=\"error === 'invalid_or_expired'\"><div class=\"bg-red-50 border-l-4 border-red-500 p-4 mb-4\"><p class=\"text-sm text-red-700\">Tautan reset tidak valid atau telah kedaluwarsa. Silakan ajukan reset kembali.</p></div></template><template x-if=\"error === 'empty_password'\"><div class=\"bg-red-50 border-l-4 border-red-500 p-4 mb-4\"><p class=\"text-sm text-red-700\">Kata sandi baru tidak boleh kosong.</p></div></template><template x-if=\"error === 'server_error'\"><div class=\"bg-red-50 border-l-4 border-red-500 p-4 mb-4\"><p class=\"text-sm text-red-700\">Terjadi kesalahan sistem. Silakan coba lagi.</p></div></template></div><form action=\"/reset-password\" method=\"POST\" class=\"space-y-4\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var12 string
+		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 224, Col: 77}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var12)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "\"> <input type=\"hidden\" name=\"token\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var13 string
+		templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.ResolveAttributeValue(token)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/auth.templ`, Line: 225, Col: 51}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var13)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "\"><div><label class=\"block text-sm font-medium text-gray-700 mb-1\">Kata Sandi Baru</label> <input type=\"password\" name=\"password\" required placeholder=\"••••••••\" class=\"w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition\"></div><button type=\"submit\" class=\"w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition text-base\">Simpan Kata Sandi Baru</button></form><div class=\"text-center text-sm text-gray-500\">Batal? <a href=\"/login\" class=\"text-emerald-600 font-bold hover:underline\">Kembali ke Login</a></div></div></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
