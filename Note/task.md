@@ -99,7 +99,7 @@
 - [ ] Trial Premium 14 hari otomatis saat register
 - [ ] Cron penurunan plan saat `plan_expires_at` lewat
 - [ ] Route `POST /activate-voucher` (form di `landing.html:247` kini menuju 404) + redeem idempotent
-- [ ] Webhook Mayar.id `payment.success` (verifikasi signature, idempotent, tabel `payments`)
+- [x] Webhook Mayar.id `payment.success` (verifikasi signature, idempotent, tabel `payments`)
 - [ ] Satu sumber harga (env/konstanta) untuk kode + landing + materi promosi
 
 ### Frontend & PWA

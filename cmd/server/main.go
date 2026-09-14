@@ -131,6 +131,9 @@ func main() {
 	appGroup.GET("/activate-voucher", handlers.ActivateVoucherGET)
 	appGroup.POST("/activate-voucher", handlers.ActivateVoucherPOST, appMiddleware.RequireRole("owner"))
 
+	// Mayar Webhook (QA-P1-23)
+	e.POST("/webhooks/mayar", handlers.MayarWebhookPOST)
+
 	// Static files for PWA (Phase 6)
 	e.Static("/static", "web/static")
 
