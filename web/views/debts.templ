@@ -124,10 +124,8 @@ templ debtContent(debts []models.Debt, wallets []models.Wallet, totalDebt int64,
 					<h3 class="text-lg font-bold text-gray-900">Catat Utang / Piutang Baru</h3>
 					<button @click="addDebtModal = false" class="text-gray-400 hover:text-gray-600">✖</button>
 				</div>
-				<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
-<form action="/debts" method="POST" class="space-y-4">
-				<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
-t			<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
+				<form action="/debts" method="POST" class="space-y-4">
+					<input type="hidden" name="csrf_token" value={ ctx.Value("csrf").(string) } />
 					<div>
 						<label class="block text-sm font-bold text-gray-700 mb-1">Tipe</label>
 						<select name="type" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none" required>

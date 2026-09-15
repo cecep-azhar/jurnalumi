@@ -280,46 +280,20 @@ func debtContent(debts []models.Debt, wallets []models.Wallet, totalDebt int64, 
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "</tbody></table></div><!-- MODAL: Tambah Utang / Piutang --><div x-cloak x-show=\"addDebtModal\" class=\"fixed inset-0 z-50 flex items-center justify-center p-4\" x-transition.opacity><div class=\"fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm\" @click=\"addDebtModal = false\"></div><div class=\"bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative z-10\" x-transition.scale><div class=\"flex justify-between items-center mb-6\"><h3 class=\"text-lg font-bold text-gray-900\">Catat Utang / Piutang Baru</h3><button @click=\"addDebtModal = false\" class=\"text-gray-400 hover:text-gray-600\">✖</button></div><input type=\"hidden\" name=\"csrf_token\" value=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "</tbody></table></div><!-- MODAL: Tambah Utang / Piutang --><div x-cloak x-show=\"addDebtModal\" class=\"fixed inset-0 z-50 flex items-center justify-center p-4\" x-transition.opacity><div class=\"fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm\" @click=\"addDebtModal = false\"></div><div class=\"bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative z-10\" x-transition.scale><div class=\"flex justify-between items-center mb-6\"><h3 class=\"text-lg font-bold text-gray-900\">Catat Utang / Piutang Baru</h3><button @click=\"addDebtModal = false\" class=\"text-gray-400 hover:text-gray-600\">✖</button></div><form action=\"/debts\" method=\"POST\" class=\"space-y-4\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var16 string
 		templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/debts.templ`, Line: 127, Col: 77}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/debts.templ`, Line: 128, Col: 78}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var16)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "\"><form action=\"/debts\" method=\"POST\" class=\"space-y-4\"><input type=\"hidden\" name=\"csrf_token\" value=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var17 string
-		templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/debts.templ`, Line: 129, Col: 77}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var17)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "\"> t\t\t\t<input type=\"hidden\" name=\"csrf_token\" value=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var18 string
-		templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.ResolveAttributeValue(ctx.Value("csrf").(string))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/debts.templ`, Line: 130, Col: 77}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var18)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Tipe</label> <select name=\"type\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required><option value=\"debt\">Utang (Saya Pinjam Uang / Cicilan)</option> <option value=\"receivable\">Piutang (Orang Pinjam Uang Saya)</option></select></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Judul / Keterangan</label> <input type=\"text\" name=\"title\" placeholder=\"e.g. Cicilan Motor Vario / Pinjaman Saudara\" required class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-purple-500 outline-none\"></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Nama Pihak Terkait (Counterparty)</label> <input type=\"text\" name=\"counterparty\" placeholder=\"e.g. Leasing / Ahmad\" required class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-purple-500 outline-none\"></div><div class=\"grid grid-cols-2 gap-4\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Total Uang (Rp)</label> <input type=\"number\" name=\"total_amount\" step=\"1000\" placeholder=\"5000000\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Bunga / Margin (%)</label> <input type=\"number\" name=\"interest_rate\" step=\"0.1\" value=\"0\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required></div></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Tanggal Jatuh Tempo Bulanan</label> <input type=\"date\" name=\"due_date\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\"></div><button type=\"submit\" class=\"w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition mt-4\">Simpan Rekam Utang</button></form></div></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Tipe</label> <select name=\"type\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required><option value=\"debt\">Utang (Saya Pinjam Uang / Cicilan)</option> <option value=\"receivable\">Piutang (Orang Pinjam Uang Saya)</option></select></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Judul / Keterangan</label> <input type=\"text\" name=\"title\" placeholder=\"e.g. Cicilan Motor Vario / Pinjaman Saudara\" required class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-purple-500 outline-none\"></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Nama Pihak Terkait (Counterparty)</label> <input type=\"text\" name=\"counterparty\" placeholder=\"e.g. Leasing / Ahmad\" required class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:border-purple-500 outline-none\"></div><div class=\"grid grid-cols-2 gap-4\"><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Total Uang (Rp)</label> <input type=\"number\" name=\"total_amount\" step=\"1000\" placeholder=\"5000000\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Bunga / Margin (%)</label> <input type=\"number\" name=\"interest_rate\" step=\"0.1\" value=\"0\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\" required></div></div><div><label class=\"block text-sm font-bold text-gray-700 mb-1\">Tanggal Jatuh Tempo Bulanan</label> <input type=\"date\" name=\"due_date\" class=\"w-full border-2 border-gray-200 rounded-xl px-4 py-2 outline-none\"></div><button type=\"submit\" class=\"w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition mt-4\">Simpan Rekam Utang</button></form></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
