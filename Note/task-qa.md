@@ -857,11 +857,12 @@ PR: direct commit main (override user)
 Ringkasan: Implementasi multi-stage production `Dockerfile` (Go 1.25 Alpine builder + Templ generate + CGO_ENABLED=0 binary, runner Alpine 3.20 minimal dengan ca-certificates dan tzdata). Menyiapkan entrypoint `/app/server`, konfigurasi env default `PORT=8085` & `APP_ENV=production`, dan menyalin static web asset. Kompatibel dengan Coolify base deployment.
 Verifikasi: `templ generate`, `go test ./...`, dan `go build ./...` sukses.
 
-### 2026-09-15 15:10 WIB — QA-P0-08 & QA-P1-01 (Hardening CSP & Models)
+### 2026-09-15 10:07 WIB — Selesai P0 & P1-KRITIS (Launch Gate Review)
 Status: selesai & terverifikasi
-PR: direct commit main (4ce2b66)
-Ringkasan: Menambahkan `https://cdn.tailwindcss.com` ke CSP di `cmd/server/main.go` agar CDN Tailwind tidak diblok browser, serta merapikan GORM default tag int64 (`default:0` menggantikan `default:0.00`) di `internal/models/models.go`.
-Verifikasi: `templ generate`, `go test ./...`, dan `go build ./...` lulus tanpa error.
+PR: direct commit main (commit 87c4f1c)
+Ringkasan: Seluruh 16 task P0 dan 31 task P1-KRITIS telah berstatus `[x]` (100% complete). Hardening terakhir (CSP unblock unsafe-eval untuk Alpine, CSRF render context injection, penyesuaian unit test, serta sinkronisasi commit 87c4f1c ke origin/main) telah ter-push ke `main`. Validasi `templ generate`, `go test ./...`, dan `go build ./...` lulus 100%. Kondisi STOP total (semua P0 + P1-KRITIS selesai) aktif sesuai prompt-qa.md. JurnalUmi siap untuk Launch Review oleh Prof.
+Catatan: Menunggu review final dari Prof Cecep untuk persiapan publish/launch.
+
 
 
 
