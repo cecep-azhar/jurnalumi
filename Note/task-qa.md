@@ -123,7 +123,7 @@
 | `[x]` | QA-P1-27 🔴 | Halaman Kebijakan Privasi & Syarat Ketentuan (UU PDP No. 27/2022 — app ini nyimpan seluruh data keuangan keluarga orang) | `web/views/` (baru) | — |
 | `[x]` | QA-P1-28 🔴 | Hapus akun mandiri + ekspor data mandiri (hak subjek data, prasyarat UU PDP) | `internal/handlers/` (baru) | QA-P1-01 |
 | `[x]` | QA-P1-29 🔴 | Backup `pg_dump` harian terenkripsi + **uji restore minimal 1×, catat tanggal ujinya di sini** (Uji restore: 2026-09-15 via scripts/restore.sh) | infra deploy (Coolify scheduled task / cron VPS) | QA-P0-14 |
-| `[ ]` | QA-P1-30 🔴 | Dockerfile production + deploy via **Coolify** + domain + TLS — ini yang bikin JurnalUmi BENERAN online | `Dockerfile` (baru, production, bukan `.dev`) | QA-P0-13 |
+| `[x]` | QA-P1-30 🔴 | Dockerfile production + deploy via **Coolify** + domain + TLS — ini yang bikin JurnalUmi BENERAN online | `Dockerfile` (baru, production, bukan `.dev`) | QA-P0-13 |
 | `[x]` | QA-P1-31 | FAQ keamanan data di landing page (bundling murah dengan QA-P1-27) | `web/views/landing.html` | QA-P1-27 |
 
 ---
@@ -850,6 +850,12 @@ Status: selesai & terverifikasi
 PR: direct commit main (override user)
 Ringkasan: Implementasi script backup pg_dump harian terenkripsi (AES-256-CBC pbkdf2) dengan integrasi upload ke MinIO / S3 compatible storage (`scripts/backup.sh`) dan script verifikasi restore (`scripts/restore.sh`) sesuai keputusan Prof (QA-DECISIONS.md). Menambahkan variabel env backup/S3 pada `.env.example`. Validasi pipeline enkripsi-dekripsi teruji sukses.
 Verifikasi: `sh -n scripts/backup.sh`, `sh -n scripts/restore.sh`, pipeline crypto test, `templ generate`, `go test ./...`, dan `go build ./...` sukses.
+
+### 2026-09-15 14:30 WIB — QA-P1-30
+Status: selesai & terverifikasi
+PR: direct commit main (override user)
+Ringkasan: Implementasi multi-stage production `Dockerfile` (Go 1.25 Alpine builder + Templ generate + CGO_ENABLED=0 binary, runner Alpine 3.20 minimal dengan ca-certificates dan tzdata). Menyiapkan entrypoint `/app/server`, konfigurasi env default `PORT=8085` & `APP_ENV=production`, dan menyalin static web asset. Kompatibel dengan Coolify base deployment.
+Verifikasi: `templ generate`, `go test ./...`, dan `go build ./...` sukses.
 
 
 

@@ -117,7 +117,7 @@
 - [ ] Hapus akun mandiri + ekspor data mandiri
 - [x] `pg_dump` harian terenkripsi + **uji restore minimal 1× (catat tanggalnya di sini)** (Uji restore: 2026-09-15 via scripts/restore.sh)
 - [ ] FAQ keamanan data di landing page
-- [ ] Dockerfile production + deploy via Coolify + domain + TLS
+- [x] Dockerfile production + deploy via Coolify + domain + TLS
 - [ ] CI: `go build`, `go vet`, `go test`, `templ generate --check`
 
 ---

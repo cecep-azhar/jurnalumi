@@ -1,0 +1,32 @@
+# Multi-stage build for production
+FROM golang:1.25-alpine AS builder
+
+WORKDIR /app
+
+RUN apk add --no-cache git ca-certificates tzdata
+
+RUN go install github.com/a-h/templ/cmd/templ@v0.2.747
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+
+RUN templ generate
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /app/bin/server ./cmd/server
+
+FROM alpine:3.20
+
+WORKDIR /app
+
+RUN apk add --no-cache ca-certificates tzdata
+
+COPY --from=builder /app/bin/server /app/server
+COPY --from=builder /app/web /app/web
+
+ENV APP_ENV=production
+ENV PORT=8085
+
+EXPOSE 8085
+
+ENTRYPOINT ["/app/server"]
