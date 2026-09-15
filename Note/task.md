@@ -30,26 +30,26 @@
 ## P0 — BLOCKER: sebelum boleh dipakai orang selain founder
 
 ### Keamanan
-- [ ] 🔴 Proteksi seluruh route `/admin/*`: middleware auth + role `superadmin` (`main.go:57-59` saat ini terbuka publik)
+- [x] 🔴 Proteksi seluruh route `/admin/*`: middleware auth + role `superadmin` (`main.go:57-59` saat ini terbuka publik)
 - [x] 🔴 Pindahkan `SESSION_SECRET` ke env; refuse start bila kosong saat `APP_ENV=production` (`main.go:32` hardcoded & ter-commit)
-- [ ] 🔴 Cookie session: `Secure` + `SameSite=Lax` + rotasi session id saat login
-- [ ] 🔴 Middleware `RequireRole(...)` + terapkan matrix `Role_Permission.md` ke semua route (kini role sama sekali tidak dicek)
-- [ ] 🔴 `middleware.CSRF()` global + hidden token di semua form Templ
-- [ ] 🔴 Rate limit `/login` & `/register` + lockout setelah 5 kali gagal
-- [ ] Hapus `middleware.CORS()` global (tidak dibutuhkan untuk SSR)
-- [ ] Tambah security header (HSTS, nosniff, Referrer-Policy, CSP dasar)
-- [ ] Seed CLI untuk membuat user `superadmin` (jangan lewat form publik)
+- [x] 🔴 Cookie session: `Secure` + `SameSite=Lax` + rotasi session id saat login
+- [x] 🔴 Middleware `RequireRole(...)` + terapkan matrix `Role_Permission.md` ke semua route (kini role sama sekali tidak dicek)
+- [x] 🔴 `middleware.CSRF()` global + hidden token di semua form Templ
+- [x] 🔴 Rate limit `/login` & `/register` + lockout setelah 5 kali gagal
+- [x] Hapus `middleware.CORS()` global (tidak dibutuhkan untuk SSR)
+- [x] Tambah security header (HSTS, nosniff, Referrer-Policy, CSP dasar)
+- [x] Seed CLI untuk membuat user `superadmin` (jangan lewat form publik)
 
 ### Integritas data
-- [ ] 🔴 Matikan/ganti `DebtPayPOST` yang membagi dua sisa utang (`debts.go:88-91`) → form bayar nyata: pilih wallet + nominal → insert transaksi + potong saldo + kurangi sisa + catat `debt_payments`, satu DB transaction
-- [ ] 🔴 Tangani error `db.Create/Save` di semua handler (kini diabaikan di 6 tempat) + tampilkan flash message ke user
-- [ ] Validasi input server-side (nominal > 0, tanggal wajar, wallet/kategori milik tenant sendiri, enum tipe)
+- [x] 🔴 Matikan/ganti `DebtPayPOST` yang membagi dua sisa utang (`debts.go:88-91`) → form bayar nyata: pilih wallet + nominal → insert transaksi + potong saldo + kurangi sisa + catat `debt_payments`, satu DB transaction
+- [x] 🔴 Tangani error `db.Create/Save` di semua handler (kini diabaikan di 6 tempat) + tampilkan flash message ke user
+- [x] Validasi input server-side (nominal > 0, tanggal wajar, wallet/kategori milik tenant sendiri, enum tipe)
 
 ### Infrastruktur dasar
-- [ ] Perbaiki `Dockerfile.dev` (pakai `golang:1.25-alpine`, kini 1.23 → build gagal vs `go.mod`)
-- [ ] Buat `docker-compose.yml` (Postgres 16 + Mailhog + app)
-- [ ] Buat `.env.example` + `README` cara menjalankan
-- [ ] Hapus duplikasi `e.Static("/static")` (`main.go:42` & `:83`)
+- [x] Perbaiki `Dockerfile.dev` (pakai `golang:1.25-alpine`, kini 1.23 → build gagal vs `go.mod`)
+- [x] Buat `docker-compose.yml` (Postgres 16 + Mailhog + app)
+- [x] Buat `.env.example` + `README` cara menjalankan
+- [x] Hapus duplikasi `e.Static("/static")` (`main.go:42` & `:83`)
 
 ---
 
@@ -57,48 +57,48 @@
 
 ### Fondasi data (kerjakan lebih dulu, semua fitur lain menumpang di sini)
 - [ ] Migrasi ke **goose**, matikan `AutoMigrate` di production
-- [ ] Konversi seluruh nominal ke `int64` rupiah penuh (hapus `float64` untuk uang)
-- [ ] Isi & gunakan `category_id` di transaksi (kini hanya `category_name` string → laporan per kategori mustahil)
-- [ ] Tabel baru: `budgets`, `recurring_rules`, `debt_payments`, `assets`, `price_snapshots`, `audit_logs`, `payments`
-- [ ] Aktifkan **Row-Level Security** + `SET LOCAL app.tenant_id` per request + helper `Scoped(c)`
-- [ ] Transaksi `opening_balance` untuk saldo awal wallet + job rekonsiliasi saldo harian
-- [ ] Test: perhitungan uang, isolasi tenant, RBAC, plan limit
+- [x] Konversi seluruh nominal ke `int64` rupiah penuh (hapus `float64` untuk uang)
+- [x] Isi & gunakan `category_id` di transaksi (kini hanya `category_name` string → laporan per kategori mustahil)
+- [x] Tabel baru: `budgets`, `recurring_rules`, `debt_payments`, `assets`, `price_snapshots`, `audit_logs`, `payments`
+- [x] Aktifkan **Row-Level Security** + `SET LOCAL app.tenant_id` per request + helper `Scoped(c)`
+- [x] Transaksi `opening_balance` untuk saldo awal wallet + job rekonsiliasi saldo harian
+- [x] Test: perhitungan uang, isolasi tenant, RBAC, plan limit
 
 ### Ledger & UX inti
-- [ ] Edit & hapus transaksi (soft delete + audit log) — penyebab utama user berhenti memakai app keuangan
+- [x] Edit & hapus transaksi (soft delete + audit log) — penyebab utama user berhenti memakai app keuangan
 - [ ] Transfer antar dompet (`type='transfer'` + `to_wallet_id`)
 - [ ] Pagination di dashboard, reports, dan export
-- [ ] `FormatRupiah` format Indonesia (`Rp 500.000`, kini `Rp 500000.00`)
-- [ ] Filter periode di dashboard (label "Bulan Ini" kini menjumlah seluruh transaksi sepanjang masa)
+- [x] `FormatRupiah` format Indonesia (`Rp 500.000`, kini `Rp 500000.00`)
+- [x] Filter periode di dashboard (label "Bulan Ini" kini menjumlah seluruh transaksi sepanjang masa)
 - [ ] Quick entry < 5 detik: FAB mobile, default wallet & kategori terakhir, shortcut nominal
 - [ ] Import CSV/Excel dari catatan lama (mapping + preview + rollback)
 
 ### Fitur yang selama ini hanya teks di HTML
-- [ ] Budget per periode + indikator hijau/kuning/merah **dihitung di server**
-- [ ] Net Worth = total aset − total utang (ganti kartu "Coming Soon" di `dashboard.templ:64`)
-- [ ] Kalkulator **Snowball & Avalanche** yang benar-benar menghitung + unit test
+- [x] Budget per periode + indikator hijau/kuning/merah **dihitung di server**
+- [x] Net Worth = total aset − total utang (ganti kartu "Coming Soon" di `dashboard.templ:64`)
+- [x] Kalkulator **Snowball & Avalanche** yang benar-benar menghitung + unit test
 - [ ] Emergency Fund Health Score (rata-rata pengeluaran 3 bulan × faktor 6/9/12)
-- [ ] Sinking funds: target + tanggal target → setoran bulanan yang dibutuhkan + progress bar
+- [x] Sinking funds: target + tanggal target → setoran bulanan yang dibutuhkan + progress bar
 - [ ] Audit log + halaman "Aktivitas Keluarga" (bukti nyata janji transparansi pasangan)
 
 ### Aset & harga logam mulia
-- [ ] Cron harian ambil harga → `price_snapshots`; halaman aset **hanya baca snapshot** (kini 1 HTTP call per aset, timeout 3 detik masing-masing)
-- [ ] Ganti/verifikasi sumber harga (`api.logammulia.com` tidak eksis → selalu fallback konstanta 1.450.000)
-- [ ] Fallback harga manual per aset selama sumber belum tersedia
-- [ ] Perbaiki perhitungan dinar (keping → gram) & perak (kini hardcoded 16.500/gram)
+- [x] Cron harian ambil harga → `price_snapshots`; halaman aset **hanya baca snapshot** (kini 1 HTTP call per aset, timeout 3 detik masing-masing)
+- [x] Ganti/verifikasi sumber harga (`api.logammulia.com` tidak eksis → selalu fallback konstanta 1.450.000)
+- [x] Fallback harga manual per aset selama sumber belum tersedia
+- [x] Perbaiki perhitungan dinar (keping → gram) & perak (kini hardcoded 16.500/gram)
 
 ### Notifikasi & scheduler
-- [ ] Scheduler `robfig/cron` + DB lock
+- [x] Scheduler `robfig/cron` + DB lock
 - [ ] Debt reminder H-3 & H-1 (sambungkan `SendEmailNotification` yang kini dead code)
 - [ ] Budget alert 80% & 100% (maks 1 email per kategori per ambang per bulan)
 - [ ] Ringkasan bulanan email tanggal 1
 - [x] Verifikasi email + reset password
 
 ### Monetisasi
-- [ ] Middleware `RequirePlan(feature)` + enforcement limit Free (2 dompet, 1 user, histori 3 bulan)
+- [x] Middleware `RequirePlan(feature)` + enforcement limit Free (2 dompet, 1 user, histori 3 bulan)
 - [ ] Trial Premium 14 hari otomatis saat register
-- [ ] Cron penurunan plan saat `plan_expires_at` lewat
-- [ ] Route `POST /activate-voucher` (form di `landing.html:247` kini menuju 404) + redeem idempotent
+- [x] Cron penurunan plan saat `plan_expires_at` lewat
+- [x] Route `POST /activate-voucher` (form di `landing.html:247` kini menuju 404) + redeem idempotent
 - [x] Webhook Mayar.id `payment.success` (verifikasi signature, idempotent, tabel `payments`)
 - [x] Satu sumber harga (env/konstanta) untuk kode + landing + materi promosi
 
@@ -106,17 +106,17 @@
 - [ ] Tailwind via CLI build (hapus `cdn.tailwindcss.com` — dilarang untuk production)
 - [ ] Self-host Alpine.js & HTMX
 - [ ] Dark mode (`darkMode: 'class'` + toggle + localStorage) — prasyaratnya Tailwind CLI
-- [ ] `dashboard.templ` memakai `@Layout` (kini nav di-copy-paste, tanpa PWA & hx-boost)
-- [ ] `sw.js`: network-first untuk route data, cache-first hanya aset statis, **jangan precache halaman ber-auth**
-- [ ] Bersihkan cache saat logout (`caches.delete`) — kini data keuangan bisa tersaji di HP yang dipinjam
+- [x] `dashboard.templ` memakai `@Layout` (kini nav di-copy-paste, tanpa PWA & hx-boost)
+- [x] `sw.js`: network-first untuk route data, cache-first hanya aset statis, **jangan precache halaman ber-auth**
+- [x] Bersihkan cache saat logout (`caches.delete`) — kini data keuangan bisa tersaji di HP yang dipinjam
 - [ ] Offline queue IndexedDB + indikator "menunggu sinkronisasi"
 - [ ] Icon PWA di-host sendiri, 192 & 512 terpisah + maskable (kini menunjuk CDN Flaticon)
 
 ### Kepatuhan & operasional (gate publik launch)
-- [ ] Halaman Kebijakan Privasi & Syarat Ketentuan (UU PDP 27/2022)
-- [ ] Hapus akun mandiri + ekspor data mandiri
+- [x] Halaman Kebijakan Privasi & Syarat Ketentuan (UU PDP 27/2022)
+- [x] Hapus akun mandiri + ekspor data mandiri
 - [x] `pg_dump` harian terenkripsi + **uji restore minimal 1× (catat tanggalnya di sini)** (Uji restore: 2026-09-15 via scripts/restore.sh)
-- [ ] FAQ keamanan data di landing page
+- [x] FAQ keamanan data di landing page
 - [x] Dockerfile production + deploy via Coolify + domain + TLS
 - [ ] CI: `go build`, `go vet`, `go test`, `templ generate --check`
 
