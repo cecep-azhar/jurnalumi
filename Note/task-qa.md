@@ -109,7 +109,7 @@
 | `[x]` | QA-P1-21 | Cron turunkan plan saat `plan_expires_at` lewat (pakai QA-P1-19) | `internal/scheduler/cron.go` | QA-P1-19, QA-P1-20 |
 | `[x]` | QA-P1-22 🔴 | Route `POST /activate-voucher` — form di `landing.html:247` KINI MENUJU 404 di landing page publik, ini bug yang langsung kelihatan user | `cmd/server/main.go`, handler baru | — |
 | `[x]` | QA-P1-23 🔴 | Webhook Mayar.id `payment.success` (verifikasi signature, idempotent, tabel `payments`) — TANPA INI: orang bayar di Mayar, JurnalUmi tidak pernah tahu, user tidak ter-upgrade. Ini flow bisnis paling kritis yang bolong | `internal/handlers/` (baru) | QA-P1-04 |
-| `[ ]` | QA-P1-24 | Satu sumber harga (env/konstanta) dipakai konsisten di kode + landing + materi promosi (kini 3 angka beda: 39rb/bln, 190rb/thn, link `jurnalumi-premium-39k`) | lintas file, lihat `review.md` F15 | — |
+| `[x]` | QA-P1-24 | Satu sumber harga (env/konstanta) dipakai konsisten di kode + landing + materi promosi (kini 3 angka beda: 39rb/bln, 190rb/thn, link `jurnalumi-premium-39k`) | lintas file, lihat `review.md` F15 | — |
 
 ### H. Frontend — hanya yang menyangkut privasi/konsistensi, murah
 | Status | ID | Task | Lokasi | Depends on |
@@ -838,4 +838,11 @@ Status: selesai & terverifikasi
 PR: direct commit main (override user)
 Ringkasan: Implementasi endpoint webhook Mayar.id `POST /webhooks/mayar`. Verifikasi signature HMAC-SHA256 jika secret tersedia, idempotency check menggunakan `ExternalID` pada tabel `payments`, record payment status, dan update tenant plan ke premium (1 tahun) dalam DB transaction. Menambahkan placeholder `MAYAR_API_KEY` dan `MAYAR_WEBHOOK_SECRET` di `.env.example`.
 Verifikasi: `templ generate`, `go test ./...`, dan `go build ./...` sukses.
+
+### 2026-09-15 10:05 WIB — QA-P1-24
+Status: selesai & terverifikasi
+PR: direct commit main (override user)
+Ringkasan: Menyelaraskan harga dan informasi paket premium sesuai Keputusan Prof (QA-DECISIONS.md: promo Rp 9.000/bln, 6 bulan pertama gratis, pembayaran manual transfer BSI 7043984831 a/n CECEP SAEFUL AZHAR HIDAYAT). Membuat package `internal/services/pricing.go` sebagai single source of truth untuk konfigurasi harga, mengupdate landing page card pricing & modal checkout dengan detail transfer rekening BSI & konfirmasi WA, serta menghapus inkonsistensi harga lama (Rp 390k / Rp 190k / link 39k Mayar).
+Verifikasi: `templ generate`, `go test -v ./...`, dan `go build ./...` lulus tanpa error.
+
 
