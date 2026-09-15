@@ -43,7 +43,7 @@ type Category struct {
 	Type       string    `gorm:"size:50;not null" json:"type"` // income, expense
 	Name       string    `gorm:"size:255;not null" json:"name"`
 	Color      string    `gorm:"size:50;default:'gray'" json:"color"`
-	BudgetLimit int64   `gorm:"type:bigint;default:0.00" json:"budget_limit"` // Phase 3: Budget Capping
+	BudgetLimit int64   `gorm:"type:bigint;default:0" json:"budget_limit"` // Phase 3: Budget Capping
 }
 
 // Wallet represents Bank, Cash, or E-Wallet accounts (and Sinking Funds)
@@ -52,8 +52,8 @@ type Wallet struct {
 	TenantID     uuid.UUID `gorm:"type:uuid;not null;index" json:"tenant_id"`
 	Name         string    `gorm:"size:255;not null" json:"name"`
 	Type         string    `gorm:"size:50;not null" json:"type"` 
-	Balance      int64   `gorm:"type:bigint;default:0.00" json:"balance"`
-	TargetAmount int64   `gorm:"type:bigint;default:0.00" json:"target_amount"` // Sinking/Emergency Fund Target
+	Balance      int64   `gorm:"type:bigint;default:0" json:"balance"`
+	TargetAmount int64   `gorm:"type:bigint;default:0" json:"target_amount"` // Sinking/Emergency Fund Target
 }
 
 // Transaction represents financial ledger items
@@ -77,9 +77,9 @@ type CommodityAsset struct {
 	Type         string    `gorm:"size:50;not null" json:"type"` 
 	Name         string    `gorm:"size:255;not null" json:"name"`
 	WeightGram   int64   `gorm:"type:bigint;not null" json:"weight_gram"`
-	Karatage     int64   `gorm:"type:bigint;default:24.00" json:"karatage"`
+	Karatage     int64   `gorm:"type:bigint;default:24" json:"karatage"`
 	BuyPrice     int64   `gorm:"type:bigint;not null" json:"buy_price"`
-	CurrentValue int64   `gorm:"type:bigint;default:0.00" json:"current_value"`
+	CurrentValue int64   `gorm:"type:bigint;default:0" json:"current_value"`
 }
 
 // Debt represents Utang and Piutang
@@ -91,7 +91,7 @@ type Debt struct {
 	Counterparty    string     `gorm:"size:255;not null" json:"counterparty"`
 	TotalAmount     int64    `gorm:"type:bigint;not null" json:"total_amount"`
 	RemainingAmount int64    `gorm:"type:bigint;not null" json:"remaining_amount"`
-	InterestRate    int64    `gorm:"type:bigint;default:0.00" json:"interest_rate"`
+	InterestRate    int64    `gorm:"type:bigint;default:0" json:"interest_rate"`
 	DueDate         *time.Time `json:"due_date"`
 	Status          string     `gorm:"size:50;default:'active'" json:"status"` 
 }

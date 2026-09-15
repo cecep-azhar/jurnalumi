@@ -52,7 +52,7 @@ func main() {
 		XFrameOptions:         "SAMEORIGIN",
 		HSTSMaxAge:            31536000,
 		HSTSExcludeSubdomains: false,
-		ContentSecurityPolicy: "default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; img-src 'self' data: https:; font-src 'self' data:; frame-ancestors 'self';",
+		ContentSecurityPolicy: "default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.tailwindcss.com; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://cdn.tailwindcss.com; img-src 'self' data: https:; font-src 'self' data:; frame-ancestors 'self';",
 		ReferrerPolicy:        "strict-origin-when-cross-origin",
 	}))
 	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
