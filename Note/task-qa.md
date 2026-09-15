@@ -857,5 +857,12 @@ PR: direct commit main (override user)
 Ringkasan: Implementasi multi-stage production `Dockerfile` (Go 1.25 Alpine builder + Templ generate + CGO_ENABLED=0 binary, runner Alpine 3.20 minimal dengan ca-certificates dan tzdata). Menyiapkan entrypoint `/app/server`, konfigurasi env default `PORT=8085` & `APP_ENV=production`, dan menyalin static web asset. Kompatibel dengan Coolify base deployment.
 Verifikasi: `templ generate`, `go test ./...`, dan `go build ./...` sukses.
 
+### 2026-09-15 15:10 WIB — QA-P0-08 & QA-P1-01 (Hardening CSP & Models)
+Status: selesai & terverifikasi
+PR: direct commit main (4ce2b66)
+Ringkasan: Menambahkan `https://cdn.tailwindcss.com` ke CSP di `cmd/server/main.go` agar CDN Tailwind tidak diblok browser, serta merapikan GORM default tag int64 (`default:0` menggantikan `default:0.00`) di `internal/models/models.go`.
+Verifikasi: `templ generate`, `go test ./...`, dan `go build ./...` lulus tanpa error.
+
+
 
 
