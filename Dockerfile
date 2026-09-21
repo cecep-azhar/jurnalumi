@@ -1,18 +1,15 @@
 # Multi-stage build for production
-FROM golang:1.25-alpine AS builder
+FROM golang:1.26-alpine AS builder
 
 WORKDIR /app
 
 RUN apk add --no-cache git ca-certificates tzdata
-
-RUN go install github.com/a-h/templ/cmd/templ@v0.2.747
 
 COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
 
-RUN templ generate
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /app/bin/server ./cmd/server
 
 FROM alpine:3.20
